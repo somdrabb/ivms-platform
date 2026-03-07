@@ -1,0 +1,3403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prospectus Workspace with Zoom + Tools</title>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- GOOGLE FONTS -->
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2
+?family=Roboto:wght@400;700
+&family=Open+Sans:wght@400;700
+&family=Lato:wght@400;700
+&family=Inter:wght@400;700
+&family=Poppins:wght@400;700
+&family=Montserrat:wght@400;700
+&family=Source+Sans+Pro:wght@400;700
+&family=Nunito:wght@400;700
+&family=PT+Sans:wght@400;700
+&family=Playfair+Display:wght@400;700
+&family=Merriweather:wght@400;700
+&family=Oswald:wght@400;700
+&family=Anton
+&family=Bebas+Neue
+&family=Archivo+Black
+&family=Cinzel:wght@400;700
+&family=Pacifico
+&family=Dancing+Script:wght@400;700
+&family=Great+Vibes
+&display=swap">
+
+<style>
+  :root { --line: transparent; } /* no more grid lines */
+
+  * {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  body {
+    margin:0;
+    font-family:system-ui, sans-serif;
+    background:#e5e7eb;
+    color:#111827;
+  }
+
+  .workspace {
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    background:transparent;
+  }
+
+  /* ============= TOP TOOLBAR ============= */
+  .top-toolbar {
+    background:transparent;
+    border-bottom:none;
+    padding:8px 12px;
+    box-sizing:border-box;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+
+  .tool-group {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border-radius:9999px;
+    padding:4px 10px;
+    border:none;
+    font-size:14px;
+    max-height:40px;
+    color:#064e3b;
+  }
+
+  .tool-group i {
+    font-size:18px;
+    color:#064e3b;
+  }
+
+  .tool-group select,
+  .tool-group input[type="color"],
+  .tool-group input[type="text"] {
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:4px 8px;
+    height:30px;
+    box-sizing:border-box;
+  }
+
+  .tool-group input[type="color"] {
+    padding:0;
+    width:30px;
+    min-width:30px;
+    border-radius:9999px;
+    overflow:hidden;
+  }
+
+  .tool-group select {
+    max-width:190px;
+  }
+
+  .font-size-controls {
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .font-size-btn {
+    width:26px;
+    height:26px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:17px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+  }
+  .font-size-btn:hover {
+    border-color:#16a34a;
+    color:#16a34a;
+  }
+
+  #fontSizeDisplay {
+    width:60px;
+    text-align:center;
+    padding:4px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+  }
+
+  /* TEXTAREA TOOL */
+  .tool-group-text {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border-radius:9999px;
+    padding:4px 10px;
+    border:none;
+    font-size:14px;
+    max-height:none;
+    color:#064e3b;
+  }
+
+  .tool-group-text i {
+    font-size:18px;
+    color:#064e3b;
+  }
+
+  .tool-group-text textarea {
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:5px 8px;
+    resize:vertical;
+    min-height:32px;
+    max-height:60px;
+    width:240px;
+    box-sizing:border-box;
+  }
+
+  .top-toolbar select:focus,
+  .top-toolbar input:focus,
+  .top-toolbar textarea:focus {
+    outline:none;
+    background:transparent;
+    border-color:#16a34a;
+  }
+
+  /* USER ICON NEXT TO TEXTAREA */
+  .user-icon-btn {
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid #064e3b;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+  }
+  .user-icon-btn i {
+    font-size:16px;
+    color:#064e3b;
+  }
+  .user-icon-btn:hover {
+    border-color:#16a34a;
+  }
+
+  /* ============= CUSTOM FONT DROPDOWN ============= */
+  .font-dropdown {
+    position:relative;
+  }
+
+  .font-dropdown-btn {
+    min-width:170px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:4px 8px;
+    height:30px;
+    box-sizing:border-box;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+
+  .font-dropdown-btn span {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:1;
+  }
+
+  .font-dropdown-btn i.fa-chevron-down {
+    font-size:12px;
+  }
+
+  .font-dropdown-menu {
+    position:absolute;
+    top:110%;
+    left:0;
+    min-width:220px;
+    max-height:260px;
+    overflow-y:auto;
+    background:#f9fafb;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    box-shadow:0 10px 25px rgba(15,23,42,0.25);
+    padding:4px 0;
+    z-index:60;
+    display:none;
+  }
+
+  .font-item {
+    padding:4px 10px;
+    font-size:14px;
+    color:#111827;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+
+  .font-item:hover {
+    background:#e5e7eb;
+  }
+
+  .font-item-active {
+    background:#d1fae5;
+  }
+
+  /* ============= PREVIEW AREA ============= */
+.preview-panel {
+  flex: 1;
+  background: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0px;        /* ⬅️ reduced from 4px to 0px */
+  padding-bottom: 20px;    /* ⬅️ slightly bigger bottom space */
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  overflow: auto;
+}
+
+
+
+
+
+.prospekt-area {
+  display: flex;
+
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) 1fr;
+  gap: 16px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+
+
+
+  @media (max-width:1100px) {
+    .workspace-grid { grid-template-columns:1fr; }
+  }
+
+  .prospekt-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 0;      /* ⬅️ ensures no spacing */
+  padding-top: 0;     /* ⬅️ ensures no spacing */
+}
+  .discount-panel {
+    background:#f9fafb;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(15,23,42,0.12);
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    max-height:100%;
+  }
+
+  .discount-header {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+
+  .discount-title {
+    font-weight:700;
+    font-size:18px;
+    color:#0f172a;
+  }
+
+  .discount-subtitle {
+    font-size:13px;
+    color:#475569;
+  }
+
+  .discount-refresh {
+    border:1px solid #0f172a;
+    background:#0f172a;
+    color:#e5e7eb;
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .discount-refresh:hover { background:#1f2937; }
+
+  .discount-status {
+    font-size:13px;
+    color:#334155;
+    margin-bottom:8px;
+  }
+
+  .discount-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    overflow:auto;
+    padding-right:4px;
+    min-height:0;
+  }
+
+  .discount-card {
+    background:transparent;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    box-shadow:none;
+  }
+
+  .discount-thumb {
+    width:72px;
+    height:72px;
+    border-radius:0;
+    overflow:visible;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+
+  .discount-thumb img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .discount-body {
+    flex:1;
+    min-width:0;
+  }
+
+  .discount-row {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .discount-name {
+    font-weight:700;
+    font-size:15px;
+    color:#0f172a;
+  }
+
+  .discount-meta {
+    font-size:12px;
+    color:#475569;
+  }
+
+  .discount-prices {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    margin-top:4px;
+  }
+
+  .discount-old-price {
+    color:#9ca3af;
+    text-decoration:line-through;
+  }
+
+  .discount-new-price {
+    color:#dc2626;
+    font-family:"Times New Roman", Times, serif;
+    font-weight:900;
+    font-size:24px;
+    -webkit-text-stroke:0;
+    text-shadow:none;
+  }
+
+  .discount-chip {
+    background:#dc2626;
+    color:#fff;
+    padding:4px 8px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:12px;
+  }
+
+  .zoom-controls {
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:50;
+  }
+  .zoom-btn {
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:6px;
+    font-size:22px;
+    background:#1f2937;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  .zoom-btn:hover { background:#374151; }
+
+  .zoom-display {
+    min-width:60px;
+    height:36px;
+    border-radius:6px;
+    border:1px solid #1f2937;
+    background:#0f172a;
+    color:#e5e7eb;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+  }
+ /* ============= PROSPEKT ============= */
+.prospekt-wrapper {
+  transform-origin: center center;
+  transition: transform 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============= +++++++ ============= */
+.prospekt {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  color: #1d4ed8;
+  overflow: visible;
+}
+
+
+/* ============= +++++++ ============= */
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  margin: 0;
+}
+/* ----- Column A (left) ----- */
+.A {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* A1: header area (logo + keyword) */
+.A1 {
+  flex: 0 0 auto; /* just as high as its content */
+  padding: 5px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(95, 104, 221);
+  color: #ffffff;
+}
+
+/* A2/A3/A4: rows aligned with B2/B3/B4 ratios */
+/* three product rows on the left: same height */
+.A2,
+.A3,
+.A4 {
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;   /* ← all equal height */
+}
+
+/* main product boxes inside A2/A3/A4 */
+.A2_2,
+.A3_2,
+.A4_2 {
+  flex: 1;
+  padding: 4px;
+  border: none;
+  height: auto;
+  font-size: 8px;
+  line-height: 1.1;
+}
+
+/* Default styling for A2.2 */
+.edit-box[data-box="A2_2"] {
+  background: rgb(255, 250, 57);
+}
+
+/* A2.2 badge: larger red diagonal in top-right with yellow text */
+.edit-box[data-box="A2_2"] .p-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  left: auto;
+  transform: rotate(45deg);
+  background: rgb(239, 31, 31);
+  color: rgb(255, 250, 57);
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+}
+.edit-box[data-box="A2_2"] .p-badge-text {
+  color: rgb(255, 250, 57);
+  font-size: 24px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Default styling for A3.2 */
+.edit-box[data-box="A3_2"] {
+  background: rgb(95, 104, 221);
+}
+
+/* Default styling for A4.2 */
+.edit-box[data-box="A4_2"] {
+  background: rgb(235, 45, 45);
+}
+
+/* Align product images top-left and enlarge within A2_2 / A3_2 / A4_2 */
+.edit-box[data-box="A2_2"] .p-thumb,
+.edit-box[data-box="A3_2"] .p-thumb,
+.edit-box[data-box="A4_2"] .p-thumb {
+  width: 150px;
+  height: 150px;
+  align-self: flex-start;
+  margin: 0 0 6px 0;
+}
+.edit-box[data-box="A2_2"] .prospekt-product,
+.edit-box[data-box="A3_2"] .prospekt-product,
+.edit-box[data-box="A4_2"] .prospekt-product {
+  align-items: flex-start;
+  text-align: left;
+}
+.edit-box[data-box="A3_2"] .p-thumb {
+  width: 180px;
+  height: 180px;
+  align-self: flex-end;
+  margin-left: auto;
+}
+.edit-box[data-box="A4_2"] .p-thumb {
+  order: 1;
+}
+.edit-box[data-box="A2_2"] .p-body {
+  align-items: flex-end;
+  text-align: right;
+  margin-top: 72px; /* drop content below the badge */
+}
+.edit-box[data-box="A4_2"] .p-body {
+  order: 2;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: 6px;
+}
+.edit-box[data-box="A2_2"] .p-name {
+  font-size: 18px;
+  max-width: 20mm;
+  word-break: break-word;
+}
+.edit-box[data-box="A3_2"] .p-body {
+  align-self: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+.edit-box[data-box="A4_2"] .p-name {
+  font-size: 18px;
+  line-height: 1.2;
+  max-width: 32mm;
+  word-break: break-word;
+}
+.edit-box[data-box="A3_2"] .p-name {
+  font-size: 25px;
+  max-width: 22mm;
+  word-break: break-word;
+  text-align: right;
+}
+.edit-box[data-box="A3_2"] .p-badge {
+  background: rgb(239, 31, 31);
+  color: #fff8a3; /* high-contrast yellow on red */
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+  position: absolute;
+  top: 8px;
+  right: auto;
+  left: 8px;
+}
+.edit-box[data-box="A3_2"] .p-badge-text {
+  color: #fff8a3;
+  font-size: 24px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* A4.2 badge: top-right with larger percent */
+.edit-box[data-box="A4_2"] .p-badge {
+  position: absolute;
+  top: auto;
+  left: auto;
+  right: 10mm;
+  bottom: 31mm; /* pushed slightly down above UVP price stack */
+  transform: rotate(45deg);
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  z-index: 2;
+}
+.edit-box[data-box="A4_2"] .p-badge-text {
+  font-size: 20px;
+}
+
+.edit-box[data-box="A4_2"] .p-prices {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+/* A1 logo + keyword */
+.a1-logo-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.a1-company-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.a1-company-keyword {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  color: #ffffff;
+  margin-top: 3px;
+  word-wrap: break-word;
+}
+
+/* ----- Column B (right) ----- */
+.B {
+  width: 66.66%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* B1: date strip at top */
+/* B1: date strip at top – fixed 10mm */
+.B1 {
+  flex: 0 0 10mm;        /* fixed height inside flex column */
+  height: 10mm;
+  box-sizing: border-box;
+  padding: 2mm 4mm;      /* internal padding, still inside 10mm */
+  border: none;
+  display: flex;
+  align-items: center;   /* vertically center text */
+  justify-content: center; /* horizontally center */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  background: rgb(242, 193, 13);
+  color: #111827;
+}
+
+
+/* Container for B2 / B3 / B4 */
+.B-lower {
+  flex: 1;               /* takes the remaining height of the page */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;      /* no extra gap before C */
+  min-height: 0;
+}
+
+/* B2 / B3 / B4 rows – these three fill 100% of B-lower */
+.B2,
+.B3,
+.B4 {
+  border: none;
+  padding: 8px;
+}
+
+.B2 { flex: 0.20; }      /* top yellow part */
+.B3 { flex: 0.50; }      /* big red part with 3 products */
+.B4 { flex: 0.30; }      /* bottom yellow part */
+
+
+.edit-box[data-box="B2"] {
+  background: rgb(242, 193, 13);
+}
+
+.edit-box[data-box="B2"] .prospekt-product {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: start;
+  justify-items: start;
+  gap: 8px 12px;
+  height: auto; /* avoid extra empty space below content */
+}
+
+.edit-box[data-box="B2"] .p-thumb {
+  width: 300px;
+  height: 300px;
+  margin: -10px 0 0 0; /* nudge image upward without changing box height */
+  order: 1;
+  align-self: flex-start;
+  grid-row: 1;
+  grid-column: 1;
+  position: relative;
+}
+
+.edit-box[data-box="B2"] .p-body {
+  order: 2;
+  align-items: center;
+  text-align: center;
+  grid-row: 2;
+  grid-column: 1 / span 2; /* center name beneath the image */
+}
+
+.edit-box[data-box="B2"] .p-prices {
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+  grid-row: 1;
+  grid-column: 2;
+  align-self: center;
+  justify-self: start; /* nudge stack a bit left */
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; /* push further down */
+  margin-left: -12px; /* nudge left slightly */
+}
+
+.edit-box[data-box="B2"] .p-new {
+  font-size: 56px;
+}
+
+.edit-box[data-box="B2"] .p-name {
+  font-size: 22px;
+}
+
+.edit-box[data-box="B2"] .p-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: auto;
+  transform: rotate(45deg);
+  z-index: 2;
+  background: rgb(239, 31, 31);
+  color: rgb(242, 193, 13); /* match B2 background */
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+}
+
+.edit-box[data-box="B2"] .p-badge-text {
+  color: rgb(242, 193, 13);
+  font-size: 22px;
+}
+
+.edit-box[data-box="B4"] {
+  background: rgb(255, 250, 57);
+}
+
+/* ----- B3 triple layout ----- */
+
+.edit-box[data-box="B3"] {
+  position: relative;
+  overflow: hidden;
+  background: rgb(239, 31, 31);
+}
+
+/* hide old divider lines */
+.edit-box[data-box="B3"]::before,
+.edit-box[data-box="B3"]::after {
+  content: none;
+}
+
+.edit-box[data-box="B3"]::before { left: 33.33%; }
+.edit-box[data-box="B3"]::after  { left: 66.66%; }
+
+.b3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 100%;
+}
+
+.b3-grid-cell {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+}
+
+/* compact product styling inside B3 cells */
+.edit-box[data-box="B3"] .prospekt-product {
+  padding: 2px;
+  gap: 0;
+  max-width: 120px;
+  margin: 0 auto;
+  align-items: center;
+  position: relative;
+}
+
+.edit-box[data-box="B3"] .p-thumb {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:first-child .p-thumb {
+  width: 200px;
+  height: 200px;
+  top: 120px;
+}
+.edit-box[data-box="B3"] .b3-grid-cell:first-child .p-badge {
+  top: 70px;
+  bottom: auto;
+  left: 10%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(2) .p-thumb {
+  width: 190px;
+  height: 190px;
+  top: 20px;
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(2) .p-badge {
+  bottom: auto;
+  top: 260px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(3) .p-thumb {
+  width: 180px;
+  height: 180px;
+  top: 120px;
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(3) .p-badge {
+  bottom: auto;
+  top: 90px;
+  left: 70%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .p-body {
+  gap: 0;
+  margin-top: 0;
+  order: 2;
+  position: absolute;
+  right: 6px;
+  bottom: 68px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.edit-box[data-box="B3"] .p-name {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.edit-box[data-box="B3"] .p-prices {
+  gap: 6px;
+}
+
+.edit-box[data-box="B3"] .p-old {
+  font-size: 12px;
+  color: #000000;
+  font-weight: 700;
+  margin-top: 0;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.edit-box[data-box="B3"] .p-new {
+  font-size: 50px;
+  color: #f4f006;
+}
+
+.edit-box[data-box="B3"] .p-badge {
+  width: 50px;
+  height: 50px;
+  font-size: 19px;
+  padding: 0;
+  order: 3;
+  margin: 0;
+  position: absolute;
+  bottom: 24px;
+  right: 26px;
+  transform: rotate(45deg);
+}
+
+
+
+.edit-box[data-box="B3"] .p-prices {
+  order: 4;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: flex-end;
+  text-align: right;
+  align-self: auto;
+  padding-left: 0;
+  margin-right: 0;
+  position: absolute;
+  right: 4px;
+  bottom: 8px;
+}
+
+.edit-box[data-box="B3"] .p-old {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+  text-decoration: none;
+  color: #0a1a5f;
+  font-weight: 700;
+}
+
+.edit-box[data-box="B3"] .p-old::before {
+  content: "UVP";
+  margin-bottom: 1px;
+}
+
+.edit-box[data-box="B3"] .p-new {
+  align-self: flex-end;
+  margin-top: 1px;
+}
+
+.edit-box[data-box="B3"] .p-badge-text {
+  font-size: 21px;
+}
+
+/* ----- B4 layout (big product at bottom) ----- */
+
+.edit-box[data-box="B4"] .prospekt-product {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  position: relative;
+  padding: 10px 8px 12px 8px;
+}
+
+.edit-box[data-box="B4"] .p-thumb {
+  width: 190px;
+  height: 190px;
+  margin: 0;
+  order: 1;
+  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.edit-box[data-box="B4"] .p-body {
+  order: 2;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-name {
+  font-size: 18px;
+  width: 25mm;
+  max-width: 25mm;
+  text-align: left;
+  margin-top: -30px;
+}
+
+.edit-box[data-box="B4"] .p-old {
+  font-size: 16px;
+}
+
+.edit-box[data-box="B4"] .p-prices {
+  order: 3;
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+  text-align: right;
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-badge {
+  position: absolute;
+  right: 6px;
+  bottom: 80px; /* sit above price stack */
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  transform: none;
+  border-radius: 4px;
+  margin: 0;
+  background: rgb(239, 31, 31);
+  color: rgb(255, 250, 57);
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-badge-text {
+  transform: none;
+  font-size: 28px;    /* make inside text bigger */
+  font-weight: 900;   /* (optional) bolder text */
+  line-height: 1;     /* keeps text vertically centered */
+}
+
+/* ----- Footer bar C ----- */
+
+.C {
+  padding: 2mm 4mm 6mm 4mm;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: none;
+  background: rgb(95, 104, 221);
+  color: #ffffff;
+  margin-top: 0;         /* sits directly under B4 */
+  flex: 0 0 22mm;
+}
+
+/* company content inside C */
+.c-company {
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  font-size: 14px;
+  line-height: 1.1;
+  color: #ffffff;
+  font-weight: 500;
+  background: rgb(95, 104, 221);
+  width: 100%;
+  position: relative;
+}
+/* ensure foreground text sits above watermark */
+.c-company > * {
+  position: relative;
+  z-index: 1;
+}
+.c-watermark {
+  position: absolute;
+  right: 3mm;
+  bottom: 2mm;
+  width: 26mm;
+  height: 26mm;
+  object-fit: contain;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Left: logo + name */
+.c-logo-column {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1px;
+  margin-right: 3px;
+}
+
+.c-logo-small {
+  width: 20mm;
+  height: 20mm;
+  object-fit: contain;
+}
+
+.c-name {
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  white-space: normal;
+}
+
+/* Right: horizontal info with wrapping */
+.c-info-horizontal {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+}
+
+.c-chip {
+  display: inline-flex;
+  align-items: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.c-chip a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.c-chip a:hover {
+  text-decoration: underline;
+}
+
+.c-separator {
+  padding: 0 1px;
+}
+
+.c-chip-social {
+  position: absolute;
+  right: 3mm;      /* a bit more to the left */
+  bottom: 2mm;     /* ✅ positive value = inside C */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+
+
+.c-social-btn {
+  border: none;
+  border-radius: 50%;
+  width: 18px;            /* bigger circle */
+  height: 18px;
+  cursor: pointer;
+  font-size: 10px;        /* bigger symbol */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.c-social-btn i {
+  font-size: 22px;        /* match size */
+}
+
+
+.c-social-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.c-social-btn-whatsapp {
+  background: #25d366;
+}
+
+.c-social-btn-facebook {
+  background: #1877f2;
+}
+
+.c-social-btn-instagram {
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+}
+
+/* ----- Shared helpers ----- */
+
+.edit-box {
+  cursor: pointer;
+}
+
+.selected-box {
+  outline: 3px solid #2563eb;
+  outline-offset: -3px;
+}
+
+.prospekt-stack {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
+  height: 100%;
+}
+
+.prospekt-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-bottom: 1px solid #d1d5db;
+  padding: 6px 4px;
+}
+
+.prospekt-row:last-child {
+  border-bottom: none;
+}
+
+.prospekt-product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #0f172a;
+  height: 100%;
+  box-sizing: border-box;
+  flex: 1 1 0;
+}
+
+.prospekt-product .p-thumb {
+  width: 96px;
+  height: 96px;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  flex-shrink: 0;
+  margin-top: auto;
+  order: 2;
+}
+
+.prospekt-product .p-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prospekt-product .p-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  align-items: center;
+  text-align: center;
+  order: 1;
+}
+
+.prospekt-product .p-name {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #0f172a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.prospekt-product .p-meta {
+  font-size: 10px;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prospekt-product .p-prices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  order: 4;
+}
+
+.prospekt-product .p-old {
+  color: #000000;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: none;
+}
+.prospekt-product .p-old::before {
+  content: "UVP";
+  margin-right: 4px;
+}
+
+.prospekt-product .p-old-value {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.prospekt-product .p-old-value::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 50%;
+  height: 1px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.prospekt-product .p-new {
+  color: #dc2626;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 900;
+  font-size: 46px;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
+.edit-box[data-box="A2_2"] .p-new {
+  color: #c20000; /* vivid red on yellow background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.edit-box[data-box="A3_2"] .p-new {
+  color: #ffeb3b; /* bright yellow on blue background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.edit-box[data-box="A4_2"] .p-new {
+  color: #ffeb3b; /* bright yellow on red background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.edit-box[data-box="B2"] .p-new {
+  color: #b30000; /* deep red on yellow background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.prospekt-product .p-badge {
+  background: #facc15;
+  color: #000000;
+  font-weight: 800;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  font-size: 12px;
+  position: relative;
+  order: 3;
+  align-self: center;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+}
+
+.prospekt-product .p-badge-text {
+  display: block;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 800;
+  transform: rotate(-45deg);
+}
+
+.prospekt-empty {
+  justify-content: center;
+  font-size: 11px;
+  color: #6b7280;
+  border: none;
+  background: transparent;
+}
+
+.center-both {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+
+  /* ============= MODALS (DATE + WEEKDAY) ============= */
+  .date-modal,
+  .weekday-modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+  }
+
+  .date-modal-content,
+  .weekday-modal-content {
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px 18px;
+    border-radius:10px;
+    border:1px solid #1f2937;
+    width:260px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+    font-size:13px;
+  }
+
+  .date-modal-content h3,
+  .weekday-modal-content h3 {
+    margin:0 0 10px;
+    font-size:15px;
+  }
+
+  .date-modal-content label {
+    display:block;
+    margin:8px 0 4px;
+  }
+
+  .date-modal-content input[type="text"] {
+    width:100%;
+    padding:6px;
+    border-radius:6px;
+    border:1px solid #334155;
+    background:#020617;
+    color:#e5e7eb;
+    font-size:13px;
+    box-sizing:border-box;
+  }
+
+  .date-modal-actions,
+  .weekday-modal-actions {
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:12px;
+  }
+
+  .date-btn,
+  .weekday-btn {
+    padding:6px 10px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:13px;
+  }
+
+  .date-btn.cancel,
+  .weekday-btn.cancel {
+    background:#111827;
+    color:#e5e7eb;
+  }
+
+  .date-btn.ok {
+    background:#22c55e;
+    color:#022c22;
+    font-weight:600;
+  }
+
+  .weekday-options {
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:8px;
+  }
+
+  .weekday-option {
+    flex:1 1 48%;
+    text-align:center;
+    padding:6px 4px;
+    border-radius:6px;
+    border:1px solid #1f2937;
+    background:#020617;
+    color:#e5e7eb;
+    cursor:pointer;
+    font-size:12px;
+  }
+  .weekday-option:hover {
+    background:#1e293b;
+  }
+
+  /* ============= COMPANY / USER REGISTER MODAL ============= */
+  .company-modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:110;
+  }
+
+  .company-modal-content {
+    background:#bbf7d0;        /* light green */
+    color:#000000;             /* black text */
+    padding:22px 24px;
+    border-radius:14px;
+    border:1px solid #16a34a;
+    width:560px;
+    max-width:96vw;
+    box-shadow:0 14px 34px rgba(0,0,0,0.35);
+    font-size:15px;
+    box-sizing:border-box;
+  }
+
+  .company-modal-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+
+  .company-modal-header h3 {
+    margin:0;
+    font-size:20px;
+    font-weight:700;
+  }
+
+  .company-close-btn {
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:#14532d;
+    font-size:20px;
+  }
+  .company-close-btn:hover {
+    color:#b91c1c;
+  }
+
+  .company-form-row {
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin-bottom:10px;
+  }
+
+  .company-form-row label {
+    font-size:14px;
+    color:#022c22;
+    font-weight:600;
+  }
+
+  .company-input,
+  .company-textarea {
+    width:100%;
+    padding:9px 10px;
+    border-radius:6px;
+    border:1px solid #16a34a;
+    background:#ecfdf5;
+    color:#022c22;
+    font-size:14px;
+    box-sizing:border-box;
+  }
+
+  .company-input:focus,
+  .company-textarea:focus {
+    outline:none;
+    border-color:#15803d;
+    box-shadow:0 0 0 1px rgba(21,128,61,0.4);
+  }
+
+  .company-textarea {
+    min-height:80px;
+    resize:vertical;
+  }
+
+  .company-modal-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .company-modal-actions {
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:16px;
+  }
+
+  .company-btn {
+    padding:8px 14px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+  }
+
+  .company-btn.cancel {
+    background:#bbf7d0;
+    color:#065f46;
+    border:1px solid #16a34a;
+  }
+
+  .company-btn.save {
+    background:#16a34a;
+    color:#ecfdf5;
+  }
+
+  .company-btn.save:hover {
+    background:#15803d;
+  }
+
+  /* Opening hours inner row */
+  .opening-hours-row {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px;
+  }
+
+  .opening-hours-row select,
+  .opening-hours-row input[type="time"] {
+    border-radius:6px;
+    border:1px solid #16a34a;
+    background:#ecfdf5;
+    color:#022c22;
+    font-size:13px;
+    padding:5px 6px;
+    height:32px;
+    box-sizing:border-box;
+  }
+
+  .oh-add-btn {
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:none;
+    background:#16a34a;
+    color:#ecfdf5;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .oh-add-btn:hover {
+    background:#15803d;
+  }
+</style>
+</head>
+<body>
+
+<div class="workspace">
+
+  <!-- ============= TOP TOOLBAR (HEADER) ============= -->
+  <div class="top-toolbar">
+
+    <!-- Select Box -->
+    <div class="tool-group">
+      <i class="fa-solid fa-square"></i>
+      <select id="boxSelector">
+        <option value="">– wählen –</option>
+        <option value="A1">A1</option>
+        <option value="A2_1">A2.1</option>
+        <option value="A2_2">A2.2</option>
+        <option value="A3_1">A3.1</option>
+        <option value="A3_2">A3.2</option>
+        <option value="A4_1">A4.1</option>
+        <option value="A4_2">A4.2</option>
+        <option value="B1">B1</option>
+        <option value="B2">B2</option>
+        <option value="B3">B3</option>
+        <option value="B4">B4</option>
+        <option value="C">C</option>
+      </select>
+    </div>
+
+    <!-- CUSTOM FONT DROPDOWN -->
+    <div class="tool-group font-dropdown">
+      <i class="fa-solid fa-font"></i>
+      <button type="button" id="fontFamilyButton" class="font-dropdown-btn">
+        <span id="fontFamilyLabel" style="font-family: system-ui, sans-serif;">System UI</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div id="fontFamilyMenu" class="font-dropdown-menu">
+        <!-- System / UI -->
+        <div class="font-item font-item-active"
+             data-value=""
+             data-label="System UI"
+             style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+          System UI (Default)
+        </div>
+        <div class="font-item"
+             data-value="Segoe UI"
+             data-label="Segoe UI"
+             style="font-family: 'Segoe UI', sans-serif;">
+          Segoe UI
+        </div>
+        <div class="font-item"
+             data-value="Arial"
+             data-label="Arial"
+             style="font-family: Arial, Helvetica, sans-serif;">
+          Arial
+        </div>
+        <div class="font-item"
+             data-value="Helvetica"
+             data-label="Helvetica"
+             style="font-family: Helvetica, Arial, sans-serif;">
+          Helvetica
+        </div>
+
+        <!-- Google fonts -->
+        <div class="font-item"
+             data-value="Roboto"
+             data-label="Roboto"
+             style="font-family: Roboto, Arial, sans-serif;">
+          Roboto
+        </div>
+        <div class="font-item"
+             data-value="Open Sans"
+             data-label="Open Sans"
+             style="font-family: 'Open Sans', Arial, sans-serif;">
+          Open Sans
+        </div>
+        <div class="font-item"
+             data-value="Lato"
+             data-label="Lato"
+             style="font-family: Lato, Arial, sans-serif;">
+          Lato
+        </div>
+        <div class="font-item"
+             data-value="Inter"
+             data-label="Inter"
+             style="font-family: Inter, system-ui, sans-serif;">
+          Inter
+        </div>
+        <div class="font-item"
+             data-value="Poppins"
+             data-label="Poppins"
+             style="font-family: Poppins, system-ui, sans-serif;">
+          Poppins
+        </div>
+        <div class="font-item"
+             data-value="Montserrat"
+             data-label="Montserrat"
+             style="font-family: Montserrat, system-ui, sans-serif;">
+          Montserrat
+        </div>
+        <div class="font-item"
+             data-value="Source Sans Pro"
+             data-label="Source Sans Pro"
+             style="font-family: 'Source Sans Pro', system-ui, sans-serif;">
+          Source Sans Pro
+        </div>
+        <div class="font-item"
+             data-value="Nunito"
+             data-label="Nunito"
+             style="font-family: Nunito, system-ui, sans-serif;">
+          Nunito
+        </div>
+        <div class="font-item"
+             data-value="PT Sans"
+             data-label="PT Sans"
+             style="font-family: 'PT Sans', system-ui, sans-serif;">
+          PT Sans
+        </div>
+
+        <!-- Serif -->
+        <div class="font-item"
+             data-value="Times New Roman"
+             data-label="Times New Roman"
+             style="font-family: 'Times New Roman', Times, serif;">
+          Times New Roman
+        </div>
+        <div class="font-item"
+             data-value="Georgia"
+             data-label="Georgia"
+             style="font-family: Georgia, 'Times New Roman', serif;">
+          Georgia
+        </div>
+        <div class="font-item"
+             data-value="Garamond"
+             data-label="Garamond"
+             style="font-family: Garamond, 'Times New Roman', serif;">
+          Garamond
+        </div>
+        <div class="font-item"
+             data-value="Playfair Display"
+             data-label="Playfair Display"
+             style="font-family: 'Playfair Display', 'Times New Roman', serif;">
+          Playfair Display
+        </div>
+        <div class="font-item"
+             data-value="Merriweather"
+             data-label="Merriweather"
+             style="font-family: Merriweather, 'Times New Roman', serif;">
+          Merriweather
+        </div>
+
+        <!-- Display / condensed -->
+        <div class="font-item"
+             data-value="Oswald"
+             data-label="Oswald"
+             style="font-family: Oswald, Arial, sans-serif;">
+          Oswald
+        </div>
+        <div class="font-item"
+             data-value="Anton"
+             data-label="Anton"
+             style="font-family: Anton, Arial, sans-serif;">
+          Anton
+        </div>
+        <div class="font-item"
+             data-value="Bebas Neue"
+             data-label="Bebas Neue"
+             style="font-family: 'Bebas Neue', Arial, sans-serif;">
+          Bebas Neue
+        </div>
+        <div class="font-item"
+             data-value="Archivo Black"
+             data-label="Archivo Black"
+             style="font-family: 'Archivo Black', Arial, sans-serif;">
+          Archivo Black
+        </div>
+        <div class="font-item"
+             data-value="Cinzel"
+             data-label="Cinzel"
+             style="font-family: Cinzel, 'Times New Roman', serif;">
+          Cinzel
+        </div>
+
+        <!-- Script -->
+        <div class="font-item"
+             data-value="Pacifico"
+             data-label="Pacifico"
+             style="font-family: Pacifico, 'Comic Sans MS', cursive;">
+          Pacifico
+        </div>
+        <div class="font-item"
+             data-value="Dancing Script"
+             data-label="Dancing Script"
+             style="font-family: 'Dancing Script', 'Comic Sans MS', cursive;">
+          Dancing Script
+        </div>
+        <div class="font-item"
+             data-value="Great Vibes"
+             data-label="Great Vibes"
+             style="font-family: 'Great Vibes', 'Comic Sans MS', cursive;">
+          Great Vibes
+        </div>
+
+        <!-- Monospace -->
+        <div class="font-item"
+             data-value="Courier New"
+             data-label="Courier New"
+             style="font-family: 'Courier New', Courier, monospace;">
+          Courier New
+        </div>
+        <div class="font-item"
+             data-value="monospace"
+             data-label="Monospace"
+             style="font-family: monospace;">
+          Monospace
+        </div>
+      </div>
+    </div>
+
+    <!-- Font size -->
+    <div class="tool-group">
+      <i class="fa-solid fa-text-height"></i>
+      <div class="font-size-controls">
+        <button type="button" class="font-size-btn" id="fontSizeMinus">–</button>
+        <input type="text" id="fontSizeDisplay" value="16px" readonly>
+        <button type="button" class="font-size-btn" id="fontSizePlus">+</button>
+      </div>
+    </div>
+
+    <!-- Font weight -->
+    <div class="tool-group">
+      <i class="fa-solid fa-bold"></i>
+      <select id="fontWeight">
+        <option value="">Default</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+        <option value="500">500</option>
+        <option value="600">600</option>
+        <option value="700">700</option>
+        <option value="800">800</option>
+        <option value="900">900</option>
+      </select>
+    </div>
+
+    <!-- Text alignment -->
+    <div class="tool-group">
+      <i class="fa-solid fa-align-left"></i>
+      <select id="textAlign">
+        <option value="">Default</option>
+        <option value="left">Left</option>
+        <option value="center">Center</option>
+        <option value="right">Right</option>
+        <option value="justify">Justify</option>
+        <option value="center-both">Center V+H</option>
+      </select>
+    </div>
+
+    <!-- Text color -->
+    <div class="tool-group">
+      <i class="fa-solid fa-palette"></i>
+      <input type="color" id="textColorPicker" value="#1d4ed8">
+    </div>
+
+    <!-- Background color -->
+    <div class="tool-group">
+      <i class="fa-solid fa-fill-drip"></i>
+      <input type="color" id="bgColorPicker" value="#ffffff">
+    </div>
+
+    <!-- Text content textarea + USER ICON -->
+    <div class="tool-group-text">
+      <i class="fa-solid fa-i-cursor"></i>
+      <textarea id="textContent" placeholder="Text für gewählten Bereich..."></textarea>
+
+      <!-- USER ICON BUTTON -->
+      <button type="button"
+              id="companyUserBtn"
+              class="user-icon-btn"
+              title="Firma / Nutzer registrieren">
+        <i class="fa-solid fa-user"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ============= PREVIEW AREA ============= -->
+  <div class="preview-panel">
+    <div class="workspace-grid">
+
+      <aside class="discount-panel">
+        <div class="discount-header">
+          <div>
+            <div class="discount-title">Discounted products</div>
+            <div class="discount-subtitle">Pulled from current inventory promos</div>
+          </div>
+          <button type="button"
+                  class="discount-refresh"
+                  id="refreshDiscounts"
+                  title="Reload discounted products">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+        <div id="discountStatus" class="discount-status">Loading discounted products…</div>
+        <div id="discountList" class="discount-list" aria-live="polite"></div>
+      </aside>
+
+      <div class="prospekt-area">
+        <div class="prospekt-wrapper" id="prospektWrapper">
+          <div class="prospekt" id="mainProspekt">
+
+            <div class="content-wrapper">
+              <!-- A -->
+              <div class="A">
+                <div class="A1 edit-box" data-box="A1"></div>
+
+                <div class="A2">
+                  <div class="A2_1 edit-box" data-box="A2_1"></div>
+                  <div class="A2_2 edit-box" data-box="A2_2"></div>
+                </div>
+
+                <div class="A3">
+                  <div class="A3_1 edit-box" data-box="A3_1"></div>
+                  <div class="A3_2 edit-box" data-box="A3_2"></div>
+                </div>
+
+                <div class="A4">
+                  <div class="A4_1 edit-box" data-box="A4_1"></div>
+                  <div class="A4_2 edit-box" data-box="A4_2"></div>
+                </div>
+              </div>
+
+              <!-- B -->
+              <div class="B">
+                <div class="B1 edit-box" data-box="B1"></div>
+                <div class="B-lower">
+                  <div class="B2 edit-box" data-box="B2"></div>
+                  <div class="B3 edit-box" data-box="B3"></div>
+                  <div class="B4 edit-box" data-box="B4"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="C edit-box" data-box="C"></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ZOOM BUTTONS + PERCENTAGE -->
+    <div class="zoom-controls">
+      <button class="zoom-btn" onclick="zoomOut()">–</button>
+      <div class="zoom-display" id="zoomDisplay">90%</div>
+      <button class="zoom-btn" onclick="zoomIn()">+</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- DATE MODAL -->
+<div class="date-modal" id="dateModal">
+  <div class="date-modal-content" onclick="event.stopPropagation()">
+    <h3>Aktionszeitraum wählen</h3>
+    <label for="dateFrom">Von:</label>
+    <input type="text" id="dateFrom" placeholder="dd.mm.yyyy">
+    <label for="dateTo">Bis:</label>
+    <input type="text" id="dateTo" placeholder="dd.mm.yyyy">
+    <div class="date-modal-actions">
+      <button type="button" class="date-btn cancel" id="dateCancel">Abbrechen</button>
+      <button type="button" class="date-btn ok" id="dateApply">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEEKDAY MODAL -->
+<div class="weekday-modal" id="weekdayModal">
+  <div class="weekday-modal-content" onclick="event.stopPropagation()">
+    <h3>Wochentag wählen</h3>
+    <div class="weekday-options">
+      <button class="weekday-option" data-day="Montag">Montag</button>
+      <button class="weekday-option" data-day="Dienstag">Dienstag</button>
+      <button class="weekday-option" data-day="Mittwoch">Mittwoch</button>
+      <button class="weekday-option" data-day="Donnerstag">Donnerstag</button>
+      <button class="weekday-option" data-day="Freitag">Freitag</button>
+      <button class="weekday-option" data-day="Samstag">Samstag</button>
+      <button class="weekday-option" data-day="Sonntag">Sonntag</button>
+    </div>
+    <div class="weekday-modal-actions">
+      <button type="button" class="weekday-btn cancel" id="weekdayCancel">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMPANY / USER REGISTER MODAL -->
+<div class="company-modal" id="companyModal">
+  <div class="company-modal-content" onclick="event.stopPropagation()">
+    <div class="company-modal-header">
+      <h3>Firma / Nutzer registrieren</h3>
+      <button type="button" class="company-close-btn" id="companyClose">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="company-form">
+      <div class="company-form-row">
+        <label for="companyId">Company ID</label>
+        <input type="text" id="companyId" class="company-input"
+               placeholder="z.B. SPATZ-001">
+      </div>
+
+      <div class="company-form-row">
+        <label for="companyName">Firmenname</label>
+        <input type="text" id="companyName" class="company-input"
+               placeholder="Firmenname">
+      </div>
+
+      <div class="company-form-row">
+        <label for="companyLogo">Firmenlogo</label>
+        <input type="file" id="companyLogo" class="company-input"
+               accept="image/*">
+      </div>
+
+      <div class="company-modal-grid">
+        <div class="company-form-row">
+          <label for="companyKeyword">Kurz-Keyword</label>
+          <input type="text" id="companyKeyword" class="company-input"
+                 placeholder="z.B. Lieferdienst">
+        </div>
+
+        <div class="company-form-row">
+          <label for="companyPhone">Telefonnummer</label>
+          <input type="tel" id="companyPhone" class="company-input"
+                 placeholder="+49 ...">
+        </div>
+      </div>
+
+      <div class="company-modal-grid">
+        <div class="company-form-row">
+          <label for="companyEmail">E-Mail Adresse</label>
+          <input type="email" id="companyEmail" class="company-input"
+                 placeholder="info@firma.de">
+        </div>
+
+        <div class="company-form-row">
+          <label for="companyAddress">Firmenadresse</label>
+          <input type="text" id="companyAddress" class="company-input"
+                 placeholder="Straße, PLZ, Stadt">
+        </div>
+      </div>
+
+      <!-- OPENING HOURS -->
+      <div class="company-form-row">
+        <label>Öffnungszeiten</label>
+        <div class="opening-hours-row">
+          <select id="ohFromDay">
+            <option value="Mo">Mo</option>
+            <option value="Di">Di</option>
+            <option value="Mi">Mi</option>
+            <option value="Do">Do</option>
+            <option value="Fr">Fr</option>
+            <option value="Sa">Sa</option>
+            <option value="So">So</option>
+          </select>
+          <span>-</span>
+          <select id="ohToDay">
+            <option value="Mo">Mo</option>
+            <option value="Di">Di</option>
+            <option value="Mi">Mi</option>
+            <option value="Do">Do</option>
+            <option value="Fr" selected>Fr</option>
+            <option value="Sa">Sa</option>
+            <option value="So">So</option>
+          </select>
+          <input type="time" id="ohFromTime" value="18:00">
+          <span>-</span>
+          <input type="time" id="ohToTime" value="20:00">
+          <button type="button" id="ohAddBtn" class="oh-add-btn">+</button>
+        </div>
+        <input type="text" id="companyOpeningHours" class="company-input"
+               placeholder="z.B. Mo-Fr. 18:00-20:00; Sa. 10:00-14:00">
+      </div>
+
+      <div class="company-form-row">
+        <label for="companyWhatsapp">WhatsApp Link / Nummer</label>
+        <input type="text" id="companyWhatsapp" class="company-input"
+               placeholder="z.B. https://wa.me/49... oder Nummer">
+      </div>
+
+      <div class="company-modal-grid">
+        <div class="company-form-row">
+          <label for="companyFacebook">Facebook Link</label>
+          <input type="text" id="companyFacebook" class="company-input"
+                 placeholder="https://facebook.com/…">
+        </div>
+
+        <div class="company-form-row">
+          <label for="companyInstagram">Instagram Link</label>
+          <input type="text" id="companyInstagram" class="company-input"
+                 placeholder="https://instagram.com/…">
+        </div>
+      </div>
+
+      <div class="company-form-row">
+        <label for="companyDetails">Firmendetails</label>
+        <textarea id="companyDetails" class="company-textarea"
+                  placeholder="Beschreibung, Besonderheiten ..."></textarea>
+      </div>
+    </div>
+
+    <div class="company-modal-actions">
+      <button type="button" class="company-btn cancel" id="companyCancel">
+        Abbrechen
+      </button>
+      <button type="button" class="company-btn save" id="companySave">
+        Speichern
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+let zoomLevel = 0.97;   // ✅ default zoom = 97%
+const API_BASE = (window.API_BASE || 'http://127.0.0.1:4000/api').replace(/\/$/, '');
+const wrapper = document.getElementById("prospektWrapper");
+const zoomDisplay = document.getElementById("zoomDisplay");
+
+function updateZoomDisplay() {
+  const percent = Math.round(zoomLevel * 100);
+  zoomDisplay.textContent = percent + "%";
+}
+
+function applyZoom() {
+  wrapper.style.transform = `scale(${zoomLevel})`;
+  updateZoomDisplay();
+}
+function zoomIn() {
+  zoomLevel = Math.min(2, zoomLevel + 0.1);
+  applyZoom();
+}
+function zoomOut() {
+  zoomLevel = Math.max(0.4, zoomLevel - 0.1);
+  applyZoom();
+}
+applyZoom();
+
+/* TOOLS */
+const selector         = document.getElementById("boxSelector");
+const bgColorPicker    = document.getElementById("bgColorPicker");
+const textArea         = document.getElementById("textContent");
+const textColorPicker  = document.getElementById("textColorPicker");
+const fontWeightSelect = document.getElementById("fontWeight");
+const textAlignSelect  = document.getElementById("textAlign");
+
+const fontSizeDisplay  = document.getElementById("fontSizeDisplay");
+const fontSizePlus     = document.getElementById("fontSizePlus");
+const fontSizeMinus    = document.getElementById("fontSizeMinus");
+
+/* FONT DROPDOWN ELEMENTS */
+const fontFamilyButton = document.getElementById("fontFamilyButton");
+const fontFamilyLabel  = document.getElementById("fontFamilyLabel");
+const fontFamilyMenu   = document.getElementById("fontFamilyMenu");
+const fontItems        = fontFamilyMenu.querySelectorAll(".font-item");
+
+/* BOX references */
+const boxA1 = document.querySelector('.edit-box[data-box="A1"]');
+const boxC  = document.querySelector('.edit-box[data-box="C"]');
+
+let selectedBox = null;
+let currentFontSize = 16;
+
+/* DATE MODAL */
+const dateModal  = document.getElementById("dateModal");
+const dateFrom   = document.getElementById("dateFrom");
+const dateTo     = document.getElementById("dateTo");
+const dateApply  = document.getElementById("dateApply");
+const dateCancel = document.getElementById("dateCancel");
+
+/* WEEKDAY MODAL */
+const weekdayModal   = document.getElementById("weekdayModal");
+const weekdayCancel  = document.getElementById("weekdayCancel");
+const weekdayButtons = document.querySelectorAll(".weekday-option");
+
+/* COMPANY / USER REGISTER MODAL */
+const companyModal      = document.getElementById("companyModal");
+const companyUserBtn    = document.getElementById("companyUserBtn");
+const companyClose      = document.getElementById("companyClose");
+const companyCancel     = document.getElementById("companyCancel");
+const companySave       = document.getElementById("companySave");
+const companyLogoInput  = document.getElementById("companyLogo");
+const discountListEl    = document.getElementById("discountList");
+const discountStatusEl  = document.getElementById("discountStatus");
+const refreshDiscountsBtn = document.getElementById("refreshDiscounts");
+const prospektSlotSelectors = [
+  '.edit-box[data-box="B2"]',
+  '.edit-box[data-box="A2_2"]',
+  '.edit-box[data-box="A3_2"]',
+  '.edit-box[data-box="A4_2"]',
+  '.edit-box[data-box="B4"]'
+];
+
+/* OPENING HOURS ELEMENTS */
+const ohFromDay    = document.getElementById("ohFromDay");
+const ohToDay      = document.getElementById("ohToDay");
+const ohFromTime   = document.getElementById("ohFromTime");
+const ohToTime     = document.getElementById("ohToTime");
+const ohAddBtn     = document.getElementById("ohAddBtn");
+const openingInput = document.getElementById("companyOpeningHours");
+
+/* In-memory data URL for Firmenlogo */
+let companyLogoDataUrl = "";
+const COMPANY_FORM_STORAGE_KEY = "prospekt-company-form-v1";
+
+/* --- LOCAL STORAGE FOR COMPANY PROFILE --- */
+const PROFILE_STORAGE_KEY = "prospektCompanyProfileV1";
+
+function saveProfileToLocalStorage(profile, logoDataUrl) {
+  try {
+    const payload = {
+      ...profile,
+      companyLogoDataUrl: logoDataUrl || ""
+    };
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(payload));
+  } catch (err) {
+    console.warn("Could not save profile to localStorage:", err);
+  }
+}
+
+function loadProfileFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (err) {
+    console.warn("Could not read profile from localStorage:", err);
+    return null;
+  }
+}
+
+
+/* Helper: style target
+   - A1 → Kurz-Keyword
+   - C  → .c-company
+   - others → whole box
+*/
+function getStyleTarget() {
+  if (!selectedBox) return null;
+  const boxId = selectedBox.dataset.box;
+  if (boxId === "A1") {
+    const kw = selectedBox.querySelector(".a1-company-keyword");
+    if (kw) return kw;
+  }
+  if (boxId === "C") {
+    const comp = selectedBox.querySelector(".c-company");
+    if (comp) return comp;
+  }
+  return selectedBox;
+}
+
+/* Build final URL from raw text */
+function buildSocialUrl(type, raw) {
+  if (!raw) return null;
+  raw = raw.trim();
+  if (!raw) return null;
+
+  if (raw.startsWith("http://") || raw.startsWith("https://")) {
+    return raw;
+  }
+
+  if (type === "whatsapp") {
+    const digits = raw.replace(/\D/g, "");
+    if (!digits) return null;
+    return "https://wa.me/" + digits;
+  }
+
+  if (type === "facebook") {
+    return "https://facebook.com/" + raw;
+  }
+
+  if (type === "instagram") {
+    return "https://instagram.com/" + raw;
+  }
+
+  return null;
+}
+
+function openDateModal()      { dateModal.style.display   = "flex"; }
+function closeDateModal()     { dateModal.style.display   = "none"; }
+function openWeekdayModal()   { weekdayModal.style.display = "flex"; }
+function closeWeekdayModal()  { weekdayModal.style.display = "none"; }
+
+function openCompanyModal()   { companyModal.style.display = "flex"; }
+function closeCompanyModal()  { companyModal.style.display = "none"; }
+
+/* Handle Firmenlogo file selection → store data URL */
+companyLogoInput.addEventListener("change", () => {
+  const file = companyLogoInput.files[0];
+  if (!file) {
+    companyLogoDataUrl = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    companyLogoDataUrl = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+function getCompanyFormData() {
+  return {
+    companyId:           document.getElementById("companyId").value.trim(),
+    companyName:         document.getElementById("companyName").value.trim(),
+    companyKeyword:      document.getElementById("companyKeyword").value.trim(),
+    companyAddress:      document.getElementById("companyAddress").value.trim(),
+    companyPhone:        document.getElementById("companyPhone").value.trim(),
+    companyEmail:        document.getElementById("companyEmail").value.trim(),
+    companyOpeningHours: document.getElementById("companyOpeningHours").value.trim(),
+    companyWhatsapp:     document.getElementById("companyWhatsapp").value.trim(),
+    companyFacebook:     document.getElementById("companyFacebook").value.trim(),
+    companyInstagram:    document.getElementById("companyInstagram").value.trim(),
+    companyDetails:      document.getElementById("companyDetails").value.trim(),
+    ohFromDay:           ohFromDay.value,
+    ohToDay:             ohToDay.value,
+    ohFromTime:          ohFromTime.value,
+    ohToTime:            ohToTime.value,
+    companyLogoDataUrl
+  };
+}
+
+function persistCompanyFormData(data = getCompanyFormData()) {
+  try {
+    localStorage.setItem(COMPANY_FORM_STORAGE_KEY, JSON.stringify(data));
+  } catch (_err) {
+    /* ignore storage errors */
+  }
+}
+
+function loadCompanyFormData() {
+  let data = null;
+  try {
+    const raw = localStorage.getItem(COMPANY_FORM_STORAGE_KEY);
+    data = raw ? JSON.parse(raw) : null;
+  } catch (_err) {
+    data = null;
+  }
+  if (!data) return null;
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && typeof val === "string") el.value = val;
+  };
+
+  setVal("companyId", data.companyId || "");
+  setVal("companyName", data.companyName || "");
+  setVal("companyKeyword", data.companyKeyword || "");
+  setVal("companyAddress", data.companyAddress || "");
+  setVal("companyPhone", data.companyPhone || "");
+  setVal("companyEmail", data.companyEmail || "");
+  setVal("companyOpeningHours", data.companyOpeningHours || "");
+  setVal("companyWhatsapp", data.companyWhatsapp || "");
+  setVal("companyFacebook", data.companyFacebook || "");
+  setVal("companyInstagram", data.companyInstagram || "");
+  setVal("companyDetails", data.companyDetails || "");
+
+  if (data.ohFromDay) ohFromDay.value = data.ohFromDay;
+  if (data.ohToDay)   ohToDay.value   = data.ohToDay;
+  if (data.ohFromTime) ohFromTime.value = data.ohFromTime;
+  if (data.ohToTime)   ohToTime.value   = data.ohToTime;
+
+  if (data.companyLogoDataUrl) {
+    companyLogoDataUrl = data.companyLogoDataUrl;
+  }
+
+  return data;
+}
+
+/* Parse dd.mm.yyyy → Date */
+function parseGermanDate(str) {
+  if (!str) return null;
+  const parts = str.trim().split(".");
+  if (parts.length !== 3) return null;
+  const dd = parseInt(parts[0], 10);
+  const mm = parseInt(parts[1], 10);
+  const yyyy = parseInt(parts[2], 10);
+  if (!dd || !mm || !yyyy) return null;
+  const d = new Date(yyyy, mm - 1, dd);
+  if (d.getFullYear() !== yyyy || d.getMonth() !== mm - 1 || d.getDate() !== dd) {
+    return null;
+  }
+  return d;
+}
+
+/* Select helper */
+function selectBoxElement(el) {
+  if (selectedBox) selectedBox.classList.remove("selected-box");
+  selectedBox = el;
+  if (!selectedBox) return;
+
+  selectedBox.classList.add("selected-box");
+
+  const boxName = selectedBox.dataset.box;
+  if (boxName) selector.value = boxName;
+
+  // Textarea content (only safe for A1 and simple boxes; C is layout-driven)
+  if (boxName === "A1") {
+    const kw = selectedBox.querySelector(".a1-company-keyword");
+    textArea.value = kw ? kw.textContent.trim() : "";
+  } else if (boxName === "C") {
+    const comp = selectedBox.querySelector(".c-company");
+    textArea.value = comp ? comp.innerText.trim() : "";
+  } else {
+    textArea.value = selectedBox.textContent.trim();
+  }
+
+  const target = getStyleTarget();
+  const fs = target ? window.getComputedStyle(target).fontSize : null;
+  currentFontSize = fs ? parseInt(fs, 10) : 16;
+  fontSizeDisplay.value = currentFontSize + "px";
+}
+
+/* Select via dropdown */
+selector.addEventListener("change", () => {
+  const boxName = selector.value;
+  if (!boxName) {
+    if (selectedBox) selectedBox.classList.remove("selected-box");
+    selectedBox = null;
+    textArea.value = "";
+    fontSizeDisplay.value = "16px";
+    return;
+  }
+  const el = document.querySelector('.edit-box[data-box="' + boxName + '"]');
+  if (el) selectBoxElement(el);
+});
+
+/* Select via click / dblclick */
+const editableBoxes = document.querySelectorAll(".edit-box");
+editableBoxes.forEach(box => {
+  box.addEventListener("click", (e) => {
+    e.stopPropagation();
+    selectBoxElement(box);
+    if (box.dataset.box === "B1") {
+      openDateModal();
+    }
+  });
+
+  box.addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    selectBoxElement(box);
+    const id = box.dataset.box;
+    if (id === "A2_1" || id === "A3_1" || id === "A4_1") {
+      openWeekdayModal();
+    }
+  });
+});
+
+/* Background color (whole box) */
+bgColorPicker.addEventListener("input", () => {
+  if (selectedBox) selectedBox.style.background = bgColorPicker.value;
+});
+
+/* Text content:
+   - A1 → only Kurz-Keyword
+   - C  → ignored (content comes from register form, but style is editable)
+   - others → change whole box text
+*/
+textArea.addEventListener("input", () => {
+  if (!selectedBox) return;
+  const boxId = selectedBox.dataset.box;
+  if (boxId === "A1") {
+    const kw = selectedBox.querySelector(".a1-company-keyword");
+    if (kw) kw.textContent = textArea.value;
+  } else if (boxId === "C") {
+    return; // don't break C layout
+  } else {
+    selectedBox.textContent = textArea.value;
+  }
+});
+
+/* Text color → style target */
+textColorPicker.addEventListener("input", () => {
+  const target = getStyleTarget();
+  if (target) target.style.color = textColorPicker.value;
+});
+
+/* FONT DROPDOWN LOGIC */
+function setFontFromItem(item) {
+  const value = item.dataset.value;
+  const label = item.dataset.label;
+  const style = item.style.fontFamily;
+
+  fontItems.forEach(i => i.classList.remove("font-item-active"));
+  item.classList.add("font-item-active");
+
+  fontFamilyLabel.textContent = label;
+  fontFamilyLabel.style.fontFamily = style || "system-ui, sans-serif";
+
+  const target = getStyleTarget();
+  if (target) {
+    target.style.fontFamily = value ? value : "";
+  }
+}
+
+fontFamilyButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isOpen = fontFamilyMenu.style.display === "block";
+  fontFamilyMenu.style.display = isOpen ? "none" : "block";
+});
+
+fontItems.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setFontFromItem(item);
+    fontFamilyMenu.style.display = "none";
+  });
+});
+
+/* Font weight → style target */
+fontWeightSelect.addEventListener("change", () => {
+  const target = getStyleTarget();
+  if (!target) return;
+  target.style.fontWeight = fontWeightSelect.value || "";
+});
+
+/* Text alignment + center-both → style target */
+textAlignSelect.addEventListener("change", () => {
+  const target = getStyleTarget();
+  if (!target) return;
+
+  target.classList.remove("center-both");
+  target.style.textAlign = "";
+
+  const mode = textAlignSelect.value;
+  if (mode === "") return;
+
+  if (mode === "left") target.style.textAlign = "left";
+  else if (mode === "center") target.style.textAlign = "center";
+  else if (mode === "right") target.style.textAlign = "right";
+  else if (mode === "justify") target.style.textAlign = "justify";
+  else if (mode === "center-both") target.classList.add("center-both");
+});
+
+window.addEventListener("load", fitProspektToScreen);
+window.addEventListener("resize", fitProspektToScreen);
+
+
+/* Font size +/- → style target */
+function applyFontSize() {
+  const target = getStyleTarget();
+  if (!target) return;
+  target.style.fontSize = currentFontSize + "px";
+  fontSizeDisplay.value = currentFontSize + "px";
+}
+
+fontSizePlus.addEventListener("click", () => {
+  currentFontSize += 1;
+  applyFontSize();
+});
+
+fontSizeMinus.addEventListener("click", () => {
+  currentFontSize = Math.max(1, currentFontSize - 1);
+  applyFontSize();
+});
+
+/* DATE modal logic for B1 */
+dateCancel.addEventListener("click", closeDateModal);
+
+dateApply.addEventListener("click", () => {
+  if (!selectedBox || selectedBox.dataset.box !== "B1") {
+    closeDateModal();
+    return;
+  }
+  const from = parseGermanDate(dateFrom.value);
+  const to   = parseGermanDate(dateTo.value);
+  if (!from || !to) {
+    closeDateModal();
+    return;
+  }
+
+  const fd = String(from.getDate()).padStart(2, "0");
+  const fm = String(from.getMonth() + 1).padStart(2, "0");
+  const td = String(to.getDate()).padStart(2, "0");
+  const tm = String(to.getMonth() + 1).padStart(2, "0");
+
+  const weekdays = [
+    "Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"
+  ];
+  const weekdayName = weekdays[from.getDay()];
+
+  const text = `Ab ${weekdayName} ${fd}.${fm} - ${td}.${tm}`;
+
+  selectedBox.textContent = text;
+  textArea.value = text;
+
+  selectedBox.classList.add("center-both");
+  textAlignSelect.value = "center-both";
+
+  closeDateModal();
+});
+
+/* WEEKDAY modal logic for A2.1/A3.1/A4.1 */
+weekdayCancel.addEventListener("click", closeWeekdayModal);
+
+weekdayButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (!selectedBox) return;
+    const day = btn.dataset.day;
+    const text = `Ab ${day}`;
+    selectedBox.textContent = text;
+    textArea.value = text;
+
+    selectedBox.classList.add("center-both");
+    textAlignSelect.value = "center-both";
+
+    closeWeekdayModal();
+  });
+});
+
+/* OPENING HOURS + BUTTON LOGIC */
+ohAddBtn.addEventListener("click", () => {
+  const fromDay  = ohFromDay.value;
+  const toDay    = ohToDay.value;
+  const fromTime = ohFromTime.value;
+  const toTime   = ohToTime.value;
+
+  if (!fromDay || !fromTime || !toTime) return;
+
+  let segment = "";
+  if (fromDay === toDay) {
+    segment = `${fromDay}. ${fromTime}-${toTime}`;
+  } else {
+    segment = `${fromDay}-${toDay}. ${fromTime}-${toTime}`;
+  }
+
+  if (openingInput.value.trim() === "") {
+    openingInput.value = segment;
+  } else {
+    openingInput.value = openingInput.value.trim().replace(/;?$/, "") + "; " + segment;
+  }
+});
+
+/* COMPANY modal logic */
+companyUserBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  openCompanyModal();
+});
+
+companyClose.addEventListener("click", closeCompanyModal);
+companyCancel.addEventListener("click", closeCompanyModal);
+
+function renderCompanyData(data) {
+  if (!data) return;
+
+  /* Place Firmenlogo + Kurz-Keyword into box A1 */
+  if (boxA1) {
+    boxA1.innerHTML = "";
+
+    if (data.companyLogoDataUrl) {
+      const logoWrapper = document.createElement("div");
+      logoWrapper.className = "a1-logo-wrapper";
+
+      const img = document.createElement("img");
+      img.className = "a1-company-logo";
+      img.src = data.companyLogoDataUrl;
+      img.alt = data.companyName || "Firmenlogo";
+
+      logoWrapper.appendChild(img);
+      boxA1.appendChild(logoWrapper);
+    }
+
+    if (data.companyKeyword) {
+      const kw = document.createElement("div");
+      kw.className = "a1-company-keyword";
+      kw.textContent = data.companyKeyword;
+      boxA1.appendChild(kw);
+    }
+
+    boxA1.style.display = "flex";
+    boxA1.style.flexDirection = "column";
+    boxA1.style.alignItems = "center";
+    boxA1.style.justifyContent = "center";
+  }
+
+  /* Fill box C:
+     left column = logo + name
+     right = description | address | email | phone | opening hours | socials
+  */
+  if (boxC) {
+    boxC.innerHTML = "";
+
+    const container = document.createElement("div");
+    container.className = "c-company";
+
+    // LEFT: logo + name column
+    const logoCol = document.createElement("div");
+    logoCol.className = "c-logo-column";
+
+    if (data.companyLogoDataUrl) {
+      const smallImg = document.createElement("img");
+      smallImg.className = "c-logo-small";
+      smallImg.src = data.companyLogoDataUrl;
+      smallImg.alt = data.companyName || "Firmenlogo";
+      logoCol.appendChild(smallImg);
+    }
+
+    if (data.companyName) {
+      const nameEl = document.createElement("div");
+      nameEl.className = "c-name";
+      nameEl.textContent = data.companyName;
+      logoCol.appendChild(nameEl);
+    }
+
+    // RIGHT: horizontal chips row
+    const infoRow = document.createElement("div");
+    infoRow.className = "c-info-horizontal";
+
+    function addChipText(text) {
+      if (!text) return null;
+      const chip = document.createElement("span");
+      chip.className = "c-chip";
+      chip.textContent = text;
+      infoRow.appendChild(chip);
+      return chip;
+    }
+
+    function addChipEmail(email) {
+      if (!email) return null;
+      const chip = document.createElement("span");
+      chip.className = "c-chip";
+      const a = document.createElement("a");
+      a.href = "mailto:" + email;
+      a.textContent = email;
+      chip.appendChild(a);
+      infoRow.appendChild(chip);
+      return chip;
+    }
+
+    function addSeparatorIfNeeded(alreadyAddedSomething) {
+      if (!alreadyAddedSomething) return;
+      const sep = document.createElement("span");
+      sep.className = "c-separator";
+      sep.textContent = "|";
+      infoRow.appendChild(sep);
+    }
+
+    let hasChip = false;
+
+    // 1) Company description
+    if (data.companyDetails) {
+      addChipText(data.companyDetails);
+      hasChip = true;
+    }
+
+    // 2) Address
+    if (data.companyAddress) {
+      addSeparatorIfNeeded(hasChip);
+      addChipText(data.companyAddress);
+      hasChip = true;
+    }
+
+    // 3) Email
+    if (data.companyEmail) {
+      addSeparatorIfNeeded(hasChip);
+      addChipEmail(data.companyEmail);
+      hasChip = true;
+    }
+
+    // 4) Phone
+    if (data.companyPhone) {
+      addSeparatorIfNeeded(hasChip);
+      addChipText("Tel: " + data.companyPhone);
+      hasChip = true;
+    }
+
+    // 5) Opening hours
+    if (data.companyOpeningHours) {
+      addSeparatorIfNeeded(hasChip);
+      addChipText(data.companyOpeningHours);
+      hasChip = true;
+    }
+
+    // 6) Socials
+    const hasWhatsapp  = !!buildSocialUrl("whatsapp",  data.companyWhatsapp || "");
+    const hasInstagram = !!buildSocialUrl("instagram", data.companyInstagram || "");
+    const hasFacebook  = !!buildSocialUrl("facebook",  data.companyFacebook || "");
+
+    if (hasWhatsapp || hasInstagram || hasFacebook) {
+      addSeparatorIfNeeded(hasChip);
+
+      const socialChip = document.createElement("span");
+      socialChip.className = "c-chip c-chip-social";
+
+      function addSocialBtn(type, iconClass, rawValue) {
+        const url = buildSocialUrl(type, rawValue || "");
+        if (!url) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `c-social-btn c-social-btn-${type}`;
+        const icon = document.createElement("i");
+        icon.className = iconClass;
+        btn.appendChild(icon);
+        btn.addEventListener("click", () => {
+          window.open(url, "_blank");
+        });
+        socialChip.appendChild(btn);
+      }
+
+      addSocialBtn("whatsapp",  "fa-brands fa-whatsapp",   data.companyWhatsapp);
+      addSocialBtn("instagram", "fa-brands fa-instagram",  data.companyInstagram);
+      addSocialBtn("facebook",  "fa-brands fa-facebook-f", data.companyFacebook);
+
+      infoRow.appendChild(socialChip);
+    }
+
+    container.appendChild(logoCol);
+    container.appendChild(infoRow);
+    if (data.companyLogoDataUrl) {
+      const watermark = document.createElement("img");
+      watermark.className = "c-watermark";
+      watermark.src = data.companyLogoDataUrl;
+      watermark.alt = data.companyName || "Firmenlogo";
+      container.appendChild(watermark);
+    }
+    boxC.appendChild(container);
+  }
+  fitProspektToScreen();
+}
+
+/* COMPANY SAVE → fill A1 + C */
+companySave.addEventListener("click", () => {
+  const data = {
+    companyId:           document.getElementById("companyId").value.trim(),
+    companyName:         document.getElementById("companyName").value.trim(),
+    companyKeyword:      document.getElementById("companyKeyword").value.trim(),
+    companyAddress:      document.getElementById("companyAddress").value.trim(),
+    companyPhone:        document.getElementById("companyPhone").value.trim(),
+    companyEmail:        document.getElementById("companyEmail").value.trim(),
+    companyOpeningHours: document.getElementById("companyOpeningHours").value.trim(),
+    companyWhatsapp:     document.getElementById("companyWhatsapp").value.trim(),
+    companyFacebook:     document.getElementById("companyFacebook").value.trim(),
+    companyInstagram:    document.getElementById("companyInstagram").value.trim(),
+    companyDetails:      document.getElementById("companyDetails").value.trim(),
+    ohFromDay:           ohFromDay.value,
+    ohToDay:             ohToDay.value,
+    ohFromTime:          ohFromTime.value,
+    ohToTime:            ohToTime.value,
+    companyLogoDataUrl
+  };
+
+  persistCompanyFormData(data);
+  console.log("Company registration data:", data);
+
+  renderCompanyData(data);
+
+  closeCompanyModal();
+});
+
+/* Persist company form on change + restore on load */
+const companyFormFieldIds = [
+  "companyId",
+  "companyName",
+  "companyKeyword",
+  "companyAddress",
+  "companyPhone",
+  "companyEmail",
+  "companyOpeningHours",
+  "companyWhatsapp",
+  "companyFacebook",
+  "companyInstagram",
+  "companyDetails",
+  "ohFromDay",
+  "ohToDay",
+  "ohFromTime",
+  "ohToTime"
+];
+
+companyFormFieldIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const handler = () => persistCompanyFormData();
+  el.addEventListener("input", handler);
+  el.addEventListener("change", handler);
+});
+
+const restoredCompanyData = loadCompanyFormData();
+if (restoredCompanyData) {
+  renderCompanyData(restoredCompanyData);
+}
+
+
+/* DISCOUNTED PRODUCTS (inventory promotions) */
+function parsePriceValue(value) {
+  if (value === undefined || value === null || value === "") return NaN;
+  const numeric = parseFloat(String(value).replace(",", "."));
+  return Number.isFinite(numeric) ? numeric : NaN;
+}
+
+function formatCurrencyValue(value) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return "—";
+  try {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+  } catch (_err) {
+    return num.toFixed(2);
+  }
+}
+
+function resolveImageUrl(path) {
+  if (!path) return "";
+  try {
+    const apiRoot = API_BASE.replace(/\/api$/, "");
+    return new URL(path, apiRoot + "/").toString();
+  } catch (_err) {
+    return path;
+  }
+}
+
+/* Adaptive background remover:
+   - Samples corner pixels to detect the dominant background color
+   - Removes pixels within a configurable tolerance of that color
+   Note: This is heuristic-based (no AI model) but much more accurate than a fixed white threshold.
+*/
+const REMOVE_BG_ENABLED = true;
+const REMOVE_BG_FUZZ = 32;        // tolerance (0-255) for similarity to background
+const REMOVE_BG_MIN_BRIGHT = 180; // skip removal if detected background is dark
+const _chromaCache = new Map();
+
+function averageCorners(data, width, height) {
+  const samplePoints = [
+    [0, 0], [width - 1, 0],
+    [0, height - 1], [width - 1, height - 1],
+    [Math.floor(width / 2), 0],
+    [0, Math.floor(height / 2)],
+    [width - 1, Math.floor(height / 2)],
+    [Math.floor(width / 2), height - 1]
+  ];
+  let r = 0, g = 0, b = 0, count = 0;
+  for (const [x, y] of samplePoints) {
+    const idx = (y * width + x) * 4;
+    r += data[idx];
+    g += data[idx + 1];
+    b += data[idx + 2];
+    count++;
+  }
+  return [r / count, g / count, b / count];
+}
+
+function colorDistance(r, g, b, ref) {
+  const dr = r - ref[0];
+  const dg = g - ref[1];
+  const db = b - ref[2];
+  return Math.sqrt(dr * dr + dg * dg + db * db);
+}
+
+function chromaRemoveAdaptive(src) {
+  if (_chromaCache.has(src)) return _chromaCache.get(src);
+  const job = new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const imgData = ctx.getImageData(0, 0, img.width, img.height);
+        const data = imgData.data;
+
+        const bg = averageCorners(data, img.width, img.height);
+        const bgBrightness = (bg[0] + bg[1] + bg[2]) / 3;
+        const fuzz = Math.max(8, REMOVE_BG_FUZZ);
+
+        // Only remove if background is reasonably bright (common for product cutouts)
+        if (bgBrightness < REMOVE_BG_MIN_BRIGHT) {
+          resolve(canvas.toDataURL("image/png"));
+          return;
+        }
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const dist = colorDistance(r, g, b, bg);
+          if (dist <= fuzz) {
+            data[i + 3] = 0; // transparent
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+        resolve(canvas.toDataURL("image/png"));
+      } catch (err) {
+        reject(err);
+      }
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+  _chromaCache.set(src, job);
+  return job;
+}
+
+function applyBgRemoval(imgEl, src) {
+  if (!REMOVE_BG_ENABLED || !src) return;
+  chromaRemoveAdaptive(src).then((processed) => {
+    imgEl.src = processed;
+  }).catch(() => {
+    /* fall back silently */
+  });
+}
+
+function renderDiscountedProducts(items) {
+  if (!discountListEl || !discountStatusEl) return;
+  discountListEl.innerHTML = "";
+
+  if (!items.length) {
+    discountStatusEl.textContent = "No discounted products in inventory yet.";
+    return;
+  }
+
+  discountStatusEl.textContent = `Showing ${items.length} discounted product${items.length === 1 ? "" : "s"}`;
+
+  const frag = document.createDocumentFragment();
+
+  items.forEach(({ product, basePrice, promoPrice, discountPct }) => {
+    const card = document.createElement("article");
+    card.className = "discount-card";
+
+    const thumb = document.createElement("div");
+    thumb.className = "discount-thumb";
+    const imgSrc = resolveImageUrl(product.pictureUrl || product.pictureDataUrl || "");
+    if (imgSrc) {
+      const img = document.createElement("img");
+      img.src = imgSrc;
+      img.alt = product.name || "Product image";
+      thumb.appendChild(img);
+      applyBgRemoval(img, imgSrc);
+    } else {
+      const icon = document.createElement("i");
+      icon.className = "fa-solid fa-box-open";
+      thumb.appendChild(icon);
+    }
+
+    const body = document.createElement("div");
+    body.className = "discount-body";
+
+    const nameRow = document.createElement("div");
+    nameRow.className = "discount-row";
+    const name = document.createElement("div");
+    name.className = "discount-name";
+    name.textContent = product.name || "Unbenanntes Produkt";
+    const chip = document.createElement("span");
+    chip.className = "discount-chip";
+    chip.textContent = `-${discountPct}%`;
+    nameRow.appendChild(name);
+    nameRow.appendChild(chip);
+
+    const priceRow = document.createElement("div");
+    priceRow.className = "discount-prices";
+    const oldPrice = document.createElement("span");
+    oldPrice.className = "discount-old-price";
+    oldPrice.textContent = formatCurrencyValue(basePrice);
+    const newPrice = document.createElement("span");
+    newPrice.className = "discount-new-price";
+    newPrice.textContent = formatCurrencyValue(promoPrice);
+    priceRow.appendChild(oldPrice);
+    priceRow.appendChild(newPrice);
+
+    body.appendChild(nameRow);
+    body.appendChild(priceRow);
+
+    card.appendChild(thumb);
+    card.appendChild(body);
+    frag.appendChild(card);
+  });
+
+  discountListEl.appendChild(frag);
+}
+
+function makeProspektProductCard(item) {
+  const { product, basePrice, promoPrice, discountPct } = item;
+  const card = document.createElement("div");
+  card.className = "prospekt-product";
+
+  const thumb = document.createElement("div");
+  thumb.className = "p-thumb";
+  const imgSrc = resolveImageUrl(product.pictureUrl || product.pictureDataUrl || "");
+  if (imgSrc) {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = product.name || "Produktbild";
+    thumb.appendChild(img);
+    applyBgRemoval(img, imgSrc);
+  } else {
+    const icon = document.createElement("i");
+    icon.className = "fa-solid fa-image";
+    thumb.appendChild(icon);
+  }
+
+  const body = document.createElement("div");
+  body.className = "p-body";
+  const name = document.createElement("div");
+  name.className = "p-name";
+  name.textContent = product.name || "Unbenannt";
+
+  const prices = document.createElement("div");
+  prices.className = "p-prices";
+  const oldPrice = document.createElement("span");
+  oldPrice.className = "p-old";
+  oldPrice.textContent = formatCurrencyValue(basePrice);
+  const newPrice = document.createElement("span");
+  newPrice.className = "p-new";
+  newPrice.textContent = formatCurrencyValue(promoPrice);
+
+  prices.appendChild(oldPrice);
+  prices.appendChild(newPrice);
+
+  const badge = document.createElement("span");
+  badge.className = "p-badge";
+  const badgeText = document.createElement("span");
+  badgeText.className = "p-badge-text";
+  badgeText.textContent = `-${discountPct}%`;
+  badge.appendChild(badgeText);
+
+  body.appendChild(name);
+
+  card.appendChild(thumb);
+  card.appendChild(badge);
+  card.appendChild(prices);
+  card.appendChild(body);
+  return card;
+}
+
+function fillProspektWithDiscounts(items) {
+  const b3Slot = document.querySelector('.edit-box[data-box="B3"]');
+  if (b3Slot) {
+    b3Slot.innerHTML = "";
+    const grid = document.createElement("div");
+    grid.className = "b3-grid";
+    const firstThree = items.slice(0, 3);
+    for (let i = 0; i < 3; i++) {
+      const cell = document.createElement("div");
+      cell.className = "b3-grid-cell";
+      const item = firstThree[i];
+      if (item) {
+        cell.appendChild(makeProspektProductCard(item));
+      } else {
+        const empty = document.createElement("div");
+        empty.className = "prospekt-product prospekt-empty";
+        empty.textContent = "Kein Rabattartikel";
+        cell.appendChild(empty);
+      }
+      grid.appendChild(cell);
+    }
+    b3Slot.appendChild(grid);
+  }
+
+  const slots = prospektSlotSelectors
+    .map(sel => document.querySelector(sel))
+    .filter(Boolean);
+
+  slots.forEach((slot, idx) => {
+    slot.innerHTML = "";
+    const item = items[idx + 3]; // skip first three used in B3
+    if (!item) {
+      const empty = document.createElement("div");
+      empty.className = "prospekt-product prospekt-empty";
+      empty.textContent = "Kein Rabattartikel";
+      slot.appendChild(empty);
+      return;
+    }
+    slot.appendChild(makeProspektProductCard(item));
+  });
+}
+
+async function loadDiscountedProducts() {
+  if (!discountListEl || !discountStatusEl) return;
+  discountStatusEl.textContent = "Loading discounted products…";
+  discountListEl.innerHTML = "";
+  try {
+    const url = new URL(`${API_BASE}/products`);
+    url.searchParams.set("limit", "100000");
+    const res = await fetch(url.toString(), { headers: { Accept: "application/json" } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const payload = await res.json();
+    const list = Array.isArray(payload?.data)
+      ? payload.data
+      : (Array.isArray(payload) ? payload : []);
+    const discounted = list.reduce((acc, product) => {
+      const basePrice = parsePriceValue(product.price);
+      const promoPrice = parsePriceValue(product.promoPrice);
+      if (!Number.isFinite(basePrice) || basePrice <= 0) return acc;
+      if (!Number.isFinite(promoPrice) || promoPrice <= 0 || promoPrice >= basePrice) return acc;
+      const discountPct = Math.round((1 - promoPrice / basePrice) * 100);
+      acc.push({ product, basePrice, promoPrice, discountPct });
+      return acc;
+    }, []).sort((a, b) => b.discountPct - a.discountPct || a.promoPrice - b.promoPrice);
+    renderDiscountedProducts(discounted);
+    fillProspektWithDiscounts(discounted);
+        fitProspektToScreen();
+
+  } catch (err) {
+    console.error("Failed to load discounted products", err);
+    discountStatusEl.textContent = "Could not load discounted products from inventory.";
+  }
+}
+
+refreshDiscountsBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  loadDiscountedProducts();
+});
+loadDiscountedProducts();
+/* Click outside → unselect + close modals + close font menu */
+document.addEventListener("click", (e) => {
+  const insideProspekt    = e.target.closest(".prospekt");
+  const insideTools       = e.target.closest(".top-toolbar");
+  const insideDateBox     = e.target.closest(".date-modal-content");
+  const insideWeekBox     = e.target.closest(".weekday-modal-content");
+  const insideFontBox     = e.target.closest(".font-dropdown");
+  const insideCompanyBox  = e.target.closest(".company-modal-content");
+  if (!insideFontBox) {
+    fontFamilyMenu.style.display = "none";
+  }
+  if (!insideProspekt && !insideTools && !insideDateBox && !insideWeekBox && !insideCompanyBox) {
+    if (selectedBox) selectedBox.classList.remove("selected-box");
+    selectedBox = null;
+    selector.value = "";
+    textArea.value = "";
+    fontSizeDisplay.value = "16px";
+  }
+  if (e.target.id === "dateModal") closeDateModal();
+  if (e.target.id === "weekdayModal") closeWeekdayModal();
+  if (e.target.id === "companyModal") closeCompanyModal();
+});
+
+/* --- RESTORE PROFILE FROM LOCAL STORAGE ON LOAD --- */
+(function restoreProfileOnLoad() {
+  const saved = loadProfileFromLocalStorage();
+  if (!saved) return;
+  renderCompanyData(saved);  // use existing function
+})();
+
+function fitProspektToScreen() {
+  const panel = document.querySelector(".prospekt-area");
+  const page  = document.getElementById("mainProspekt");
+  if (!panel || !page) return;
+
+  // reset scale to measure real size
+  wrapper.style.transform = "scale(1)";
+
+  const panelWidth  = panel.clientWidth;
+  const panelHeight = panel.clientHeight;
+
+  const rect = page.getBoundingClientRect();
+  const pageWidth  = rect.width;
+  const pageHeight = rect.height;
+
+  const scaleX = panelWidth  / pageWidth;
+  const scaleY = panelHeight / pageHeight;
+
+  // a tiny safety margin (0.95) so nothing touches the edges
+  zoomLevel = Math.min(scaleX, scaleY) * 0.95;
+  if (!Number.isFinite(zoomLevel) || zoomLevel <= 0) {
+    zoomLevel = 0.9;
+  }
+  applyZoom();
+}
+</script>
+</body>
+</html>

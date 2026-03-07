@@ -1,0 +1,1698 @@
+:root { --line: transparent; } /* no more grid lines */
+
+  * {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  body {
+    margin:0;
+    font-family:system-ui, sans-serif;
+    background:#e5e7eb;
+    color:#111827;
+  }
+
+  .workspace {
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    background:transparent;
+  }
+
+  /* ============= TOP TOOLBAR ============= */
+  .top-toolbar {
+    background:transparent;
+    border-bottom:none;
+    padding:8px 12px;
+    box-sizing:border-box;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+
+  .tool-group {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border-radius:9999px;
+    padding:4px 10px;
+    border:none;
+    font-size:14px;
+    max-height:40px;
+    color:#064e3b;
+  }
+
+  .tool-group i {
+    font-size:18px;
+    color:#064e3b;
+  }
+
+  .tool-group select,
+  .tool-group input[type="color"],
+  .tool-group input[type="text"] {
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:4px 8px;
+    height:30px;
+    box-sizing:border-box;
+  }
+
+  .tool-group input[type="color"] {
+    padding:0;
+    width:30px;
+    min-width:30px;
+    border-radius:9999px;
+    overflow:hidden;
+  }
+
+  .tool-group select {
+    max-width:190px;
+  }
+
+  .font-size-controls {
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .font-size-btn {
+    width:26px;
+    height:26px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:17px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+  }
+  .font-size-btn:hover {
+    border-color:#16a34a;
+    color:#16a34a;
+  }
+
+  #fontSizeDisplay {
+    width:60px;
+    text-align:center;
+    padding:4px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+  }
+
+  /* TEXTAREA TOOL */
+  .tool-group-text {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border-radius:9999px;
+    padding:4px 10px;
+    border:none;
+    font-size:14px;
+    max-height:none;
+    color:#064e3b;
+  }
+
+  .tool-group-text i {
+    font-size:18px;
+    color:#064e3b;
+  }
+
+  .tool-group-text textarea {
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:5px 8px;
+    resize:vertical;
+    min-height:32px;
+    max-height:60px;
+    width:240px;
+    box-sizing:border-box;
+  }
+
+  .top-toolbar select:focus,
+  .top-toolbar input:focus,
+  .top-toolbar textarea:focus {
+    outline:none;
+    background:transparent;
+    border-color:#16a34a;
+  }
+
+  /* USER ICON NEXT TO TEXTAREA */
+  .user-icon-btn {
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid #064e3b;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+  }
+  .user-icon-btn i {
+    font-size:16px;
+    color:#064e3b;
+  }
+  .user-icon-btn:hover {
+    border-color:#16a34a;
+  }
+
+  /* ============= CUSTOM FONT DROPDOWN ============= */
+  .font-dropdown {
+    position:relative;
+  }
+
+  .font-dropdown-btn {
+    min-width:170px;
+    border-radius:5px;
+    border:1px solid #064e3b;
+    background:transparent;
+    color:#064e3b;
+    font-size:14px;
+    padding:4px 8px;
+    height:30px;
+    box-sizing:border-box;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+
+  .font-dropdown-btn span {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:1;
+  }
+
+  .font-dropdown-btn i.fa-chevron-down {
+    font-size:12px;
+  }
+
+  .font-dropdown-menu {
+    position:absolute;
+    top:110%;
+    left:0;
+    min-width:220px;
+    max-height:260px;
+    overflow-y:auto;
+    background:#f9fafb;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    box-shadow:0 10px 25px rgba(15,23,42,0.25);
+    padding:4px 0;
+    z-index:60;
+    display:none;
+  }
+
+  .font-item {
+    padding:4px 10px;
+    font-size:14px;
+    color:#111827;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+
+  .font-item:hover {
+    background:#e5e7eb;
+  }
+
+  .font-item-active {
+    background:#d1fae5;
+  }
+
+  /* ============= PREVIEW AREA ============= */
+.preview-panel {
+  flex: 1;
+  background: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0px;        /* ⬅️ reduced from 4px to 0px */
+  padding-bottom: 20px;    /* ⬅️ slightly bigger bottom space */
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  overflow: auto;
+}
+
+
+
+
+
+.prospekt-area {
+  display: flex;
+
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) 1fr;
+  gap: 16px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+
+
+
+  @media (max-width:1100px) {
+    .workspace-grid { grid-template-columns:1fr; }
+  }
+
+  .prospekt-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 0;      /* ⬅️ ensures no spacing */
+  padding-top: 0;     /* ⬅️ ensures no spacing */
+}
+  .discount-panel {
+    background:#f9fafb;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(15,23,42,0.12);
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    max-height:100%;
+  }
+
+  .discount-header {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+
+  .discount-title {
+    font-weight:700;
+    font-size:18px;
+    color:#0f172a;
+  }
+
+  .discount-subtitle {
+    font-size:13px;
+    color:#475569;
+  }
+
+  .discount-refresh {
+    border:1px solid #0f172a;
+    background:#0f172a;
+    color:#e5e7eb;
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .discount-refresh:hover { background:#1f2937; }
+
+  .discount-status {
+    font-size:13px;
+    color:#334155;
+    margin-bottom:8px;
+  }
+
+  .discount-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    overflow:auto;
+    padding-right:4px;
+    min-height:0;
+  }
+
+  .discount-card {
+    background:transparent;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    box-shadow:none;
+  }
+
+  .discount-thumb {
+    width:72px;
+    height:72px;
+    border-radius:0;
+    overflow:visible;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+
+  .discount-thumb img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .discount-body {
+    flex:1;
+    min-width:0;
+  }
+
+  .discount-row {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .discount-name {
+    font-weight:700;
+    font-size:15px;
+    color:#0f172a;
+  }
+
+  .discount-meta {
+    font-size:12px;
+    color:#475569;
+  }
+
+  .discount-prices {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    margin-top:4px;
+  }
+
+  .discount-old-price {
+    color:#9ca3af;
+    text-decoration:line-through;
+  }
+
+  .discount-new-price {
+    color:#dc2626;
+    font-family:"Times New Roman", Times, serif;
+    font-weight:900;
+    font-size:24px;
+    -webkit-text-stroke:0;
+    text-shadow:none;
+  }
+
+  .discount-chip {
+    background:#dc2626;
+    color:#fff;
+    padding:4px 8px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:12px;
+  }
+
+  .zoom-controls {
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:50;
+  }
+  .zoom-btn {
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:6px;
+    font-size:22px;
+    background:#1f2937;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  .zoom-btn:hover { background:#374151; }
+
+  .zoom-display {
+    min-width:60px;
+    height:36px;
+    border-radius:6px;
+    border:1px solid #1f2937;
+    background:#0f172a;
+    color:#e5e7eb;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+  }
+ /* ============= PROSPEKT ============= */
+.prospekt-wrapper {
+  transform-origin: center center;
+  transition: transform 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============= +++++++ ============= */
+.prospekt {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  color: #1d4ed8;
+  overflow: visible;
+}
+
+
+/* ============= +++++++ ============= */
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  margin: 0;
+}
+/* ----- Column A (left) ----- */
+.A {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* A1: header area (logo + keyword) */
+.A1 {
+  flex: 0 0 auto; /* just as high as its content */
+  padding: 5px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(95, 104, 221);
+  color: #ffffff;
+}
+
+/* A2/A3/A4: rows aligned with B2/B3/B4 ratios */
+/* three product rows on the left: same height */
+.A2,
+.A3,
+.A4 {
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;   /* ← all equal height */
+}
+
+/* main product boxes inside A2/A3/A4 */
+.A2_2,
+.A3_2,
+.A4_2 {
+  flex: 1;
+  padding: 4px;
+  border: none;
+  height: auto;
+  font-size: 8px;
+  line-height: 1.1;
+}
+
+/* Default styling for A2.2 */
+.edit-box[data-box="A2_2"] {
+  background: rgb(255, 250, 57);
+}
+
+/* A2.2 badge: larger red diagonal in top-right with yellow text */
+.edit-box[data-box="A2_2"] .p-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  left: auto;
+  transform: rotate(45deg);
+  background: rgb(239, 31, 31);
+  color: rgb(255, 250, 57);
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+}
+.edit-box[data-box="A2_2"] .p-badge-text {
+  color: rgb(255, 250, 57);
+  font-size: 24px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Default styling for A3.2 */
+.edit-box[data-box="A3_2"] {
+  background: rgb(95, 104, 221);
+}
+
+/* Default styling for A4.2 */
+.edit-box[data-box="A4_2"] {
+  background: rgb(235, 45, 45);
+}
+
+/* Align product images top-left and enlarge within A2_2 / A3_2 / A4_2 */
+.edit-box[data-box="A2_2"] .p-thumb,
+.edit-box[data-box="A3_2"] .p-thumb,
+.edit-box[data-box="A4_2"] .p-thumb {
+  width: 150px;
+  height: 150px;
+  align-self: flex-start;
+  margin: 0 0 6px 0;
+}
+.edit-box[data-box="A2_2"] .prospekt-product,
+.edit-box[data-box="A3_2"] .prospekt-product,
+.edit-box[data-box="A4_2"] .prospekt-product {
+  align-items: flex-start;
+  text-align: left;
+}
+.edit-box[data-box="A3_2"] .p-thumb {
+  width: 180px;
+  height: 180px;
+  align-self: flex-end;
+  margin-left: auto;
+}
+.edit-box[data-box="A4_2"] .p-thumb {
+  order: 1;
+}
+.edit-box[data-box="A2_2"] .p-body {
+  align-items: flex-end;
+  text-align: right;
+  margin-top: 72px; /* drop content below the badge */
+}
+.edit-box[data-box="A4_2"] .p-body {
+  order: 2;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: 6px;
+}
+.edit-box[data-box="A2_2"] .p-name {
+  font-size: 18px;
+  max-width: 20mm;
+  word-break: break-word;
+}
+.edit-box[data-box="A3_2"] .p-body {
+  align-self: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+.edit-box[data-box="A4_2"] .p-name {
+  font-size: 18px;
+  line-height: 1.2;
+  max-width: 32mm;
+  word-break: break-word;
+}
+.edit-box[data-box="A3_2"] .p-name {
+  font-size: 25px;
+  max-width: 22mm;
+  word-break: break-word;
+  text-align: right;
+}
+.edit-box[data-box="A3_2"] .p-badge {
+  background: rgb(239, 31, 31);
+  color: #fff8a3; /* high-contrast yellow on red */
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+  position: absolute;
+  top: 8px;
+  right: auto;
+  left: 8px;
+}
+.edit-box[data-box="A3_2"] .p-badge-text {
+  color: #fff8a3;
+  font-size: 24px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* A4.2 badge: top-right with larger percent */
+.edit-box[data-box="A4_2"] .p-badge {
+  position: absolute;
+  top: auto;
+  left: auto;
+  right: 10mm;
+  bottom: 31mm; /* pushed slightly down above UVP price stack */
+  transform: rotate(45deg);
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  z-index: 2;
+}
+.edit-box[data-box="A4_2"] .p-badge-text {
+  font-size: 20px;
+}
+
+.edit-box[data-box="A4_2"] .p-prices {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+/* A1 logo + keyword */
+.a1-logo-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.a1-company-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.a1-company-keyword {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  color: #ffffff;
+  margin-top: 3px;
+  word-wrap: break-word;
+}
+
+/* ----- Column B (right) ----- */
+.B {
+  width: 66.66%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* B1: date strip at top */
+/* B1: date strip at top – fixed 10mm */
+.B1 {
+  flex: 0 0 10mm;        /* fixed height inside flex column */
+  height: 10mm;
+  box-sizing: border-box;
+  padding: 2mm 4mm;      /* internal padding, still inside 10mm */
+  border: none;
+  display: flex;
+  align-items: center;   /* vertically center text */
+  justify-content: center; /* horizontally center */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  background: rgb(242, 193, 13);
+  color: #111827;
+}
+
+
+/* Container for B2 / B3 / B4 */
+.B-lower {
+  flex: 1;               /* takes the remaining height of the page */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;      /* no extra gap before C */
+  min-height: 0;
+}
+
+/* B2 / B3 / B4 rows – these three fill 100% of B-lower */
+.B2,
+.B3,
+.B4 {
+  border: none;
+  padding: 8px;
+}
+
+.B2 { flex: 0.20; }      /* top yellow part */
+.B3 { flex: 0.50; }      /* big red part with 3 products */
+.B4 { flex: 0.30; }      /* bottom yellow part */
+
+
+.edit-box[data-box="B2"] {
+  background: rgb(242, 193, 13);
+}
+
+.edit-box[data-box="B2"] .prospekt-product {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: start;
+  justify-items: start;
+  gap: 8px 12px;
+  height: auto; /* avoid extra empty space below content */
+}
+
+.edit-box[data-box="B2"] .p-thumb {
+  width: 300px;
+  height: 300px;
+  margin: -10px 0 0 0; /* nudge image upward without changing box height */
+  order: 1;
+  align-self: flex-start;
+  grid-row: 1;
+  grid-column: 1;
+  position: relative;
+}
+
+.edit-box[data-box="B2"] .p-body {
+  order: 2;
+  align-items: center;
+  text-align: center;
+  grid-row: 2;
+  grid-column: 1 / span 2; /* center name beneath the image */
+}
+
+.edit-box[data-box="B2"] .p-prices {
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+  grid-row: 1;
+  grid-column: 2;
+  align-self: center;
+  justify-self: start; /* nudge stack a bit left */
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; /* push further down */
+  margin-left: -12px; /* nudge left slightly */
+}
+
+.edit-box[data-box="B2"] .p-new {
+  font-size: 56px;
+}
+
+.edit-box[data-box="B2"] .p-name {
+  font-size: 22px;
+}
+
+.edit-box[data-box="B2"] .p-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: auto;
+  transform: rotate(45deg);
+  z-index: 2;
+  background: rgb(239, 31, 31);
+  color: rgb(242, 193, 13); /* match B2 background */
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+}
+
+.edit-box[data-box="B2"] .p-badge-text {
+  color: rgb(242, 193, 13);
+  font-size: 22px;
+}
+
+.edit-box[data-box="B4"] {
+  background: rgb(255, 250, 57);
+}
+
+/* ----- B3 triple layout ----- */
+
+.edit-box[data-box="B3"] {
+  position: relative;
+  overflow: hidden;
+  background: rgb(239, 31, 31);
+}
+
+/* hide old divider lines */
+.edit-box[data-box="B3"]::before,
+.edit-box[data-box="B3"]::after {
+  content: none;
+}
+
+.edit-box[data-box="B3"]::before { left: 33.33%; }
+.edit-box[data-box="B3"]::after  { left: 66.66%; }
+
+.b3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 100%;
+}
+
+.b3-grid-cell {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+}
+
+/* compact product styling inside B3 cells */
+.edit-box[data-box="B3"] .prospekt-product {
+  padding: 2px;
+  gap: 0;
+  max-width: 120px;
+  margin: 0 auto;
+  align-items: center;
+  position: relative;
+}
+
+.edit-box[data-box="B3"] .p-thumb {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:first-child .p-thumb {
+  width: 200px;
+  height: 200px;
+  top: 120px;
+}
+.edit-box[data-box="B3"] .b3-grid-cell:first-child .p-badge {
+  top: 70px;
+  bottom: auto;
+  left: 10%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(2) .p-thumb {
+  width: 190px;
+  height: 190px;
+  top: 20px;
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(2) .p-badge {
+  bottom: auto;
+  top: 260px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(3) .p-thumb {
+  width: 180px;
+  height: 180px;
+  top: 120px;
+}
+
+.edit-box[data-box="B3"] .b3-grid-cell:nth-child(3) .p-badge {
+  bottom: auto;
+  top: 90px;
+  left: 70%;
+  right: auto;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.edit-box[data-box="B3"] .p-body {
+  gap: 0;
+  margin-top: 0;
+  order: 2;
+  position: absolute;
+  right: 6px;
+  bottom: 68px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.edit-box[data-box="B3"] .p-name {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.edit-box[data-box="B3"] .p-prices {
+  gap: 6px;
+}
+
+.edit-box[data-box="B3"] .p-old {
+  font-size: 12px;
+  color: #000000;
+  font-weight: 700;
+  margin-top: 0;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.edit-box[data-box="B3"] .p-new {
+  font-size: 50px;
+  color: #f4f006;
+}
+
+.edit-box[data-box="B3"] .p-badge {
+  width: 50px;
+  height: 50px;
+  font-size: 19px;
+  padding: 0;
+  order: 3;
+  margin: 0;
+  position: absolute;
+  bottom: 24px;
+  right: 26px;
+  transform: rotate(45deg);
+}
+
+
+
+.edit-box[data-box="B3"] .p-prices {
+  order: 4;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: flex-end;
+  text-align: right;
+  align-self: auto;
+  padding-left: 0;
+  margin-right: 0;
+  position: absolute;
+  right: 4px;
+  bottom: 8px;
+}
+
+.edit-box[data-box="B3"] .p-old {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+  text-decoration: none;
+  color: #0a1a5f;
+  font-weight: 700;
+}
+
+.edit-box[data-box="B3"] .p-old::before {
+  content: "UVP";
+  margin-bottom: 1px;
+}
+
+.edit-box[data-box="B3"] .p-new {
+  align-self: flex-end;
+  margin-top: 1px;
+}
+
+.edit-box[data-box="B3"] .p-badge-text {
+  font-size: 21px;
+}
+
+/* ----- B4 layout (big product at bottom) ----- */
+
+.edit-box[data-box="B4"] .prospekt-product {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  position: relative;
+  padding: 10px 8px 12px 8px;
+}
+
+.edit-box[data-box="B4"] .p-thumb {
+  width: 190px;
+  height: 190px;
+  margin: 0;
+  order: 1;
+  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.edit-box[data-box="B4"] .p-body {
+  order: 2;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-name {
+  font-size: 18px;
+  width: 25mm;
+  max-width: 25mm;
+  text-align: left;
+  margin-top: -30px;
+}
+
+.edit-box[data-box="B4"] .p-old {
+  font-size: 16px;
+}
+
+.edit-box[data-box="B4"] .p-prices {
+  order: 3;
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+  text-align: right;
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-badge {
+  position: absolute;
+  right: 6px;
+  bottom: 80px; /* sit above price stack */
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  transform: none;
+  border-radius: 4px;
+  margin: 0;
+  background: rgb(239, 31, 31);
+  color: rgb(255, 250, 57);
+  z-index: 1;
+}
+
+.edit-box[data-box="B4"] .p-badge-text {
+  transform: none;
+  font-size: 28px;    /* make inside text bigger */
+  font-weight: 900;   /* (optional) bolder text */
+  line-height: 1;     /* keeps text vertically centered */
+}
+
+/* ----- Footer bar C ----- */
+
+.C {
+  padding: 2mm 4mm 6mm 4mm;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: none;
+  background: rgb(95, 104, 221);
+  color: #ffffff;
+  margin-top: 0;         /* sits directly under B4 */
+  flex: 0 0 22mm;
+}
+
+/* company content inside C */
+.c-company {
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  font-size: 14px;
+  line-height: 1.1;
+  color: #ffffff;
+  font-weight: 500;
+  background: rgb(95, 104, 221);
+  width: 100%;
+  position: relative;
+}
+/* ensure foreground text sits above watermark */
+.c-company > * {
+  position: relative;
+  z-index: 1;
+}
+.c-watermark {
+  position: absolute;
+  right: 3mm;
+  bottom: 2mm;
+  width: 26mm;
+  height: 26mm;
+  object-fit: contain;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Left: logo + name */
+.c-logo-column {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1px;
+  margin-right: 3px;
+}
+
+.c-logo-small {
+  width: 20mm;
+  height: 20mm;
+  object-fit: contain;
+}
+
+.c-name {
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  white-space: normal;
+}
+
+/* Right: horizontal info with wrapping */
+.c-info-horizontal {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+}
+
+.c-chip {
+  display: inline-flex;
+  align-items: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.c-chip a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.c-chip a:hover {
+  text-decoration: underline;
+}
+
+.c-separator {
+  padding: 0 1px;
+}
+
+.c-chip-social {
+  position: absolute;
+  right: 3mm;      /* a bit more to the left */
+  bottom: 2mm;     /* ✅ positive value = inside C */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+
+
+.c-social-btn {
+  border: none;
+  border-radius: 50%;
+  width: 18px;            /* bigger circle */
+  height: 18px;
+  cursor: pointer;
+  font-size: 10px;        /* bigger symbol */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.c-social-btn i {
+  font-size: 22px;        /* match size */
+}
+
+
+.c-social-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.c-social-btn-whatsapp {
+  background: #25d366;
+}
+
+.c-social-btn-facebook {
+  background: #1877f2;
+}
+
+.c-social-btn-instagram {
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+}
+
+/* ----- Shared helpers ----- */
+
+.edit-box {
+  cursor: pointer;
+}
+
+.selected-box {
+  outline: 3px solid #2563eb;
+  outline-offset: -3px;
+}
+
+.prospekt-stack {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
+  height: 100%;
+}
+
+.prospekt-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-bottom: 1px solid #d1d5db;
+  padding: 6px 4px;
+}
+
+.prospekt-row:last-child {
+  border-bottom: none;
+}
+
+.prospekt-product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #0f172a;
+  height: 100%;
+  box-sizing: border-box;
+  flex: 1 1 0;
+}
+
+.prospekt-product .p-thumb {
+  width: 96px;
+  height: 96px;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  flex-shrink: 0;
+  margin-top: auto;
+  order: 2;
+}
+
+.prospekt-product .p-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prospekt-product .p-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  align-items: center;
+  text-align: center;
+  order: 1;
+}
+
+.prospekt-product .p-name {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #0f172a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.prospekt-product .p-meta {
+  font-size: 10px;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prospekt-product .p-prices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  order: 4;
+}
+
+.prospekt-product .p-old {
+  color: #000000;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: none;
+}
+.prospekt-product .p-old::before {
+  content: "UVP";
+  margin-right: 4px;
+}
+
+.prospekt-product .p-old-value {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.prospekt-product .p-old-value::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 50%;
+  height: 1px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.prospekt-product .p-new {
+  color: #dc2626;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 900;
+  font-size: 46px;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
+.edit-box[data-box="A2_2"] .p-new {
+  color: #c20000; /* vivid red on yellow background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.edit-box[data-box="A3_2"] .p-new {
+  color: #ffeb3b; /* bright yellow on blue background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.edit-box[data-box="A4_2"] .p-new {
+  color: #ffeb3b; /* bright yellow on red background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.edit-box[data-box="B2"] .p-new {
+  color: #b30000; /* deep red on yellow background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.prospekt-product .p-badge {
+  background: #facc15;
+  color: #000000;
+  font-weight: 800;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  font-size: 12px;
+  position: relative;
+  order: 3;
+  align-self: center;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+}
+
+.prospekt-product .p-badge-text {
+  display: block;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 800;
+  transform: rotate(-45deg);
+}
+
+.prospekt-empty {
+  justify-content: center;
+  font-size: 11px;
+  color: #6b7280;
+  border: none;
+  background: transparent;
+}
+
+.center-both {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+
+  /* ============= MODALS (DATE + WEEKDAY) ============= */
+  .date-modal,
+  .weekday-modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+  }
+
+  .date-modal-content,
+  .weekday-modal-content {
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px 18px;
+    border-radius:10px;
+    border:1px solid #1f2937;
+    width:260px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+    font-size:13px;
+  }
+
+  .date-modal-content h3,
+  .weekday-modal-content h3 {
+    margin:0 0 10px;
+    font-size:15px;
+  }
+
+  .date-modal-content label {
+    display:block;
+    margin:8px 0 4px;
+  }
+
+  .date-modal-content input[type="text"] {
+    width:100%;
+    padding:6px;
+    border-radius:6px;
+    border:1px solid #334155;
+    background:#020617;
+    color:#e5e7eb;
+    font-size:13px;
+    box-sizing:border-box;
+  }
+
+  .date-modal-actions,
+  .weekday-modal-actions {
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:12px;
+  }
+
+  .date-btn,
+  .weekday-btn {
+    padding:6px 10px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:13px;
+  }
+
+  .date-btn.cancel,
+  .weekday-btn.cancel {
+    background:#111827;
+    color:#e5e7eb;
+  }
+
+  .date-btn.ok {
+    background:#22c55e;
+    color:#022c22;
+    font-weight:600;
+  }
+
+  .weekday-options {
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:8px;
+  }
+
+  .weekday-option {
+    flex:1 1 48%;
+    text-align:center;
+    padding:6px 4px;
+    border-radius:6px;
+    border:1px solid #1f2937;
+    background:#020617;
+    color:#e5e7eb;
+    cursor:pointer;
+    font-size:12px;
+  }
+  .weekday-option:hover {
+    background:#1e293b;
+  }
+
+  /* ============= COMPANY / USER REGISTER MODAL ============= */
+  .company-modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:110;
+  }
+
+  .company-modal-content {
+    background:#bbf7d0;        /* light green */
+    color:#000000;             /* black text */
+    padding:22px 24px;
+    border-radius:14px;
+    border:1px solid #16a34a;
+    width:560px;
+    max-width:96vw;
+    box-shadow:0 14px 34px rgba(0,0,0,0.35);
+    font-size:15px;
+    box-sizing:border-box;
+  }
+
+  .company-modal-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+
+  .company-modal-header h3 {
+    margin:0;
+    font-size:20px;
+    font-weight:700;
+  }
+
+  .company-close-btn {
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:#14532d;
+    font-size:20px;
+  }
+  .company-close-btn:hover {
+    color:#b91c1c;
+  }
+
+  .company-form-row {
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin-bottom:10px;
+  }
+
+  .company-form-row label {
+    font-size:14px;
+    color:#022c22;
+    font-weight:600;
+  }
+
+  .company-input,
+  .company-textarea {
+    width:100%;
+    padding:9px 10px;
+    border-radius:6px;
+    border:1px solid #16a34a;
+    background:#ecfdf5;
+    color:#022c22;
+    font-size:14px;
+    box-sizing:border-box;
+  }
+
+  .company-input:focus,
+  .company-textarea:focus {
+    outline:none;
+    border-color:#15803d;
+    box-shadow:0 0 0 1px rgba(21,128,61,0.4);
+  }
+
+  .company-textarea {
+    min-height:80px;
+    resize:vertical;
+  }
+
+  .company-modal-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .company-modal-actions {
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:16px;
+  }
+
+  .company-btn {
+    padding:8px 14px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+  }
+
+  .company-btn.cancel {
+    background:#bbf7d0;
+    color:#065f46;
+    border:1px solid #16a34a;
+  }
+
+  .company-btn.save {
+    background:#16a34a;
+    color:#ecfdf5;
+  }
+
+  .company-btn.save:hover {
+    background:#15803d;
+  }
+
+  /* Opening hours inner row */
+  .opening-hours-row {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px;
+  }
+
+  .opening-hours-row select,
+  .opening-hours-row input[type="time"] {
+    border-radius:6px;
+    border:1px solid #16a34a;
+    background:#ecfdf5;
+    color:#022c22;
+    font-size:13px;
+    padding:5px 6px;
+    height:32px;
+    box-sizing:border-box;
+  }
+
+  .oh-add-btn {
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:none;
+    background:#16a34a;
+    color:#ecfdf5;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .oh-add-btn:hover {
+    background:#15803d;
+  }

@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport"content="width=device-width, initial-scale=1.0"/>
+  <title>IVMS-97</title>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="dashbord.css">
+</head>
+<body>
+  <!-- Delete Confirmation -->
+  <div class="popup" id="delete-confirm-popup" role="dialog" aria-modal="true"
+    aria-labelledby="delete-confirm-title" aria-describedby="delete-confirm-desc">
+    <div class="popup-content confirm-card confirm-card--danger">
+      <button class="popup-close" type="button" aria-label="Close" id="close-delete-popup-btn">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="confirm-card__icon" aria-hidden="true">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+      <h3 id="delete-confirm-title">Delete product?</h3>
+      <p id="delete-confirm-desc">You are about to delete <strong id="product-to-delete-name"></strong>. This action
+        cannot be undone.</p>
+      <p class="confirm-card__memo">I miss wearing my Abbu’s shirt🥲</p>
+      <div class="confirm-card__warning">
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+        <span>Permanently removes the product from the inventory list.</span>
+      </div>
+      <div class="popup-footer confirm-card__actions">
+        <button class="btn-cancel" type="button" id="delete-popup-keep-btn">Keep product</button>
+        <button class="btn-danger" type="button" id="confirm-delete-btn">Delete product</button>
+      </div>
+    </div>
+  </div>
+  <!-- Bulk Delete Confirmation -->
+  <div class="popup" id="bulk-delete-popup" role="dialog" aria-modal="true"
+    aria-labelledby="bulk-delete-title" aria-describedby="bulk-delete-desc">
+    <div class="popup-content confirm-card confirm-card--danger confirm-card--with-input">
+      <button class="popup-close" type="button" aria-label="Close" id="close-bulk-delete-popup-btn">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="confirm-card__password-heading">
+        <div class="confirm-card__icon confirm-card__icon--secure" aria-hidden="true">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h3 id="bulk-delete-title">Enter Password</h3>
+      </div>
+      <p id="bulk-delete-desc">Enter the reset password to permanently remove the selected items.</p>
+      <label class="confirm-card__field" for="bulk-delete-password">
+        <span>Password</span>
+        <input type="password" id="bulk-delete-password" autocomplete="current-password"
+          placeholder="Enter reset password" />
+      </label>
+      <p class="confirm-card__error" id="bulk-delete-error" role="alert"></p>
+      <div class="confirm-card__warning">
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+        <span>This action cannot be undone.</span>
+      </div>
+      <div class="popup-footer confirm-card__actions">
+        <button class="btn-cancel" type="button" id="bulk-delete-cancel">Cancel</button>
+        <button class="btn-danger" type="button" id="bulk-delete-confirm">Delete products</button>
+      </div>
+    </div>
+  </div>
+  <!-- App -->
+  <div class="container" id="app-container">
+    <header class="app-header">
+      <h1><i class="fas fa-warehouse"></i> INVENTRA</h1>
+      <!-- Shop nav will be filled dynamically by renderShopButtons() -->
+      <nav id="shop-nav" class="shop-nav" aria-label="Shop selection"></nav>
+      <div id="shop-error-banner" class="shop-error-banner" role="alert" aria-live="assertive"></div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="header-icon-btn" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    <nav class="primary-nav" aria-label="Primary navigation" role="tablist">
+      <button type="button" class="nav-pill is-active" data-tab="dashboard" id="tab-dashboard" role="tab"
+        aria-controls="panel-dashboard" aria-selected="true" tabindex="0"><i class="fas fa-chart-pie"></i>
+        Dashboard</button>
+      <button type="button" class="nav-pill" data-tab="product-management" id="tab-product-management" role="tab"
+        aria-controls="panel-product-management" aria-selected="false" tabindex="-1"><i class="fas fa-boxes-stacked"></i>
+        Product Management</button>
+      <button type="button" class="nav-pill" data-tab="warehouse" id="tab-warehouse" role="tab"
+        aria-controls="panel-warehouse" aria-selected="false" tabindex="-1"><i class="fas fa-warehouse"></i> Warehouse
+        Management</button>
+      <button type="button" class="nav-pill" data-tab="purchase" id="tab-purchase" role="tab"
+        aria-controls="panel-purchase" aria-selected="false" tabindex="-1"><i class="fas fa-truck-moving"></i> Purchase
+        Management</button>
+      <button type="button" class="nav-pill" data-tab="esl" id="tab-esl" role="tab" aria-controls="panel-esl"
+        aria-selected="false" tabindex="-1"><i class="fas fa-tag"></i> ESL / Price Labels</button>
+      <button type="button" class="nav-pill" data-tab="online-shop" id="tab-online-shop" role="tab"
+        aria-controls="panel-online-shop" aria-selected="false" tabindex="-1"><i class="fas fa-store"></i> Online
+        Shop</button>
+      <button type="button" class="nav-pill" data-tab="pos" id="tab-pos" role="tab" aria-controls="panel-pos"
+        aria-selected="false" tabindex="-1"><i class="fas fa-cash-register"></i> POS</button>
+    </nav>
+
+    <div class="tab-panels">
+      <section class="tab-panel is-active" data-tab="dashboard" id="panel-dashboard" role="tabpanel"
+        aria-labelledby="tab-dashboard">
+        <section class="dashboard dashboard-kpi-grid" aria-label="Inventory overview">
+          <article class="dashboard-kpi-card" id="kpi-card-active-products" data-kpi="active-products" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--blue"><i class="fas fa-box"></i></span>
+                <div>
+                  <h3>Active Products</h3>
+                  <p>Unique SKUs in inventory</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">LIVE</span>
+            </div>
+            <div class="kpi-card__value" id="total-products">0</div>
+            <div class="kpi-card__delta" id="kpi-delta-active-products">No data yet</div>
+            <div class="kpi-card__chart" id="chart-card-active-products"></div>
+          </article>
+
+          <article class="dashboard-kpi-card" id="kpi-card-units-on-hand" data-kpi="units-on-hand" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--indigo"><i class="fas fa-boxes"></i></span>
+                <div>
+                  <h3>Units On Hand</h3>
+                  <p>Total sellable quantity</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">STOCK</span>
+            </div>
+            <div class="kpi-card__value" id="total-stock-quantity">0</div>
+            <div class="kpi-card__delta" id="kpi-delta-units-on-hand">No data yet</div>
+            <div class="kpi-card__chart" id="chart-card-units-on-hand"></div>
+          </article>
+
+          <article class="dashboard-kpi-card kpi-card--warning" id="kpi-card-low-stock" data-kpi="low-stock" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--red"><i class="fas fa-triangle-exclamation"></i></span>
+                <div>
+                  <h3>Low Stock Alerts</h3>
+                  <p>Items at or below reorder level</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge kpi-card__badge--warning">ALERT</span>
+            </div>
+            <div class="kpi-card__value" id="low-stock">0</div>
+            <div class="kpi-card__delta" id="kpi-delta-low-stock">No urgent items</div>
+            <div class="kpi-card__chart" id="chart-card-low-stock"></div>
+          </article>
+
+          <article class="dashboard-kpi-card" id="kpi-card-restock" data-kpi="restock" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--green"><i class="fas fa-rotate"></i></span>
+                <div>
+                  <h3>Restock Queue</h3>
+                  <p>Products recently replenished</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">FLOW</span>
+            </div>
+            <div class="kpi-card__value" id="restock-metric">0</div>
+            <div class="kpi-card__delta" id="kpi-delta-restock">No recent restocks</div>
+            <div class="kpi-card__chart" id="chart-card-restock"></div>
+          </article>
+
+          <article class="dashboard-kpi-card kpi-card--wide" id="kpi-card-inventory-value" data-kpi="inventory-value" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--purple"><i class="fas fa-coins"></i></span>
+                <div>
+                  <h3>Inventory Value</h3>
+                  <p>Cost basis vs. sales potential</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">FINANCE</span>
+            </div>
+            <div class="kpi-card__value-group">
+              <div>
+                <div class="kpi-card__value" id="total-buying-amount">0.00</div>
+                <div class="kpi-card__caption">Cost basis</div>
+              </div>
+              <div>
+                <div class="kpi-card__value" id="totall-selling-amount">0.00</div>
+                <div class="kpi-card__caption">Sales potential</div>
+              </div>
+            </div>
+            <div class="kpi-card__delta" id="kpi-delta-inventory-value">No value breakdown yet</div>
+            <div class="kpi-card__chart" id="chart-card-inventory-value"></div>
+          </article>
+
+          <article class="dashboard-kpi-card" id="kpi-card-profit" data-kpi="potential-profit" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--amber"><i class="fas fa-chart-line"></i></span>
+                <div>
+                  <h3>Potential Profit</h3>
+                  <p>Projected gain vs. cost</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">MARGIN</span>
+            </div>
+            <div class="kpi-card__value" id="potential-profit">0.00</div>
+            <div class="kpi-card__delta" id="kpi-delta-profit">Margin 0%</div>
+            <div class="kpi-card__chart" id="chart-card-profit"></div>
+          </article>
+
+          <article class="dashboard-kpi-card" id="kpi-card-weight" data-kpi="weight-cost" tabindex="0" role="button">
+            <div class="kpi-card__top">
+              <div class="kpi-card__meta">
+                <span class="kpi-card__icon kpi-card__icon--teal"><i class="fas fa-weight-hanging"></i></span>
+                <div>
+                  <h3>Stock Weight / Avg Cost</h3>
+                  <p>Logistics at a glance</p>
+                </div>
+              </div>
+              <span class="kpi-card__badge">LOGISTICS</span>
+            </div>
+            <div class="kpi-card__value-group">
+              <div>
+                <div class="kpi-card__value" id="total-weight">0 kg</div>
+                <div class="kpi-card__caption">Aggregate weight</div>
+              </div>
+              <div>
+                <div class="kpi-card__value" id="average-unit-cost">0.00</div>
+                <div class="kpi-card__caption">Avg cost / unit</div>
+              </div>
+            </div>
+            <div class="kpi-card__delta" id="kpi-delta-weight">No logistics summary yet</div>
+            <div class="kpi-card__chart" id="chart-card-weight"></div>
+          </article>
+        </section>
+        <section class="kpi-detail-panel" id="kpi-detail-panel" hidden>
+          <div class="kpi-detail-panel__header">
+            <div>
+              <h3 id="kpi-detail-title">KPI Details</h3>
+              <p id="kpi-detail-subtitle">Click any dashboard card to open the full graphical preview.</p>
+            </div>
+            <div class="kpi-detail-panel__actions">
+              <button type="button" class="btn-link" id="kpi-detail-open-related" hidden>Open related view</button>
+              <button type="button" class="btn-link" id="kpi-detail-popout">Open full dashboard view</button>
+              <button type="button" class="btn-link" id="kpi-detail-close">Close</button>
+            </div>
+          </div>
+
+          <div class="kpi-detail-tabs">
+            <button type="button" class="kpi-detail-tab is-active" data-kpi-tab="chart">Chart</button>
+            <button type="button" class="kpi-detail-tab" data-kpi-tab="top5">Top 5</button>
+            <button type="button" class="kpi-detail-tab" data-kpi-tab="distribution">Distribution</button>
+          </div>
+
+          <div class="kpi-detail-chart" id="kpi-detail-chart"></div>
+          <div class="kpi-detail-content" id="kpi-detail-content"></div>
+        </section>
+
+        <section class="dashboard-kpi-subview" id="dashboard-kpi-subview" hidden>
+          <div class="dashboard-kpi-subview__header">
+            <div>
+              <h3 id="dashboard-kpi-subview-title">Expanded KPI Workspace</h3>
+              <p id="dashboard-kpi-subview-subtitle">Deep-dive dashboard view</p>
+            </div>
+            <div>
+              <button type="button" class="btn-link" id="dashboard-kpi-subview-back">Back to dashboard</button>
+            </div>
+          </div>
+
+          <div class="dashboard-kpi-subview__tabs">
+            <button type="button" class="dashboard-kpi-subview-tab is-active" data-kpi-subtab="chart">Chart</button>
+            <button type="button" class="dashboard-kpi-subview-tab" data-kpi-subtab="top5">Top 5</button>
+            <button type="button" class="dashboard-kpi-subview-tab" data-kpi-subtab="distribution">Distribution</button>
+          </div>
+
+          <div class="dashboard-kpi-subview__chart" id="dashboard-kpi-subview-chart"></div>
+          <div class="dashboard-kpi-subview__body" id="dashboard-kpi-subview-body"></div>
+        </section>
+
+        <section class="inventory-insights" aria-label="Inventory insights">
+          <article class="insight-card">
+            <header>
+              <h4>Stock Health</h4>
+              <span class="insight-tag">Live</span>
+            </header>
+            <p id="stock-health-label">—</p>
+            <div class="insight-progress" role="img" aria-label="Stock health indicator">
+              <div class="insight-progress__bar" id="stock-health-bar"></div>
+            </div>
+          </article>
+          <article class="insight-card">
+            <header>
+              <h4>Value / SKU</h4>
+              <span class="insight-tag insight-tag--accent">Finance</span>
+            </header>
+            <p class="insight-value" id="value-per-sku">0.00</p>
+            <p class="insight-caption">Average cost per listed product</p>
+          </article>
+          <article class="insight-card">
+            <header>
+              <h4>Weight / SKU</h4>
+              <span class="insight-tag insight-tag--cool">Logistics</span>
+            </header>
+            <p class="insight-value" id="weight-per-sku">0 kg</p>
+            <p class="insight-caption">Average weight keeps shipping in check</p>
+          </article>
+        </section>
+      </section>
+
+      <section class="tab-panel" data-tab="product-management" id="panel-product-management" role="tabpanel"
+        aria-labelledby="tab-product-management" hidden>
+        <section class="action-toolbar full-width-bleed" aria-label="Inventory actions">
+          <div class="action-buttons">
+            <button id="add-btn" class="action-btn action-btn--primary" title="Add Product"
+              aria-label="Add a new product to the inventory"><i class="fas fa-plus"></i> Add Product</button>
+            <button id="import-csv-btn" class="action-btn" title="Import Products from CSV"><i
+                class="fas fa-file-import"></i> Import CSV</button>
+            <button id="export-csv-btn" class="action-btn" title="Export All Products to CSV"><i
+                class="fas fa-file-export"></i> Export CSV</button>
+            <button id="export-txt-btn" class="action-btn" title="Export All Products as Text"><i
+                class="fas fa-file-alt"></i> Export as Text</button>
+            <button id="export-pdf-btn" class="action-btn" title="Export All Products as PDF"><i
+                class="fas fa-file-pdf"></i> Export as PDF</button>
+            <button id="restock-btn" class="action-btn" title="View Restocked Products"><i class="fas fa-box"></i>
+              Restock <span class="notification-badge" id="restock-count">0</span></button>
+            <button id="duplicate-btn" class="action-btn" title="Remove Duplicates"><i class="fas fa-clone"></i> Merge
+              <span class="notification-badge" id="duplicate-count">0</span></button>
+            <button id="inventory-history-btn" class="action-btn" title="View Full Inventory History"><i
+                class="fas fa-history"></i> History <span class="notification-badge" id="history-count">0</span></button>
+            <button id="inventory-allstock-btn" class="action-btn" title="View All Inventory"><i
+                class="fa-solid fa-globe"></i> All Stock <span class="notification-badge" id="allstock-count">0</span></button>
+            <button id="inventory-lowstock-btn" class="action-btn" title="View Low Stock Items"><i
+                class="fa-brands fa-product-hunt"></i> Low Stock <span class="notification-badge" id="lowstock-count">0</span></button>
+            <button id="inventory-stockin-btn" class="action-btn" title="View Stock In History"><i
+                class="fa-solid fa-arrow-up-right-dots"></i> Stock In <span class="notification-badge" id="stockin-count">0</span></button>
+            <button id="inventory-stockout-btn" class="action-btn" title="View Stock Out History"><i
+                class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i> Stock Out <span class="notification-badge"
+                id="stockout-count">0</span></button>
+            <button id="bulk-select-btn" class="action-btn action-btn--icon" title="Select rows"
+              aria-label="Toggle row selection" aria-pressed="false">
+              <i class="fas fa-hand-pointer"></i>
+            </button>
+            <button id="bulk-delete-btn" class="action-btn action-btn--icon" title="Delete selected rows"
+              aria-label="Delete selected rows" disabled>
+              <i class="fas fa-trash"></i>
+            </button>
+            <button id="reset-inventory-btn" class="action-btn" title="Reset Inventory"><i class="fas fa-trash-restore"></i>
+              Reset Inventory</button>
+          </div>
+          <aside class="action-highlights" aria-live="polite">
+            <h4><i class="fas fa-lightbulb"></i> Quick tip</h4>
+            <p>Import a CSV template to bulk update pricing, weight, or categories in seconds.</p>
+          </aside>
+        </section>
+
+        <section class="search-section full-width-bleed">
+          <div class="search-field">
+            <i class="fas fa-search"></i>
+            <input id="search-input" placeholder="Search by EAN, PLU, Name, or Category..." />
+          </div>
+          <div class="search-field select-field">
+            <i class="fas fa-layer-group"></i>
+            <select id="category-filter">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <button id="search-button" class="action-btn action-btn--ghost"><i class="fas fa-search"></i> Search</button>
+        </section>
+
+        <section class="inventory-table-container" aria-label="Inventory Table with Pagination and Filters">
+          <div class="inventory-card">
+            <div class="inventory-intro">
+              <div id="filter-indicator" class="filter-indicator" aria-live="polite"></div>
+            </div>
+            <div class="table-wrapper">
+              <table class="inventory-table" id="inventory-table" aria-describedby="table-description">
+                <colgroup>
+                  <col style="width:100px" />  
+                  <col style="width:140px" />  <!-- EAN -->
+                  <col style="width:90px" />   <!-- PLU -->
+                  <col style="width:auto" />   <!-- Name -->
+                  <col style="width:110px" />  <!-- Price -->
+                  <col style="width:100px" />  <!-- Weight -->
+                  <col style="width:130px" />  <!-- Amount -->
+                <col style="width:140px" />  <!-- Stock Value -->
+                <col style="width:150px" />  <!-- Reorder Status -->
+                <col style="width:150px" />  <!-- Category -->
+                <col style="width:160px" />  <!-- Supplier -->
+                <col style="width:170px" />  <!-- Last Purchase -->
+                <col style="width:110px" />  <!-- MHD -->
+                <col style="width:150px" />  <!-- Warehouse -->
+                <col style="width:150px" />  <!-- Actions -->
+                <col style="width:120px" />  <!-- Cost Price -->
+                <col style="width:110px" />  <!-- Profit % -->
+                <col style="width:140px" />  <!-- Stock Status -->
+                <col style="width:120px" />  <!-- QR -->
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th scope="col" data-column="picture">Picture</th>
+                    <th scope="col" data-column="ean">EAN</th>
+                    <th scope="col" data-column="plu">PLU</th>
+                    <th scope="col" data-column="name">Name</th>
+                    <th scope="col" data-column="price">Price</th>
+                    <th scope="col" data-column="weight">Weight</th>
+                    <th scope="col" data-column="amount">Amount</th>
+                    <th scope="col" data-column="stockValue">Stock Value</th>
+                    <th scope="col" data-column="reorderStatus">Reorder Status</th>
+                    <th scope="col" data-column="category">Category</th>
+                    <th scope="col" data-column="supplier">Supplier</th>
+                    <th scope="col" data-column="lastPurchase">Last Purchase</th>
+                    <th scope="col" data-column="expiryDate">MHD</th>
+                    <th scope="col" data-column="warehouse">Warehouse</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col" data-column="cost">Cost Price</th>
+                    <th scope="col" data-column="margin">Profit %</th>
+                    <th scope="col" data-column="status">Stock Status</th>
+                    <th scope="col" data-column="qr">QR</th>
+                  </tr>
+                </thead>
+
+                <tbody id="inventory-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-toolbar" role="region" aria-label="List controls">
+            <div class="toolbar-left">
+              <label class="field-label" for="items-per-page">Items per page</label>
+              <div class="select-pill">
+                <select id="items-per-page" aria-label="Items per page">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+            </div>
+            <output id="sort-indicator"
+                class="sort-indicator"
+                aria-live="polite"
+                aria-atomic="true">
+            </output>
+          </div>
+      </section>
+      <div id="table-description" class="hidden">
+          This table displays inventory items with columns for Picture, EAN, PLU, Name, Price, Weight,
+          Amount, Stock Value, Reorder Status, Category, Supplier, Last Purchase, MHD, Warehouse, Actions, Cost Price,
+          Profit %, Stock Status, and QR code.
+        </div>
+      </section>
+
+      <section class="tab-panel" data-tab="warehouse" id="panel-warehouse" role="tabpanel"
+        aria-labelledby="tab-warehouse" hidden>
+        <header class="section-header">
+          <div>
+            <h2><i class="fas fa-warehouse"></i> Warehouse Management</h2>
+            <p>Maintain locations, monitor capacity, and handle stock transfers.</p>
+          </div>
+          <div class="section-actions">
+            <button type="button" class="action-btn action-btn--primary" id="create-warehouse-btn"><i
+                class="fas fa-plus"></i> Add Warehouse</button>
+            <button type="button" class="action-btn" id="transfer-stock-btn"><i class="fas fa-exchange-alt"></i> Transfer
+              Stock
+              <span class="notification-badge transfer-badge" id="pending-transfer-badge" hidden>0</span></button>
+          </div>
+        </header>
+
+        <section class="warehouse-metrics" aria-label="Warehouse summary metrics">
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon"><i class="fas fa-warehouse"></i></span>
+              <div>
+                <h3>Total Warehouses</h3>
+                <p class="metric-subtitle">Active + inactive</p>
+              </div>
+            </div>
+            <div class="metric-value" id="warehouse-total-count">0</div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon metric-icon--accent"><i class="fas fa-check-circle"></i></span>
+              <div>
+                <h3>Active Locations</h3>
+                <p class="metric-subtitle">Ready to receive stock</p>
+              </div>
+            </div>
+            <div class="metric-value" id="warehouse-active-count">0</div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon metric-icon--alert"><i class="fas fa-pause-circle"></i></span>
+              <div>
+                <h3>Inactive Locations</h3>
+                <p class="metric-subtitle">Temporarily unavailable</p>
+              </div>
+            </div>
+            <div class="metric-value" id="warehouse-inactive-count">0</div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon metric-icon--info"><i class="fas fa-boxes-stacked"></i></span>
+              <div>
+                <h3>Avg SKUs / Warehouse</h3>
+                <p class="metric-subtitle">Inventory spread</p>
+              </div>
+            </div>
+            <div class="metric-value" id="warehouse-average-skus">0</div>
+          </article>
+        </section>
+
+        <section class="warehouse-table-section" aria-label="Warehouses list">
+          <div class="table-wrapper">
+            <table class="data-table warehouse-table">
+              <thead>
+                <tr>
+                  <th scope="col">Code</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Manager</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total SKUs</th>
+                  <th scope="col">Capacity Used</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="warehouse-table-body">
+                <tr>
+                  <td colspan="8" class="warehouse-empty">Loading warehouses...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="transfer-queue" class="transfer-queue-card" hidden aria-label="Pending transfers">
+          <header class="section-subheader">
+            <h3><i class="fas fa-truck-loading"></i> Pending Transfers</h3>
+            <div class="section-actions">
+              <button type="button" class="action-btn" id="retry-all-transfers-btn"><i class="fas fa-redo-alt"></i>
+                Retry All</button>
+              <button type="button" class="action-btn action-btn--ghost" id="clear-transfers-btn"><i
+                  class="fas fa-times"></i> Clear</button>
+            </div>
+          </header>
+          <ul id="transfer-queue-list" class="transfer-queue__list"></ul>
+        </section>
+
+        <section id="transfer-activity" class="transfer-activity-card" hidden aria-label="Transfer activity log">
+          <header class="section-subheader">
+            <h3><i class="fas fa-clock-rotate-left"></i> Transfer Activity</h3>
+            <button type="button" class="action-btn action-btn--ghost" id="clear-transfer-activity-btn"><i
+                class="fas fa-broom"></i> Clear Log</button>
+          </header>
+          <ul id="transfer-activity-list" class="transfer-activity__list"></ul>
+        </section>
+      </section>
+
+      <section class="tab-panel" data-tab="purchase" id="panel-purchase" role="tabpanel"
+        aria-labelledby="tab-purchase" hidden>
+        <header class="section-header">
+          <div>
+            <h2><i class="fas fa-file-invoice-dollar"></i> Purchase Management</h2>
+            <p>Track inbound purchase orders and deliveries.</p>
+          </div>
+          <div class="section-actions">
+            <button type="button" class="action-btn action-btn--primary" id="create-purchase-btn"><i
+                class="fas fa-cart-plus"></i> New Purchase Order</button>
+            <button type="button" class="action-btn" id="refresh-purchases-btn"><i class="fas fa-rotate-right"></i>
+              Refresh</button>
+          </div>
+        </header>
+
+        <section class="purchase-metrics" aria-label="Purchase order metrics">
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon"><i class="fas fa-file-invoice"></i></span>
+              <div>
+                <h3>Total Orders</h3>
+                <p class="metric-subtitle">All purchase orders</p>
+              </div>
+            </div>
+            <div class="metric-value" id="purchase-total-count">0</div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon metric-icon--accent"><i class="fas fa-hourglass-half"></i></span>
+              <div>
+                <h3>Open Orders</h3>
+                <p class="metric-subtitle">Draft &amp; ordered</p>
+              </div>
+            </div>
+            <div class="metric-value" id="purchase-open-count">0</div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-header">
+              <span class="metric-icon metric-icon--alert"><i class="fas fa-calendar-day"></i></span>
+              <div>
+                <h3>Due Today</h3>
+                <p class="metric-subtitle">Expected deliveries</p>
+              </div>
+            </div>
+            <div class="metric-value" id="purchase-due-today">0</div>
+          </article>
+        </section>
+
+        <section class="purchase-table-section" aria-label="Purchase orders list">
+          <div class="table-wrapper">
+            <table class="data-table purchase-table">
+              <thead>
+                <tr>
+                  <th scope="col">Order #</th>
+                  <th scope="col">Supplier</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Warehouse</th>
+                  <th scope="col">Expected</th>
+                  <th scope="col">Items</th>
+                  <th scope="col">Total Cost</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="purchase-table-body">
+                <tr>
+                  <td colspan="8" class="purchase-empty">Loading purchase orders...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div id="purchase-empty" class="empty-panel" hidden>
+          <i class="fas fa-folder-open"></i>
+          <p>No purchase orders yet. Create your first order to plan inbound stock.</p>
+          <button type="button" class="action-btn action-btn--primary" id="empty-create-purchase-btn"><i
+              class="fas fa-plus"></i> Create Purchase Order</button>
+        </div>
+      </section>
+
+      <section class="tab-panel" data-tab="esl" id="panel-esl" role="tabpanel" aria-labelledby="tab-esl" hidden>
+        <header class="esl-header">
+          <div>
+            <h2><i class="fas fa-tag"></i> Electronic Shelf Labels</h2>
+            <p>Create ESL screens, printable price tags, and barcode/QR labels for your products.</p>
+          </div>
+          <div class="esl-header-actions">
+            <button type="button" class="esl-btn" id="esl-select-all">Select Visible</button>
+            <button type="button" class="esl-btn esl-btn--ghost" id="esl-clear-selection">Clear</button>
+            <button type="button" class="esl-btn esl-btn--primary" id="esl-print-btn" disabled><i class="fas fa-print"></i> Print
+              Selected</button>
+          </div>
+        </header>
+
+        <div class="esl-controls">
+          <label class="esl-search">
+            <i class="fas fa-search"></i>
+            <input type="search" id="esl-search" placeholder="Search products, EAN, PLU or brand">
+          </label>
+          <div class="esl-toggles">
+            <label class="esl-toggle">
+              <input type="checkbox" id="esl-highlight-promos" checked>
+              <span>Highlight discounts</span>
+            </label>
+            <label class="esl-format">
+              <span>Format</span>
+              <select id="esl-format-select">
+                <option value="standard">Standard ESL</option>
+                <option value="large">Large price card</option>
+                <option value="compact">Compact barcode label</option>
+              </select>
+            </label>
+            <span class="esl-selection" id="esl-selection-count">0 selected</span>
+          </div>
+        </div>
+
+        <div class="esl-grid" id="esl-grid" role="list"></div>
+        <div class="esl-empty-state" id="esl-empty" hidden>
+          <i class="fas fa-box-open"></i>
+          <p>No products match your filters yet.</p>
+        </div>
+      </section>
+
+      <section class="tab-panel" data-tab="online-shop" id="panel-online-shop" role="tabpanel"
+        aria-labelledby="tab-online-shop" hidden>
+        <div class="online-shop" id="online-shop-root">
+          <header class="online-shop__header">
+            <div>
+              <h2><i class="fas fa-store"></i> Online Storefront</h2>
+              <p>Publish a read-only storefront sourced directly from your inventory data. Share the live link with shoppers or embed it into your website.</p>
+            </div>
+            <div class="online-shop__actions">
+              <button type="button" class="action-btn action-btn--primary" id="online-shop-open">
+                <i class="fas fa-external-link-alt"></i> Open current shop
+              </button>
+              <button type="button" class="action-btn" id="online-shop-copy">
+                <i class="fas fa-link"></i> Copy share link
+              </button>
+            </div>
+          </header>
+
+          <div id="online-shop-status" class="online-shop__status" role="status" aria-live="polite"></div>
+
+          <div class="online-shop__grid">
+            <article class="online-shop__card">
+              <h3>Current shop snapshot</h3>
+              <dl class="online-shop__meta">
+                <div>
+                  <dt>Shop name</dt>
+                  <dd id="online-shop-name">—</dd>
+                </div>
+                <div>
+                  <dt>Shop code</dt>
+                  <dd id="online-shop-code">—</dd>
+                </div>
+                <div>
+                  <dt>Products online</dt>
+                  <dd id="online-shop-products">—</dd>
+                </div>
+                <div>
+                  <dt>Share link</dt>
+                  <dd><a id="online-shop-link" href="#" target="_blank" rel="noopener">—</a></dd>
+                </div>
+              </dl>
+            </article>
+
+            <section class="online-shop__links">
+              <div class="online-shop__links-header">
+                <h3>All shop storefronts</h3>
+                <button type="button" class="btn-link" id="online-shop-refresh">Refresh list</button>
+              </div>
+              <ul id="online-shop-links" class="online-shop__list" aria-live="polite"></ul>
+            </section>
+
+            <section class="online-shop__preview">
+              <div class="online-shop__preview-header">
+                <h3>Live preview</h3>
+                <button type="button" class="btn-link" id="online-shop-reload-preview">Reload</button>
+              </div>
+              <iframe id="online-shop-preview" title="Storefront preview" loading="lazy"></iframe>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" data-tab="pos" id="panel-pos" role="tabpanel" aria-labelledby="tab-pos" hidden>
+        <div class="empty-panel">
+          <i class="fas fa-cash-register"></i>
+          <p>POS dashboard is under construction.</p>
+        </div>
+      </section>
+    </div>
+  <!-- Add/Edit Product -->
+  <div class="popup" id="add-product-popup">
+    <div class="popup-content product-popup">
+      <div class="popup-header">
+        <h3><i class="fas fa-box"></i> Add/Edit Product</h3>
+        <button class="popup-close" id="close-popup">×</button>
+      </div>
+      <div class="product-form-grid">
+        <div class="form-group full-span">
+          <label for="picture-file-input">Product Picture</label>
+          <input type="file" id="picture-file-input" accept="image/*" />
+          <div id="picture-preview" style="margin-top:8px">
+            <img id="picture-preview-img" alt="Preview" style="max-width:80px; max-height:80px; display:none; border-radius:6px; object-fit:cover;" />
+          </div>
+          <input type="hidden" id="picture-data-url" />
+        </div>
+        <div class="form-group">
+          <label for="ean-input">EAN/Barcode <span class="required-indicator">*</span></label>
+          <input id="ean-input" pattern="\d{8,13}" />
+          <div class="field-hint">Required if PLU is empty.</div>
+        </div>
+        <div class="form-group">
+          <label for="plu-input">PLU <span class="required-indicator">*</span></label>
+          <input id="plu-input" pattern="\d{1,3}" inputmode="numeric" maxlength="3" />
+          <div class="field-hint">Required if EAN is empty.</div>
+        </div>
+        <div class="form-group">
+          <label for="name-input">Product Name <span class="required-indicator">*</span></label>
+          <input id="name-input" required maxlength="100" />
+        </div>
+        <div class="form-group">
+          <label for="price-input">Selling Price <span class="required-indicator">*</span></label>
+          <input type="number" id="price-input" min="0" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="cost-input">Cost Price</label>
+          <input id="cost-input" />
+        </div>
+        <div class="form-group">
+          <label for="weight-input">Weight</label>
+          <input id="weight-input" />
+        </div>
+        <div class="form-group">
+          <label for="expiry-input">Expiry Date</label>
+          <input type="date" id="expiry-input" />
+        </div>
+        <div class="form-group">
+          <label for="expiry-relative-select">Maximale Haltbarkeit</label>
+          <select id="expiry-relative-select">
+            <option value="">Select shelf life</option>
+            <option value="1D">1D</option>
+            <option value="2D">2D</option>
+            <option value="3D">3D</option>
+            <option value="4D">4D</option>
+            <option value="5D">5D</option>
+            <option value="6D">6D</option>
+            <option value="7D">7D</option>
+            <option value="1W">1W</option>
+            <option value="2W">2W</option>
+            <option value="3W">3W</option>
+            <option value="4W">4W</option>
+            <option value="1M">1M</option>
+            <option value="2M">2M</option>
+            <option value="3M">3M</option>
+            <option value="4M">4M</option>
+            <option value="5M">5M</option>
+            <option value="6M">6M</option>
+            <option value="9M">9M</option>
+            <option value="10M">10M</option>
+            <option value="12M">12M</option>
+          </select>
+          <div class="field-hint">Pick a preset to auto-calculate expiry from today.</div>
+        </div>
+        <div class="form-group">
+          <label for="amount-input">Initial Stock <span class="required-indicator">*</span></label>
+          <input type="number" id="amount-input" min="0" required />
+        </div>
+        <div class="form-group">
+          <label for="primary-category-input">Primary Category <span class="required-indicator">*</span></label>
+          <select id="primary-category-input">
+            <option value="">Select Primary Category</option>
+            <option>Troso</option>
+            <option>Trocken</option>
+            <option>Mopo</option>
+            <option>Tiko</option>
+            <option>Frisch-Fleisch</option>
+            <option>Kosmetick</option>
+            <option>Food</option>
+            <option>Non food</option>
+            <option>Gemüse</option>
+            <option>Getranke</option>
+            <option>Obst</option>
+            <option>Brotschen</option>
+            <option>Brot</option>
+            <option>Suesswaren</option>
+            <option>Snacks</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reorder-input">Reorder Level</label>
+          <div class="dual-field">
+            <input type="number" id="reorder-input" min="0" />
+            <select id="reorder-level-input">
+              <option value="">Quick select</option>
+              <option>1</option>
+              <option>5</option>
+              <option>10</option>
+              <option>15</option>
+              <option>20</option>
+              <option>25</option>
+              <option>30</option>
+              <option>35</option>
+              <option>40</option>
+              <option>45</option>
+              <option>50</option>
+            </select>
+          </div>
+          <div class="field-hint">Choose a preset or enter a custom level.</div>
+        </div>
+        <div class="form-group">
+          <label for="sku-input">SKU</label>
+          <input id="sku-input" />
+        </div>
+        <div class="form-group">
+          <label for="brand-input">Brand</label>
+          <input id="brand-input" />
+        </div>
+        <div class="form-group">
+          <label for="promo-price-input">Promotional Price</label>
+          <input id="promo-price-input" />
+        </div>
+        <div class="form-group">
+          <label for="tax-class-input">Tax Class</label>
+          <select id="tax-class-input">
+            <option value="">Choose option</option>
+            <option value="1">1%</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+            <option value="50">50%</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dimensions-input">Dimensions (L×W×H)</label>
+          <input id="dimensions-input" />
+        </div>
+        <div class="form-group">
+          <label for="supplier-input">Supplier</label>
+          <input id="supplier-input" />
+        </div>
+        <div class="form-group">
+          <label for="warehouse-select">Assign Warehouse</label>
+          <select id="warehouse-select">
+            <option value="">Select warehouse</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="country-input">Country of Origin</label>
+          <select id="country-input">
+            <option value="">Choose country</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="visibility-input">Visibility Status</label>
+          <select id="visibility-input">
+            <option value="">Choose status</option>
+            <option value="published">Published</option>
+            <option value="non-published">Non Published</option>
+          </select>
+        </div>
+        <div class="form-group full-span">
+          <label for="short-desc-input">Short Description</label>
+          <input id="short-desc-input" />
+        </div>
+        <div class="form-group full-span">
+          <label for="long-desc-input">Long Description</label>
+          <textarea id="long-desc-input"></textarea>
+        </div>
+        <div class="form-group full-span">
+          <label for="meta-title-input">Meta Title</label>
+          <input id="meta-title-input" />
+        </div>
+        <div class="form-group full-span">
+          <label for="meta-desc-input">Meta Description</label>
+          <textarea id="meta-desc-input"></textarea>
+        </div>
+        <div class="form-required-note">Fields marked <span class="required-indicator">*</span> are required. Provide at least one of EAN or PLU.</div>
+      </div>
+      <div class="form-actions">
+        <button id="cancel-button">Cancel</button>
+        <button id="save-button"><i class="fas fa-save"></i> Save</button>
+        <div id="error-message" class="text-danger hidden" role="alert"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Duplicates -->
+  <div class="popup" id="duplicate-popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h3><i class="fas fa-clone"></i> Duplicate Products</h3><button class="popup-close"
+          id="close-duplicate-popup">×</button>
+      </div>
+      <div id="duplicate-content">
+        <p id="popup-message">Checking for duplicate products...</p>
+        <div id="duplicate-list" style="max-height:300px;overflow-y:auto;margin:15px 0"></div>
+      </div>
+      <div id="duplicate-loader" class="hidden" style="text-align:center;margin:15px 0"><i
+          class="fas fa-spinner fa-spin"></i> Processing...</div>
+      <div class="form-actions"><button id="cancel-duplicate">Cancel</button><button id="confirm-duplicate"
+          class="text-danger">Remove Duplicates</button></div>
+    </div>
+  </div>
+  <!-- Purchase Order Modal -->
+  <div class="popup" id="purchase-modal" aria-hidden="true">
+    <div class="popup-content purchase-modal">
+      <div class="popup-header">
+        <h3 id="purchase-modal-heading-text"><i class="fas fa-file-invoice-dollar"></i> New Purchase Order</h3>
+        <button class="popup-close" id="close-purchase-modal" type="button">×</button>
+      </div>
+      <form id="purchase-form" novalidate>
+        <div id="purchase-error" class="form-error hidden" role="alert" aria-live="assertive"></div>
+        <div class="product-form-grid">
+          <div class="form-group">
+            <label for="purchase-order-number">Order Number</label>
+            <input id="purchase-order-number" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="purchase-supplier">Supplier</label>
+            <input id="purchase-supplier" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="purchase-status">Status</label>
+            <select id="purchase-status">
+              <option value="draft">Draft</option>
+              <option value="ordered">Ordered</option>
+              <option value="received">Received</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="purchase-warehouse">Warehouse</label>
+            <select id="purchase-warehouse">
+              <option value="">Assign warehouse</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="purchase-expected-date">Expected Delivery</label>
+            <input type="date" id="purchase-expected-date" />
+          </div>
+          <div class="form-group">
+            <label for="purchase-received-date">Received Date</label>
+            <input type="date" id="purchase-received-date" />
+          </div>
+          <div class="form-group">
+            <label for="purchase-tracking-number">Tracking / Reference</label>
+            <input id="purchase-tracking-number" autocomplete="off" placeholder="Shipment reference or tracking code" />
+          </div>
+          <div class="form-group">
+            <label for="purchase-total-items">Total Items</label>
+            <input type="number" id="purchase-total-items" min="0" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="purchase-total-cost">Total Cost</label>
+            <input type="number" id="purchase-total-cost" min="0" step="0.01" value="0.00" />
+          </div>
+          <div class="form-group full-span">
+            <label for="purchase-items-body">Line Items</label>
+            <div class="purchase-items-card">
+              <table class="purchase-items-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col" class="qty-col">Qty</th>
+                    <th scope="col" class="cost-col">Unit Cost</th>
+                    <th scope="col" class="total-col">Line Total</th>
+                    <th scope="col" class="action-col"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody id="purchase-items-body">
+                  <tr id="purchase-items-empty">
+                    <td colspan="5" class="purchase-items-empty">No line items yet. Add products to this order.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <datalist id="purchase-product-options"></datalist>
+              <button type="button" id="purchase-add-item-btn" class="purchase-add-item-btn">
+                <i class="fas fa-plus"></i>
+                Add Item
+              </button>
+            </div>
+          </div>
+          <div class="form-group full-span">
+            <label for="purchase-notes">Internal Notes</label>
+            <textarea id="purchase-notes" rows="3" placeholder="Add optional context for the buying team"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-purchase-btn">Cancel</button>
+          <button type="submit" id="save-purchase-btn" class="btn-primary">
+            <i class="fas fa-save"></i> <span id="save-purchase-btn-text">Save Purchase</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Warehouse Modal -->
+  <div class="popup" id="warehouse-modal" aria-hidden="true">
+    <div class="popup-content warehouse-modal">
+      <div class="popup-header">
+        <h3><i class="fas fa-warehouse"></i> Warehouse</h3>
+        <button class="popup-close" id="close-warehouse-modal" type="button">×</button>
+      </div>
+      <form id="warehouse-form" novalidate>
+        <div id="warehouse-error" class="form-error" role="alert" aria-live="assertive"></div>
+        <div class="product-form-grid">
+          <div class="form-group">
+            <label for="warehouse-code">Warehouse Code</label>
+            <input id="warehouse-code" name="warehouse-code" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="warehouse-name">Warehouse Name</label>
+            <input id="warehouse-name" name="warehouse-name" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="warehouse-status">Status</label>
+            <select id="warehouse-status" name="warehouse-status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="warehouse-manager">Manager</label>
+            <input id="warehouse-manager" name="warehouse-manager" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="warehouse-phone">Phone</label>
+            <input id="warehouse-phone" name="warehouse-phone" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="warehouse-email">Email</label>
+            <input type="email" id="warehouse-email" name="warehouse-email" autocomplete="off" />
+          </div>
+          <div class="form-group full-span">
+            <label for="warehouse-address">Address</label>
+            <textarea id="warehouse-address" name="warehouse-address" rows="2"></textarea>
+          </div>
+          <div class="form-group full-span">
+            <label for="warehouse-notes">Notes</label>
+            <textarea id="warehouse-notes" name="warehouse-notes" rows="3"
+              placeholder="Optional remarks about this location"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-warehouse-btn">Cancel</button>
+          <button type="button" id="save-warehouse-btn" class="btn-primary"><i class="fas fa-save"></i> Save
+            Warehouse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Transfer Modal -->
+  <div class="popup" id="transfer-modal" aria-hidden="true">
+    <div class="popup-content transfer-modal">
+      <div class="popup-header">
+        <h3><i class="fas fa-exchange-alt"></i> Record Stock Transfer</h3>
+        <button class="popup-close" id="transfer-close-btn" type="button">×</button>
+      </div>
+      <form id="transfer-form" novalidate>
+        <div class="form-group full-span">
+          <label for="transfer-product-select">Product</label>
+          <select id="transfer-product-select">
+            <option value="">Select product</option>
+          </select>
+        </div>
+        <div class="transfer-modal__summary" id="transfer-product-summary">
+          Select a product to view current stock and warehouse assignment.
+        </div>
+        <div class="product-form-grid">
+          <div class="form-group">
+            <label for="transfer-source-select">From Warehouse</label>
+            <select id="transfer-source-select">
+              <option value="">Select source warehouse</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="transfer-destination-select">To Warehouse</label>
+            <select id="transfer-destination-select">
+              <option value="">Select destination warehouse</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="transfer-quantity-input">Quantity</label>
+            <input type="number" id="transfer-quantity-input" min="1" value="1" />
+          </div>
+          <div class="form-group full-span">
+            <label for="transfer-note-input">Notes</label>
+            <textarea id="transfer-note-input" rows="3"
+              placeholder="Optional reason or comment for this transfer"></textarea>
+          </div>
+        </div>
+        <p id="transfer-error" class="form-error" role="alert" aria-live="assertive"></p>
+        <div class="form-actions">
+          <button type="button" id="transfer-cancel-btn">Cancel</button>
+          <button type="submit" id="transfer-submit-btn" class="btn-primary"><i class="fas fa-exchange-alt"></i> Record
+            Transfer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Stock Adjustment Reason -->
+  <div class="popup" id="reason-popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h3>Select Adjustment Reason</h3><button class="popup-close">×</button>
+      </div>
+      <div class="popup-body">
+        <div class="reason-options">
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="damage" checked><span>Damaged
+              Item</span></label>
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="expired"><span>Date
+              Expired</span></label>
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="stock_in"><span>Stock
+              In</span></label>
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="correction"><span>Stock
+              Correction</span></label>
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="quality"><span>Bad
+              Quality</span></label>
+          <label class="reason-option"><input type="radio" name="adjustment-reason" value="return"><span>Return to
+              Seller</span></label>
+        </div>
+        <div class="notes-section"><label for="reason-notes">Notes:</label><textarea id="reason-notes" rows="3"
+            placeholder="Additional details..."></textarea></div>
+      </div>
+      <div class="popup-footer"><button class="btn-cancel">Cancel</button><button class="btn-confirm"
+          id="confirm-reason-btn">Done</button></div>
+    </div>
+  </div>
+
+  
+  <!-- Validation Error -->
+  <div class="popup" id="error-popup">
+    <div class="popup-content" style="max-width:400px">
+      <div class="popup-header">
+        <h3><i class="fas fa-exclamation-circle text-danger"></i> Validation Error</h3><button class="popup-close"
+          type="button" id="error-popup-close">×</button>
+      </div>
+      <div class="popup-body">
+        <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <p id="error-message-text">Please fill in all required fields.</p>
+        <div class="error-field-highlight" id="error-field-highlight"></div>
+      </div>
+      <div class="popup-footer"><button class="btn-confirm" type="button" id="error-popup-ok">OK</button></div>
+    </div>
+  </div>
+  <!-- Reset Inventory Confirm -->
+  <div class="popup" id="reset-confirm-popup">
+    <div class="popup-content" style="max-width:400px">
+      <div class="popup-header">
+        <h3><i class="fas fa-exclamation-triangle"></i> Confirm Reset</h3><button class="popup-close"
+          type="button" id="reset-confirm-popup-close">×</button>
+      </div>
+      <div class="popup-body">
+        <p>Remove all inventory data?</p>
+        <p class="text-warning"><i class="fas fa-exclamation-circle"></i> This action cannot be undone.</p>
+      </div>
+      <div class="form-actions"><button type="button" id="cancel-reset-btn">Cancel</button><button type="button" id="confirm-reset-btn"
+          class="btn-danger">Delete</button></div>
+    </div>
+  </div>
+  <!-- Reset Inventory Password -->
+<!-- Reset Inventory Password -->
+  <div class="popup" id="reset-password-popup">
+  <div class="popup-content" style="max-width:400px">
+    <div class="popup-header">
+      <h3><i class="fas fa-lock"></i> Enter Password</h3>
+      <button class="popup-close" type="button" id="reset-password-popup-close">×</button>
+    </div>
+    <div class="popup-body">
+      <input id="reset-password-input" type="password" placeholder="Password" style="width:100%">
+      <!-- ▼ Add this line -->
+      <div id="reset-password-error" class="form-error" role="alert" aria-live="assertive" style="display:none;margin-top:8px;color:#d93025"></div>
+    </div>
+    <div class="form-actions">
+      <button id="cancel-password-btn">Cancel</button>
+      <button id="submit-password-btn" class="btn-danger">Continue</button>
+    </div>
+  </div>
+</div>
+<div id="esl-print-container" class="esl-print-container" aria-hidden="true"></div>
+      <!-- Modal Overlay -->
+<div id="modal-overlay" class="modal-overlay" aria-hidden="true"></div>
+<!-- Confirm Modal -->
+<div id="confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-icon danger"><i class="fas fa-trash"></i></div>
+      <h3 id="confirm-title">Delete Shop</h3>
+    </div>
+    <p id="confirm-desc" class="modal-text">Are you sure?</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="button" class="btn btn-danger" data-confirm>Delete</button>
+    </div>
+  </div>
+</div>
+<!-- Prompt (Rename) Modal -->
+<div id="prompt-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="prompt-title" aria-describedby="prompt-desc">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-icon"><i class="fas fa-edit"></i></div>
+      <h3 id="prompt-title">Rename Shop</h3>
+    </div>
+    <p id="prompt-desc" class="modal-text">Enter a new shop name:</p>
+    <div class="modal-field">
+      <input id="prompt-input" type="text" placeholder="Shop name" />
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="button" class="btn btn-primary" data-submit>Save</button>
+    </div>
+  </div>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- your app code (can now call Spinners.*) -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="dashboard.js"></script>
+  <script src="script.js?v=2"></script>
+  <script src="picture.js?v=2"></script>
+  <script src="addshop.js?v=2"></script>
+  <script src="updatepage.js?v=2"></script>
+  <script src="searchProduct.js?v=2"></script>
+  <script src="restinventory.js?v=2"></script>
+  <script src="helper.js?v=2"></script>
+  <script src="Key_Shortcut.js?v=2"></script>
+  <script src="excelInlineEdit.js?v=2"></script>
+</body>
+</html>

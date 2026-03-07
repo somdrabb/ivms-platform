@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Header with Categories, Profile & Footer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ <link rel="stylesheet" href="onlineshop.css">
+</head>
+<body>
+<div class="page-frame">
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-top">
+    <div class="brand-stack">
+      <div class="brand-name">INVENTRA</div>
+    </div>
+    <button class="address-btn" id="addressBtn" type="button">
+      <i class="fa-solid fa-location-arrow"></i>
+      <span id="addressDisplay">Enter your delivery address here</span>
+    </button>
+  </div>
+
+  <div class="header-bottom">
+    <div class="nav-left">
+      <div class="nav-buttons">
+      <button class="btn" id="categoriesBtn" data-close-profile="true"><i class="fa-solid fa-bars"></i> Categories ▾</button>
+      <button class="btn active" data-close-profile="true" id="exploreBtn">
+        <img src="public/assets/explore.png" alt="Explore icon" class="btn-icon">
+        Explore
+      </button>
+      <button class="btn" data-close-profile="true" id="dealsBtn">
+        <img src="public/assets/discount.png" alt="Deals icon" class="btn-icon deals-icon">
+        Deals
+      </button>
+      <button class="btn" id="profileBtn">
+        <img src="public/assets/profile.png" alt="Profile icon" class="btn-icon profile-icon">
+        Profile
+      </button>
+    </div>
+    </div>
+    <div class="header-search" id="globalSearch">
+      <button class="search-btn" aria-label="Search" type="button" id="globalSearchToggle">
+        <img src="public/assets/search.png" alt="Search icon">
+      </button>
+      <div class="header-search-panel" id="globalSearchPanel" hidden>
+        <input type="search" id="globalSearchInput" placeholder="Search products, prices, keywords..." aria-label="Search products">
+        <button type="button" class="search-clear" id="globalSearchClear" aria-label="Clear search">✕</button>
+      </div>
+    </div>
+    <button class="header-cart-btn" id="headerCartBtn" aria-label="View cart">
+      <i class="fa-solid fa-cart-plus"></i>
+      <span class="header-cart-btn__badge" id="cartBtnBadge" hidden>0</span>
+    </button>
+    <button class="header-cart-btn header-wishlist-btn" id="headerWishlistBtn" aria-label="View wishlist">
+      <i class="fa-regular fa-heart"></i>
+      <span class="header-cart-btn__badge" id="wishlistBtnBadge" hidden>0</span>
+    </button>
+  </div>
+
+  <!-- ========== CATEGORIES MEGA MENU ========== -->
+  <div class="mega-menu" id="megaMenu">
+    <div class="categories-grid">
+      <!-- Column 1 -->
+      <div class="category active"><i class="fa-solid fa-apple-whole"></i> Obst</div>
+      <div class="category"><i class="fa-solid fa-bowl-rice"></i> Cerealien & Aufstriche</div>
+      <div class="category"><i class="fa-solid fa-ice-cream"></i> Joghurt & Desserts</div>
+      <div class="category"><i class="fa-solid fa-bacon"></i> Aufschnitt & Brotaufstriche</div>
+      <div class="category"><i class="fa-solid fa-utensils"></i> Nudeln, Reis & Int. Kochen</div>
+      <div class="category"><i class="fa-regular fa-snowflake"></i> Tiefkühlkost</div>
+      <div class="category"><i class="fa-solid fa-cookie-bite"></i> Schokolade & Kekse</div>
+      <div class="category"><i class="fa-solid fa-mug-hot"></i> Alkoholfreie Getränke</div>
+      <div class="category"><i class="fa-solid fa-wine-bottle"></i> Spirituosen & Mehr</div>
+      <div class="category"><i class="fa-solid fa-baby"></i> Baby</div>
+
+      <!-- Column 2 -->
+      <div class="category"><i class="fa-solid fa-carrot"></i> Gemüse</div>
+      <div class="category"><i class="fa-solid fa-burger"></i> Frisch & Fertig</div>
+      <div class="category"><i class="fa-solid fa-cheese"></i> Feinkost</div>
+      <div class="category"><i class="fa-solid fa-drumstick-bite"></i> Fleisch & Fisch</div>
+      <div class="category"><i class="fa-solid fa-pepper-hot"></i> Saucen, Öle & Gewürze</div>
+      <div class="category"><i class="fa-solid fa-ice-cream"></i> Eis</div>
+      <div class="category"><i class="fa-solid fa-candy-cane"></i> Fruchtgummi & Bonbons</div>
+      <div class="category"><i class="fa-solid fa-beer-mug-empty"></i> Bier</div>
+      <div class="category"><i class="fa-solid fa-soap"></i> Drogerie</div>
+      <div class="category"><i class="fa-solid fa-paw"></i> Katze & Hund</div>
+
+      <!-- Column 3 -->
+      <div class="category"><i class="fa-solid fa-bread-slice"></i> Backwaren</div>
+      <div class="category"><i class="fa-solid fa-egg"></i> Eier, Milch & Butter</div>
+      <div class="category"><i class="fa-solid fa-cheese"></i> Käse</div>
+      <div class="category"><i class="fa-solid fa-leaf"></i> Vegan & Vegetarisch</div>
+      <div class="category"><i class="fa-solid fa-boxes-stacked"></i> Konserven & Backen</div>
+      <div class="category"><i class="fa-solid fa-bowl-food"></i> Salzige Snacks</div>
+      <div class="category"><i class="fa-solid fa-mug-saucer"></i> Kaffee, Tee & Kakao</div>
+      <div class="category"><i class="fa-solid fa-wine-glass"></i> Wein & Sekt</div>
+      <div class="category"><i class="fa-solid fa-broom"></i> Haushalt</div>
+      <div class="category"><i class="fa-solid fa-dumbbell"></i> Fitness & Gesundheit</div>
+    </div>
+  </div>
+
+</header>
+
+<!-- ===== QUICK CATEGORY STRIP ===== -->
+<div class="category-strip" id="categoryStrip" aria-label="Quick category filter">
+  <div class="category-strip__track" id="categoryStripTrack">
+    <button type="button" class="category-chip" data-category="Obst"><span class="category-chip__box"></span><span class="category-chip__label">Obst</span></button>
+    <button type="button" class="category-chip" data-category="Cerealien & Aufstriche"><span class="category-chip__box"></span><span class="category-chip__label">Cerealien</span></button>
+    <button type="button" class="category-chip" data-category="Joghurt & Desserts"><span class="category-chip__box"></span><span class="category-chip__label">Joghurt</span></button>
+    <button type="button" class="category-chip" data-category="Aufschnitt & Brotaufstriche"><span class="category-chip__box"></span><span class="category-chip__label">Aufschnitt</span></button>
+    <button type="button" class="category-chip" data-category="Nudeln, Reis & Int. Kochen"><span class="category-chip__box"></span><span class="category-chip__label">Nudeln</span></button>
+    <button type="button" class="category-chip" data-category="Tiefkühlkost"><span class="category-chip__box"></span><span class="category-chip__label">Tiefkühl</span></button>
+    <button type="button" class="category-chip" data-category="Schokolade & Kekse"><span class="category-chip__box"></span><span class="category-chip__label">Schoko</span></button>
+    <button type="button" class="category-chip" data-category="Alkoholfreie Getränke"><span class="category-chip__box"></span><span class="category-chip__label">Alkoholfrei</span></button>
+    <button type="button" class="category-chip" data-category="Spirituosen & Mehr"><span class="category-chip__box"></span><span class="category-chip__label">Spirituosen</span></button>
+    <button type="button" class="category-chip" data-category="Baby"><span class="category-chip__box"></span><span class="category-chip__label">Baby</span></button>
+    <button type="button" class="category-chip" data-category="Gemüse"><span class="category-chip__box"></span><span class="category-chip__label">Gemüse</span></button>
+    <button type="button" class="category-chip" data-category="Frisch & Fertig"><span class="category-chip__box"></span><span class="category-chip__label">Frisch</span></button>
+    <button type="button" class="category-chip" data-category="Feinkost"><span class="category-chip__box"></span><span class="category-chip__label">Feinkost</span></button>
+    <button type="button" class="category-chip" data-category="Fleisch & Fisch"><span class="category-chip__box"></span><span class="category-chip__label">Fleisch</span></button>
+    <button type="button" class="category-chip" data-category="Saucen, Öle & Gewürze"><span class="category-chip__box"></span><span class="category-chip__label">Gewürze</span></button>
+    <button type="button" class="category-chip" data-category="Eis"><span class="category-chip__box"></span><span class="category-chip__label">Eis</span></button>
+    <button type="button" class="category-chip" data-category="Fruchtgummi & Bonbons"><span class="category-chip__box"></span><span class="category-chip__label">Bonbons</span></button>
+    <button type="button" class="category-chip" data-category="Bier"><span class="category-chip__box"></span><span class="category-chip__label">Bier</span></button>
+    <button type="button" class="category-chip" data-category="Drogerie"><span class="category-chip__box"></span><span class="category-chip__label">Drogerie</span></button>
+    <button type="button" class="category-chip" data-category="Katze & Hund"><span class="category-chip__box"></span><span class="category-chip__label">Haustiere</span></button>
+    <button type="button" class="category-chip" data-category="Backwaren"><span class="category-chip__box"></span><span class="category-chip__label">Backwaren</span></button>
+    <button type="button" class="category-chip" data-category="Eier, Milch & Butter"><span class="category-chip__box"></span><span class="category-chip__label">Eier & Butter</span></button>
+    <button type="button" class="category-chip" data-category="Käse"><span class="category-chip__box"></span><span class="category-chip__label">Käse</span></button>
+    <button type="button" class="category-chip" data-category="Vegan & Vegetarisch"><span class="category-chip__box"></span><span class="category-chip__label">Vegan</span></button>
+    <button type="button" class="category-chip" data-category="Konserven & Backen"><span class="category-chip__box"></span><span class="category-chip__label">Konserven</span></button>
+    <button type="button" class="category-chip" data-category="Salzige Snacks"><span class="category-chip__box"></span><span class="category-chip__label">Snacks</span></button>
+    <button type="button" class="category-chip" data-category="Kaffee, Tee & Kakao"><span class="category-chip__box"></span><span class="category-chip__label">Kaffee/Tee</span></button>
+    <button type="button" class="category-chip" data-category="Wein & Sekt"><span class="category-chip__box"></span><span class="category-chip__label">Wein & Sekt</span></button>
+    <button type="button" class="category-chip" data-category="Haushalt"><span class="category-chip__box"></span><span class="category-chip__label">Haushalt</span></button>
+    <button type="button" class="category-chip" data-category="Fitness & Gesundheit"><span class="category-chip__box"></span><span class="category-chip__label">Fitness</span></button>
+  </div>
+  <button type="button" class="category-strip__arrow" id="categoryStripNext" aria-label="Scroll categories">
+    <i class="fa-solid fa-angle-right"></i>
+  </button>
+</div>
+
+<!-- ========== PROFILE AREA ========== -->
+<section class="profile-area" id="profileArea" aria-live="polite">
+  <div class="profile-card" id="profileCard">
+    <div class="profile-card__intro">
+      <h3>Manage your INVENTRA account</h3>
+      <p>Register, log in, request an OTP, update your profile, recover your password, or continue as a guest.</p>
+    </div>
+    <div class="profile-tabs" role="tablist">
+      <button class="profile-tab active" data-profile-tab="register" aria-controls="panel-register" aria-selected="true">Register</button>
+      <button class="profile-tab" data-profile-tab="login" aria-controls="panel-login" aria-selected="false">Login</button>
+      <button class="profile-tab" data-profile-tab="otp" aria-controls="panel-otp" aria-selected="false">OTP Login</button>
+      <button class="profile-tab" data-profile-tab="profile" aria-controls="panel-profile" aria-selected="false">Profile</button>
+      <button class="profile-tab" data-profile-tab="recovery" aria-controls="panel-recovery" aria-selected="false">Password Reset</button>
+      <button class="profile-tab" data-profile-tab="guest" aria-controls="panel-guest" aria-selected="false">Guest Checkout</button>
+    </div>
+    <div class="profile-panels">
+      <form class="profile-panel active" id="panel-register" data-profile-panel="register">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" required placeholder="First Name"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" required placeholder="Last Name"></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="form-group"><label>Password</label><input type="password" required placeholder="Create a password"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+49 151 1234567"></div>
+        <div class="hint">8+ characters, upper & lowercase letters, one number, one special character.</div>
+        <div class="terms">By registering you agree to INVENTRA’s <strong>Terms & Conditions</strong>.</div>
+        <button type="submit" class="primary-btn">Create account</button>
+      </form>
+
+      <form class="profile-panel" id="panel-login" data-profile-panel="login">
+        <button class="social-btn" type="button"><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+        <button class="social-btn" type="button"><i class="fa-brands fa-google"></i> Continue with Google</button>
+        <div class="divider">or log in with email</div>
+        <div class="form-group"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="form-group"><label>Password</label><input type="password" required placeholder="Password"></div>
+        <div class="forgot"><a href="#" data-profile-switch="recovery">Forgot your password?</a></div>
+        <button type="submit" class="primary-btn">Login</button>
+      </form>
+
+      <form class="profile-panel" id="panel-otp" data-profile-panel="otp">
+        <p>Receive a one-time password on your phone or email.</p>
+        <div class="form-group"><label>Phone or Email</label><input type="text" required placeholder="+49 151 1234567 or you@email.com"></div>
+        <button class="primary-btn" type="button" id="otpSendBtn">Send OTP</button>
+        <div class="form-group"><label>Enter OTP</label><input type="text" placeholder="6-digit code" id="otpInput"></div>
+        <button class="primary-btn" id="otpVerifyBtn" type="button">Verify & Login</button>
+      </form>
+
+      <form class="profile-panel" id="panel-profile" data-profile-panel="profile">
+        <p>Update your personal details to speed up checkout.</p>
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Full name"></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+49 151 1234567"></div>
+        <div class="form-group"><label>Address</label><input type="text" placeholder="Street, number, city"></div>
+        <div class="form-group"><label>Preferred Delivery Notes</label><textarea rows="2" placeholder="Ring bell, leave at reception..."></textarea></div>
+        <button type="submit" class="primary-btn">Save profile</button>
+      </form>
+
+      <form class="profile-panel" id="panel-recovery" data-profile-panel="recovery">
+        <p>Reset your password via email or SMS.</p>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" required></div>
+        <div class="form-group"><label>Phone (optional)</label><input type="tel" placeholder="+49 151 1234567"></div>
+        <button type="submit" class="primary-btn">Send reset link</button>
+      </form>
+
+      <div class="profile-panel" id="panel-guest" data-profile-panel="guest">
+        <p>Prefer to checkout without an account? Enter your basics and continue.</p>
+        <div class="form-group"><label>Name</label><input type="text" placeholder="Guest name"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="Guest email"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+49 151 1234567"></div>
+        <button type="button" class="primary-btn" id="guestCheckoutBtn">Start guest checkout</button>
+      </div>
+    </div>
+    <div class="profile-status" id="profileStatus" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ===== ADDRESS MODAL ===== -->
+<div class="address-modal" id="addressModal" aria-hidden="true">
+  <div class="address-modal__content" role="dialog" aria-modal="true" aria-labelledby="addressModalTitle">
+    <button class="address-modal__close" id="closeAddressModal" aria-label="Close address modal">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h3 id="addressModalTitle">Delivery address</h3>
+    <p class="address-modal__hint">Search for your address or use your current location.</p>
+
+    <form id="addressForm">
+      <div class="form-group">
+        <label for="addressSearch">Search address</label>
+        <input type="text" id="addressSearch" placeholder="Start typing to auto-search" list="addressSuggestions" autocomplete="off">
+        <datalist id="addressSuggestions">
+          <option value="Rosenthaler Strasse 72, 10119 Berlin"></option>
+          <option value="Friedrichstrasse 43, 10969 Berlin"></option>
+          <option value="Musterstrasse 12, 50667 Köln"></option>
+          <option value="Leopoldstrasse 50, 80802 München"></option>
+        </datalist>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="streetInput">Strasse</label>
+          <input type="text" id="streetInput" placeholder="e.g. Rosenthaler Strasse" required>
+        </div>
+        <div class="form-group">
+          <label for="houseNumberInput">House number</label>
+          <input type="text" id="houseNumberInput" placeholder="e.g. 72" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="postalCodeInput">Post code</label>
+          <input type="text" id="postalCodeInput" placeholder="e.g. 10119" required>
+        </div>
+        <div class="form-group">
+          <label for="cityInput">City</label>
+          <input type="text" id="cityInput" placeholder="e.g. Berlin" required>
+        </div>
+      </div>
+
+      <p class="address-modal__status" id="addressStatus" role="status" aria-live="polite"></p>
+
+      <div class="address-modal__actions">
+        <button type="button" class="detect-btn" id="detectLocationBtn">
+          <i class="fa-solid fa-location-crosshairs"></i>
+          Use my current location
+        </button>
+        <button type="submit" class="primary-btn">Save address</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main>
+  <div class="category-focus" id="categoryFocus" hidden></div>
+  <div class="quick-panel-slot" id="quickPanelSlot" hidden>
+    <div class="quick-panel">
+      <button type="button" class="quick-panel__close" id="quickPanelClose" aria-label="Close quick panel">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="quickPanelContent"></div>
+    </div>
+  </div>
+  <section class="product-detail-pane" id="productDetailPane" aria-live="polite" hidden></section>
+  <section class="products-section" aria-label="Inventory products">
+    <div class="products-section__header">
+      <h2>Inventory</h2>
+      <button id="refreshProductsBtn" class="refresh-btn" type="button">Refresh</button>
+    </div>
+    <p id="productsStatus" class="products-status" aria-live="polite"></p>
+    <div class="product-collections" id="productCollections" aria-live="polite"></div>
+  </section>
+</main>
+
+<!-- ===== CART & WISHLIST ===== -->
+<section class="cart-wishlist" aria-label="Shopping cart and wishlist">
+  <div class="cart-panel">
+    <div class="cart-layout">
+      <div class="cart-items-card">
+        <div class="cart-items-card__header">
+          <h2>Shopping Cart <span id="cartCount">(0 items)</span></h2>
+          <p>Adjust quantities or remove items before checkout.</p>
+          <button type="button" class="quick-panel__cta" id="continueShoppingBtn">
+            Continue Shopping
+          </button>
+        </div>
+        <div id="cartItems" class="cart-items"></div>
+      </div>
+      <div class="summary-card">
+        <div class="coupon-card">
+          <h3>Coupons</h3>
+          <div class="coupon-card__row">
+            <input type="text" id="couponInput" placeholder="Promo code">
+            <button type="button" id="applyCouponBtn">Apply</button>
+          </div>
+          <p id="couponStatus" class="coupon-status"></p>
+        </div>
+        <div class="order-summary" id="cartSummary"></div>
+        <button type="button" class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        <div class="payment-methods" id="paymentMethods" hidden>
+          <button type="button" data-method="card">Credit / Debit Card</button>
+          <button type="button" data-method="mastercard">Mastercard</button>
+          <button type="button" data-method="paypal">PayPal</button>
+          <button type="button" data-method="klarna">Klarna</button>
+          <button type="button" data-method="giftcard">Gift Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wishlist-panel">
+    <h2>Saved for Later</h2>
+    <p>Wishlist keeps items handy for another order.</p>
+    <div id="wishlistItems" class="wishlist-items"></div>
+  </div>
+</section>
+
+<!-- ===== CHECKOUT & ORDERS ===== -->
+<section class="checkout-orders" aria-label="Checkout and order management">
+  <div class="checkout-panel">
+    <h2>Checkout</h2>
+    <form id="checkoutForm">
+      <div class="form-group"><label>Shipping Name</label><input type="text" required placeholder="Full name" name="shippingName"></div>
+      <div class="form-group"><label>Shipping Address</label><input type="text" required placeholder="Street, house number, city" name="shippingAddress"></div>
+      <div class="form-group"><label>Payment Method</label>
+        <select required name="paymentMethod">
+          <option value="">Choose a payment method</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Apple Pay">Apple Pay</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Order Notes</label><textarea rows="2" placeholder="Delivery notes (optional)" name="orderNotes"></textarea></div>
+      <button type="submit" class="primary-btn">Place Order</button>
+    </form>
+  </div>
+  <div class="order-confirmation" id="orderConfirmation" aria-live="polite">
+    <h2>Order Confirmation</h2>
+    <p>No orders submitted yet.</p>
+  </div>
+  <div class="order-history" id="orderHistory">
+    <h2>Order History</h2>
+    <ul class="order-history__list"></ul>
+  </div>
+  <div class="order-tracking" id="orderTracking">
+    <h2>Order Tracking</h2>
+    <div class="order-tracking__timeline"></div>
+  </div>
+</section>
+
+<!-- ===== CUSTOMER COMMUNICATION ===== -->
+<section class="communication-hub" aria-label="Customer communication options">
+  <div class="communication-hub__intro">
+    <h2>Stay Informed & Supported</h2>
+    <p>We keep you in the loop from purchase to delivery and make it easy to reach out anytime.</p>
+  </div>
+  <div class="communication-grid">
+    <article class="communication-card">
+      <h3>Order Confirmation Email</h3>
+      <p>Receive a detailed receipt with delivery window and tracking code within minutes of checking out.</p>
+      <ul>
+        <li>Instant confirmation</li>
+        <li>Downloadable invoice</li>
+        <li>Quick reorder links</li>
+      </ul>
+      <div class="comm-actions">
+        <label for="confirmationEmail">Send a test confirmation</label>
+        <div class="comm-input-row">
+          <input type="email" id="confirmationEmail" placeholder="customer@email.com">
+          <button type="button" id="sendConfirmationBtn">Send</button>
+        </div>
+        <div class="comm-input-row two">
+          <input type="text" id="confirmationOrderId" placeholder="Order ID (e.g. INV-2091)">
+          <input type="text" id="confirmationEta" placeholder="ETA (Today 18:30)">
+        </div>
+        <div class="comm-preview" id="confirmationPreview">
+          <strong>Preview:</strong>
+          <p>Your order INV-0000 is confirmed and will arrive Today.</p>
+        </div>
+        <p class="comm-status" id="confirmationStatus" aria-live="polite"></p>
+        <ul class="comm-log" id="confirmationLog"></ul>
+      </div>
+    </article>
+    <article class="communication-card">
+      <h3>Shipping & Delivery Updates</h3>
+      <p>Get proactive notifications when your rider departs, is nearby, and after delivery.</p>
+      <ul>
+        <li>SMS push alerts</li>
+        <li>Live map tracking</li>
+        <li>Photo proof of delivery</li>
+      </ul>
+      <div class="comm-actions">
+        <label>Notify customer via</label>
+        <div class="comm-toggle-row">
+          <label><input type="checkbox" id="shipNotifySms" checked> SMS</label>
+          <label><input type="checkbox" id="shipNotifyEmail" checked> Email</label>
+          <label><input type="checkbox" id="shipNotifyPush" checked> Push</label>
+        </div>
+        <div class="comm-input-row">
+          <select id="shippingTemplate" aria-label="Shipping template">
+            <option value="Order confirmed and preparing">Order confirmed and preparing</option>
+            <option value="Packed and ready for courier pickup">Packed and ready for courier pickup</option>
+            <option value="Courier departed and on the way">Courier departed and on the way</option>
+            <option value="Courier nearby – please be ready">Courier nearby – please be ready</option>
+            <option value="Delivered 🎉">Delivered 🎉</option>
+          </select>
+          <button type="button" id="shippingUpdateBtn">Send next update</button>
+        </div>
+        <div class="comm-preview" id="shippingPreview">
+          <strong>Preview:</strong>
+          <p>SMS & Email · Order confirmed and preparing</p>
+        </div>
+        <p class="comm-status" id="shippingStatus" aria-live="polite"></p>
+        <ul class="comm-log" id="shippingLog"></ul>
+      </div>
+    </article>
+    <article class="communication-card">
+      <h3>Promotional Emails</h3>
+      <p>Never miss limited-time deals, seasonal drops, or recipe inspiration tailored to your basket.</p>
+      <form class="newsletter-form">
+        <label for="promoEmail">Subscribe to newsletter</label>
+        <div class="newsletter-form__row">
+          <input type="email" id="promoEmail" placeholder="Email address">
+          <select id="newsletterFrequency" aria-label="Email frequency">
+            <option value="Weekly">Weekly highlights</option>
+            <option value="Daily">Daily deals</option>
+            <option value="Monthly">Monthly digest</option>
+          </select>
+          <button type="button" id="newsletterJoinBtn">Join</button>
+        </div>
+        <small>You can unsubscribe at any time.</small>
+        <p class="comm-status" id="newsletterStatus" aria-live="polite"></p>
+      </form>
+    </article>
+    <article class="communication-card">
+      <h3>Customer Support</h3>
+      <p>Need help with an order? Start a chat or leave us a message — we answer within minutes.</p>
+      <form class="support-form">
+        <label for="supportMessage">Send a quick message</label>
+        <textarea id="supportMessage" rows="3" placeholder="Let us know how we can help"></textarea>
+        <button type="button" id="supportSubmitBtn">Contact Support</button>
+      </form>
+      <p class="comm-status" id="supportStatus" aria-live="polite"></p>
+      <button type="button" class="support-chat-btn" id="supportChatToggle">
+        <i class="fa-solid fa-comments"></i> Open Live Chat
+      </button>
+      <div class="support-chat" id="supportChat" hidden>
+        <div class="support-chat__messages" id="supportChatMessages">
+          <div class="support-chat__message bot">Hey! I'm Ava from INVENTRA. How can I help?</div>
+        </div>
+        <div class="support-chat__composer">
+          <input type="text" id="supportChatInput" placeholder="Type a message...">
+          <button type="button" id="supportChatSendBtn">Send</button>
+        </div>
+      </div>
+    </article>
+    <article class="communication-card communication-card--feed">
+      <h3>Notification Activity</h3>
+      <p>Live snapshot of recently triggered emails, SMS, pushes, and chat transcripts.</p>
+      <ul class="notification-feed" id="notificationFeed">
+        <li>No notifications yet.</li>
+      </ul>
+      <button type="button" id="clearNotificationFeed" class="secondary-btn">Clear history</button>
+    </article>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-hero">
+    <span class="footer-hero__text">Everyday essentials, delivered with care.</span>
+  </div>
+  <div class="footer-container">
+    <div class="footer-brand-block">
+      <div class="footer-logo">INVENTRA</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-column">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">About INVENTRA</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Careers</h4>
+        <ul>
+          <li><a href="#">Join the HQ</a></li>
+          <li><a href="#">INVENTRA Hubs - Join as a Rider</a></li>
+          <li><a href="#">INVENTRA Hubs - Join as an Ops Associate</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Social</h4>
+        <ul class="social-links">
+          <li><a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+          <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Apps</h4>
+        <ul>
+          <li><a href="#"><i class="fa-brands fa-apple"></i> App Store</a></li>
+          <li><a href="#"><i class="fa-brands fa-google-play"></i> Google Play</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 INVENTRA. All rights reserved.</p>
+  </div>
+</footer>
+</div>
+<script src="./onlineshop.js" defer></script>
+</body>
+</html>

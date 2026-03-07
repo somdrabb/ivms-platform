@@ -1,0 +1,65 @@
+inventory-system/
+├─ package.json
+├─ package-lock.json
+├─ README.md
+├─ .env
+├─ .env.example
+├─ .gitignore
+├─ uploads/
+├─ src/
+│  ├─ index.js
+│  ├─ config/
+│  │  └─ db.js
+│  ├─ middleware/
+│  │  └─ auth.js
+│  ├─ models/
+│  │  ├─ product.js
+│  │  ├─ purchaseOrder.js
+│  │  ├─ shop.js
+│  │  └─ user.js
+│  ├─ routes/
+│  │  ├─ auth.js
+│  │  ├─ products.js
+│  │  ├─ purchases.js
+│  │  ├─ shops.js
+│  │  ├─ warehouses.js
+│  │  └─ history.js
+│  ├─ utils/
+│  │  ├─ csv.js
+│  │  ├─ password.js
+│  │  └─ token.js
+│  └─ services/
+│     └─ productService.js
+├─ public/
+│  └─ uploads/            # only if you want public static assets separate
+├─ frontend/
+│  ├─ backoffice/
+│  │  ├─ backoffice.html
+│  │  ├─ index.css
+│  │  ├─ script.js
+│  │  ├─ dashboard.js
+│  │  ├─ addshop.js
+│  │  ├─ updatepage.js
+│  │  ├─ searchProduct.js
+│  │  ├─ restinventory.js
+│  │  ├─ helper.js
+│  │  ├─ Key_Shortcut.js
+│  │  ├─ excelInlineEdit.js
+│  │  └─ picture.js
+│  ├─ storefront/
+│  │  ├─ index.html
+│  │  ├─ style.css
+│  │  └─ shop.js
+│  ├─ onlineshop/
+│  │  ├─ onlineshop.html
+│  │  ├─ onlineshop.css
+│  │  └─ onlineshop.js
+│  ├─ pos/
+│  │  ├─ pos.html
+│  │  ├─ pos.js
+│  │  └─ pos.css
+│  └─ prospectus/
+│     └─ prospectus.html
+└─ docs/
+   ├─ screenshots/
+   └─ architecture/

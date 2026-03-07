@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory Storefront</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="store-shell">
+    <header class="store-header">
+      <div class="store-brand">
+        <span class="store-tag">Inventory powered</span>
+        <h1 id="store-name">Online Storefront</h1>
+        <p id="store-subtitle">Product catalog synced from your back office.</p>
+      </div>
+      <div class="store-controls">
+        <label for="search-input" class="visually-hidden">Search products</label>
+        <input id="search-input" type="search" placeholder="Search products, brands, or SKU…" autocomplete="off">
+        <label for="sort-select" class="visually-hidden">Sort products</label>
+        <select id="sort-select">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="name">Alphabetical</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="store-main">
+      <aside class="store-sidebar">
+        <section class="panel">
+          <h2>Categories</h2>
+          <div id="category-list" class="chip-list" role="listbox" aria-label="Filter by category">
+            <button type="button" class="chip is-active" data-category="all">All products</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Availability</h2>
+          <div class="chip-list" role="listbox" aria-label="Filter by availability">
+            <button type="button" class="chip is-active" data-availability="all">All</button>
+            <button type="button" class="chip" data-availability="in-stock">In stock</button>
+            <button type="button" class="chip" data-availability="low-stock">Low stock</button>
+            <button type="button" class="chip" data-availability="out-of-stock">Out of stock</button>
+          </div>
+        </section>
+        <section class="panel panel-info">
+          <h2>Need something?</h2>
+          <p>Use the “Request Stock” button on any product to send the item details to your clipboard. Share it with your sales team or customers instantly.</p>
+        </section>
+      </aside>
+
+      <section class="store-content">
+        <div id="status-banner" class="status-banner" role="status" aria-live="polite"></div>
+        <div id="product-grid" class="product-grid"></div>
+      </section>
+    </main>
+
+    <footer class="store-footer">
+      <p>Synced storefront · Shop ID <span id="shop-id">shop-1</span></p>
+    </footer>
+  </div>
+
+  <template id="product-card-template">
+    <article class="product-card">
+      <figure class="product-image">
+        <img src="" alt="" loading="lazy">
+        <figcaption class="product-stock"></figcaption>
+      </figure>
+      <div class="product-info">
+        <div class="product-headline">
+          <h3 class="product-name"></h3>
+          <p class="product-brand"></p>
+        </div>
+        <p class="product-desc"></p>
+        <dl class="product-meta">
+          <div><dt>Price</dt><dd class="product-price"></dd></div>
+          <div><dt>SKU</dt><dd class="product-sku"></dd></div>
+          <div><dt>Category</dt><dd class="product-category"></dd></div>
+        </dl>
+        <div class="product-actions">
+          <button type="button" class="product-action">Request Stock</button>
+          <span class="product-pill"></span>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="./shop.js"></script>
+</body>
+</html>
