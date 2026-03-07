@@ -1,7 +1,7 @@
 # IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
 
 <p align="center">
-  <b>A full-stack retail operations platform for inventory, POS, storefront, backoffice, promotions, and multi-shop management.</b>
+  <b>A full-stack retail operations platform for inventory, POS,S-Go POS, storefront Management for Onlineshop, Online-Shop , backoffice, promotions- Auto generated Prospecats with Autometion, and multi-shop management.</b>
 </p>
 
 <p align="center">
