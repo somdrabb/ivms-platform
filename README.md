@@ -14,6 +14,23 @@
 </p>
 
 ---
+## Overview
+
+**IVMS** is a unified **retail operations platform** that combines multiple business-critical tools into one connected system.
+
+Instead of building isolated pages, this project was designed as a **shared platform** where all major interfaces connect to the same backend and database. That means products, stock, pricing, shops, purchases, inventory movements, and operational workflows remain synchronized across the whole ecosystem.
+
+The platform includes:
+
+- **Inventory management console**
+- **Backoffice / admin interface**
+- **POS (Point of Sale) system**
+- **Customer-facing storefront**
+- **Prospectus / promotions workspace**
+- **Central API and database backend**
+
+This makes IVMS much more than a normal CRUD app. It is a **multi-surface retail platform** built around one shared source of truth.
+---
 
 ## What this project includes
 
