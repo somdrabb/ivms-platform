@@ -197,8 +197,116 @@ ivms-platform/
 This structure matches the architecture already implied by the current server imports and npm scripts. fileciteturn6file2 fileciteturn6file1
 
 ---
+# IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
+
+<p align="center">
+  <b>A full-stack retail operations platform for inventory, POS, storefront, backoffice, promotions, and multi-shop management.</b>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js" />
+  <img src="https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb" />
+  <img src="https://img.shields.io/badge/JavaScript-Vanilla-yellow?style=for-the-badge&logo=javascript" />
+  <img src="https://img.shields.io/badge/HTML-CSS-orange?style=for-the-badge&logo=html5" />
+  <img src="https://img.shields.io/badge/Multi--Shop-Supported-blue?style=for-the-badge" />
+</p>
+
+---
+
+## Overview
+
+**IVMS** is a unified **retail operations platform** that combines multiple business-critical tools into one connected system.
+
+Instead of building isolated pages, this project was designed as a **shared platform** where all major interfaces connect to the same backend and database. That means products, stock, pricing, shops, purchases, inventory movements, and operational workflows remain synchronized across the whole ecosystem.
+
+The platform includes:
+
+- **Inventory management console**
+- **Backoffice / admin interface**
+- **POS (Point of Sale) system**
+- **Customer-facing storefront**
+- **Prospectus / promotions workspace**
+- **Central API and database backend**
+
+This makes IVMS much more than a normal CRUD app. It is a **multi-surface retail platform** built around one shared source of truth.
+
+---
+
+## Platform Modules
+
+### 1. Inventory & Operations Console
+The main IVMS console is the internal operational cockpit used to manage products, stock, warehouses, purchases, transfers, ESL-related workflows, images, inline editing, search, and pagination.
+
+### 2. Backoffice SPA
+The backoffice is an admin/business-focused interface for dashboards, sales views, terminal handling, cashier-related workflows, and other staff-facing business operations.
+
+### 3. POS Interface
+The POS module provides a browser-based point-of-sale experience with login/lockscreen flow, article lookup, keypad interaction, session persistence, and register-oriented screen logic.
+
+### 4. Customer Storefront
+The storefront is a customer-facing catalog experience that reads live data from the shared API and supports search, sorting, category filters, availability filters, and quick stock-request interactions.
+
+### 5. Prospectus / Promotions Workspace
+The prospectus module acts as a promotional editor and marketing workspace that supports editable layouts, company profile data, zooming, discount/product loading, and local persistence.
+
+### 6. Central Backend & Database
+The backend is the shared API and data layer that powers all modules. It handles products, shops, purchases, warehouses, stock history, authentication, and static frontend delivery.
+
+---
+
+## Why this project is strong
+
+This repository is strong because it demonstrates **system-level thinking**, not just page-level coding.
+
+### It combines:
+- inventory management
+- multi-shop operations
+- admin workflows
+- customer-facing retail UI
+- POS-style interactions
+- purchase / warehouse processes
+- promotional tooling
+- one shared backend and database architecture
+
+That makes it far more realistic than a basic tutorial app.
+
+---
+
+## Architecture
+
+```text
+                         ┌───────────────────────────┐
+                         │        MongoDB            │
+                         │   Products / Shops /      │
+                         │ Purchases / Users / Logs  │
+                         └─────────────┬─────────────┘
+                                       │
+                                       │
+                          ┌────────────▼────────────┐
+                          │   Node.js + Express API │
+                          │  Auth / Products /      │
+                          │  Shops / Purchases /    │
+                          │  Warehouses / History   │
+                          └───────┬───────┬─────────┘
+                                  │       │
+               ┌──────────────────┘       └──────────────────┐
+               │                                             │
+     ┌─────────▼─────────┐                         ┌─────────▼─────────┐
+     │  IVMS Console     │                         │   Backoffice SPA  │
+     │ Inventory / KPIs  │                         │ Admin / Sales /   │
+     │ Warehouse / Shop  │                         │ Cashier / Reports │
+     └─────────┬─────────┘                         └───────────────────┘
+               │
+     ┌─────────┼─────────┬───────────────────────────────┐
+     │         │         │                               │
+┌────▼────┐ ┌──▼──────┐ ┌▼────────────┐            ┌─────▼──────────┐
+│  POS    │ │Storefront│ │ Prospectus │            │ Shared Frontend │
+│ Register│ │ Catalog   │ │ Promotions │            │ Static Delivery │
+└─────────┘ └───────────┘ └────────────┘            └────────────────┘
 
 ## Repository layout in the current uploaded version
+---
 
 ### Backend-related files
 - `db.js`
