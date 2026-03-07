@@ -1,8 +1,17 @@
 # IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
 
-IVMS is a full-stack retail operations platform that combines inventory management, multi-shop administration, a POS interface, a customer-facing storefront, a prospectus/promotions workspace, and a central Node.js + MongoDB backend.
+<p align="center">
+  <b>A full-stack retail operations platform for inventory, POS, storefront, backoffice, promotions, and multi-shop management.</b>
+</p>
 
-The project is designed as one shared system: all operational interfaces connect to the same API and database so products, stock, pricing, shops, purchases, and supporting workflows stay synchronized across the platform. The Express server also serves the bundled frontends directly, so one backend process can power the whole experience. fileciteturn6file2 fileciteturn6file1
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js" />
+  <img src="https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb" />
+  <img src="https://img.shields.io/badge/JavaScript-Vanilla-yellow?style=for-the-badge&logo=javascript" />
+  <img src="https://img.shields.io/badge/HTML-CSS-orange?style=for-the-badge&logo=html5" />
+  <img src="https://img.shields.io/badge/Multi--Shop-Supported-blue?style=for-the-badge" />
+</p>
 
 ---
 
