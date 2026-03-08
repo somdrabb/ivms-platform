@@ -61,9 +61,9 @@ This project follows a shared-data architecture:
 1. The **backend** stores and serves products, shops, purchases, warehouse activity, and history.
 2. The **IVMS console** consumes those APIs for inventory and operations.
 3. The **storefront** reads the same product/shop data for customer-facing browsing.
-4. The **POS** can use the same API host and active shop context for article lookup and transaction-related flows. fileciteturn6file13
-5. The **backoffice** acts as a business operations SPA and also talks to the same backend. fileciteturn6file19
-6. The **prospectus** workspace can pull promotional/inventory data to build marketing content. fileciteturn6file11
+4. The **POS** can use the same API host and active shop context for article lookup and transaction-related flows. 
+5. The **backoffice** acts as a business operations SPA and also talks to the same backend. 
+6. The **prospectus** workspace can pull promotional/inventory data to build marketing content.
 
 That makes IVMS a unified retail platform rather than a collection of unrelated pages.
 
