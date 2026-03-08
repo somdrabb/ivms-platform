@@ -86,7 +86,7 @@ The current backend entry point is `src/index.js` according to the runtime scrip
 - Vanilla JavaScript
 - Font Awesome
 - LocalStorage / IndexedDB where needed
-- Some third-party browser helpers such as QR/barcode/chart-related scripts referenced by the frontend shell. fileciteturn6file3
+- Some third-party browser helpers such as QR/barcode/chart-related scripts referenced by the frontend shell. 
 
 ### Design approach
 - Static frontends that can be served directly by Express
@@ -194,7 +194,7 @@ ivms-platform/
    └─ screenshots/
 ```
 
-This structure matches the architecture already implied by the current server imports and npm scripts. fileciteturn6file2 fileciteturn6file1
+This structure matches the architecture already implied by the current server imports and npm scripts. 
 
 ---
 # IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
