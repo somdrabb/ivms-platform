@@ -549,7 +549,7 @@ Because the Express server also delivers the frontend applications, you can laun
    ```bash
    npm install
 
-## Create your environment configuration
+Create your environment configuration
 Add a .env file in the project root and provide the required runtime variables for your local environment.
 
 Ensure MongoDB is available
@@ -557,26 +557,26 @@ Start your local MongoDB instance before launching the application.
 
 Start the platform
 
-```npm run dev```
+npm run dev
 
 or
 
-```npm start```
+npm start
 Available Local Interfaces
 
-# Once the server is running, the platform frontends can be accessed directly through the backend service:
+Once the server is running, the platform frontends can be accessed directly through the backend service:
 
-Storefront: ```http://localhost:4000/storefront/```
+Storefront: http://localhost:4000/storefront/
 
-POS: ```http://localhost:4000/pos/pos.html```
+POS: http://localhost:4000/pos/pos.html
 
-Backoffice: ```http://localhost:4000/backoffice/backoffice.html ```
+Backoffice: http://localhost:4000/backoffice/backoffice.html
 
-# This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
+This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
-# Summary
+Summary
 
-# IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
+IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
 
 From an engineering and product perspective, the platform already demonstrates strong practical value through:
 
@@ -590,4 +590,4 @@ customer-facing and internal-facing application layers
 
 operational scalability potential
 
-# With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
+With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
