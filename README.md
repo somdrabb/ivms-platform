@@ -78,7 +78,7 @@ That makes IVMS a unified retail platform rather than a collection of unrelated 
 - ES Modules
 - CORS, Morgan, dotenv
 
-The current backend entry point is `src/index.js` according to the runtime scripts, and the uploaded server file imports database, models, middleware, and routes for products, shops, purchases, warehouses, history, and auth. fileciteturn6file1 fileciteturn6file2
+The current backend entry point is `src/index.js` according to the runtime scripts, and the uploaded server file imports database, models, middleware, and routes for products, shops, purchases, warehouses, history, and auth. 
 
 ### Frontend
 - HTML
@@ -196,25 +196,7 @@ ivms-platform/
 
 This structure matches the architecture already implied by the current server imports and npm scripts. 
 
----
-# IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
 
-<p align="center">
-  <b>A full-stack retail operations platform for inventory, POS, storefront, backoffice, promotions, and multi-shop management.</b>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js" />
-  <img src="https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb" />
-  <img src="https://img.shields.io/badge/JavaScript-Vanilla-yellow?style=for-the-badge&logo=javascript" />
-  <img src="https://img.shields.io/badge/HTML-CSS-orange?style=for-the-badge&logo=html5" />
-  <img src="https://img.shields.io/badge/Multi--Shop-Supported-blue?style=for-the-badge" />
-</p>
-
----
-
-## Overview
 
 **IVMS** is a unified **retail operations platform** that combines multiple business-critical tools into one connected system.
 
@@ -504,75 +486,6 @@ Because the Express app serves the bundled frontends, you do not necessarily nee
 
 ---
 
-## Example environment values
-
-Create a `.env` file with values such as:
-
-```env
-MONGODB_URI=mongodb://localhost:27017/inventory
-PORT=4000
-NODE_ENV=development
-JWT_SECRET=your-secret
-```
-
-Adjust names to match the exact variables used in your backend.
-
----
-
-## Why this project is strong
-
-This repository stands out because it combines several real business concerns in one system:
-- inventory management
-- multi-shop support
-- operational dashboards
-- POS workflows
-- storefront catalog delivery
-- admin/backoffice tools
-- marketing/prospectus tooling
-- centralized API + database design
-
-That makes it much stronger than a normal “products CRUD” app. It shows system thinking, not only page building.
-
----
-
-## Current improvement opportunities
-
-The project is strong, but these improvements would make it more professional:
-
-1. **Clean folder structure**
-   Move backend files into `src/` subfolders and split frontend modules into dedicated directories.
-
-2. **Fix naming consistency**
-   Rename files like `dashbord.css`, `serchproduct.js`, and `propectas.html` to cleaner names.
-
-3. **Split inline-heavy files**
-   Separate large inline HTML/CSS/JS in `backoffice.html` and `propectas.html` into dedicated files.
-
-4. **Align README and actual structure**
-   The project description should match the exact files and routes that currently exist.
-
-5. **Harden auth and production security**
-   Before production deployment, review route protection, token handling, admin-only actions, and destructive operations.
-
-6. **Add screenshots and architecture diagrams**
-   This would improve portfolio and GitHub presentation significantly.
-
----
-
-## Portfolio value
-
-As a portfolio project, IVMS is very good because it demonstrates:
-- full-stack architecture
-- API design
-- modular front-end organization
-- real-world business logic
-- operational UX thinking
-- multi-surface product design
-
-A recruiter or client can immediately see that this is closer to a real internal business platform than a tutorial project.
-
----
-
-## Final summary
+## summary
 
 IVMS is a unified retail operations platform built around one central backend and multiple role-specific frontends. It combines internal operations, customer-facing sales, register workflows, administration, and promotional tooling into one shared system. The codebase already shows strong practical capability; with cleaner structure, naming consistency, and production hardening, it can become an even more professional GitHub and portfolio project.
