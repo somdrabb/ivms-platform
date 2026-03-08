@@ -212,47 +212,84 @@ ivms-platform/
 ├── README.md
 ├── .env
 ├── .env.example
-├── uploads/
 │
-├── src/                             # Backend / API layer
-│   ├── index.js                     # Express app entry point
-│   ├── db.js                        # Database connection
+├── src/                                 # Backend / API layer
+│   ├── index.js                         # Express app entry point
+│   ├── db.js                            # Database connection
 │   │
-│   ├── middleware/                  # Cross-cutting backend middleware
-│   │   └── auth.js
+│   ├── middleware/                      # Cross-cutting backend middleware
+│   │   └── auth.js                      # Authentication / request protection
 │   │
-│   ├── models/                      # Database models / schemas
-│   │   ├── product.js
-│   │   ├── purchaseOrder.js
-│   │   ├── shop.js
-│   │   └── user.js
+│   ├── models/                          # Database models / schemas
+│   │   ├── product.js                   # Product data model
+│   │   ├── purchaseOrder.js             # Purchase order model
+│   │   ├── shop.js                      # Shop / outlet model
+│   │   └── user.js                      # User / access model
 │   │
-│   ├── routes/                      # API route modules
-│   │   ├── auth.js
-│   │   ├── products.js
-│   │   ├── purchases.js
-│   │   ├── shops.js
-│   │   ├── warehouses.js
-│   │   └── history.js
+│   ├── routes/                          # API route modules
+│   │   ├── auth.js                      # Authentication routes
+│   │   ├── products.js                  # Product and inventory routes
+│   │   ├── purchases.js                 # Purchase workflow routes
+│   │   ├── shops.js                     # Shop management routes
+│   │   ├── warehouses.js                # Warehouse-related routes
+│   │   └── history.js                   # Stock / audit history routes
 │   │
-│   └── utils/                       # Shared backend utilities
-│       ├── csv.js
-│       ├── password.js
-│       └── token.js
+│   └── utils/                           # Shared backend utilities
+│       ├── csv.js                       # CSV import / export helpers
+│       ├── password.js                  # Password hashing / validation
+│       └── token.js                     # Token / auth helpers
 │
-├── frontend/                        # Frontend applications
-│   ├── ivms/                        # Main inventory & operations console
-│   ├── storefront/                  # Customer-facing online shop
-│   ├── pos/                         # Point-of-sale interface
-│   ├── backoffice/                  # Admin / business operations SPA
-│   └── prospectus/                  # Promotions / prospectus workspace
+├── frontend/                            # Frontend applications
+│   ├── ivms/                            # Main inventory & operations console
+│   │   ├── index.html                   # Main application shell
+│   │   ├── index.css                    # Global UI styling
+│   │   ├── dashbord.css                 # Dashboard-specific styling
+│   │   ├── script.js                    # Core app state / rendering logic
+│   │   ├── addshop.js                   # Shop switching / shop-aware logic
+│   │   ├── updatepage.js                # Pagination helpers
+│   │   ├── excelInlineEdit.js           # Inline editing workflow
+│   │   ├── helper.js                    # Shared UI / browser helpers
+│   │   ├── picture.js                   # Product image handling
+│   │   ├── restinventory.js             # Inventory reset workflow
+│   │   ├── Key_Shortcut.js              # Keyboard shortcut support
+│   │   ├── serchproduct.js              # Search and filtering logic
+│   │   └── public/                      # IVMS static assets
+│   │
+│   ├── storefront/                      # Customer-facing online shop
+│   │   ├── index.html                   # Storefront page shell
+│   │   ├── style.css                    # Storefront styling
+│   │   ├── shop.js                      # Catalog rendering / filters
+│   │   └── public/                      # Storefront static assets
+│   │
+│   ├── onlineshop/                      # Additional online shop frontend
+│   │   ├── onlineshop.html              # Online shop page
+│   │   ├── onlineshop.css               # Online shop styling
+│   │   ├── onlineshop.js                # Online shop logic
+│   │   └── public/                      # Online shop static assets
+│   │
+│   ├── pos/                             # Point-of-sale interface
+│   │   ├── pos.html                     # POS screen layout
+│   │   ├── pos.css                      # POS styling
+│   │   ├── pos.js                       # POS interactions / session logic
+│   │   └── public/                      # POS images / slideshow assets
+│   │
+│   ├── backoffice/                      # Admin / business operations SPA
+│   │   ├── backoffice.html              # Backoffice SPA shell
+│   │   ├── backoffice.css               # Backoffice styling
+│   │   ├── backoffice.js                # Backoffice application logic
+│   │   └── public/                      # Backoffice static assets
+│   │
+│   └── prospectus/                      # Promotions / prospectus workspace
+│       ├── prospectus.html              # Prospectus editor workspace
+│       ├── prospectus.css               # Prospectus styling
+│       ├── prospectus.js                # Prospectus interactions / logic
+│       └── public/                      # Prospectus static assets
 │
-├── uploads/                         # Uploaded assets / product images
+├── uploads/                             # Uploaded runtime assets / product images
 │
-└── docs/                            # Project documentation
-    └── screenshots/                 # UI previews and repository visuals
+└── docs/                                # Project documentation
+    └── screenshots/                     # UI previews and repository visuals
 ```
-
 db.js
 
 index.js
