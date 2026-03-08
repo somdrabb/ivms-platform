@@ -560,10 +560,11 @@ Start the platform
 
 ```bash
 npm run dev
-
+```
 or
 ```bash
 npm start
+```
 
 Available Local Interfaces
 
