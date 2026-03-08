@@ -557,16 +557,21 @@ Start your local MongoDB instance before launching the application.
 
 Start the platform
 
-```npm run dev
+
+```bash
+npm run dev
 
 or
+```bash
+npm start
 
-```npm start
 Available Local Interfaces
 
 Once the server is running, the platform frontends can be accessed directly through the backend service:
 
-Storefront: ```http://localhost:4000/storefront/
+Storefront:
+```bash
+http://localhost:4000/storefront/
 
 POS: ```http://localhost:4000/pos/pos.html
 
