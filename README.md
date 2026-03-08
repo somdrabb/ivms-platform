@@ -1,16 +1,48 @@
 # IVMS — Integrated Inventory, POS, Storefront & Backoffice Platform
 
 <p align="center">
-  <b>A full-stack retail operations platform for inventory, POS, S-Go POS, storefront management, backoffice workflows, promotions, auto-generated prospectus automation, and multi-shop management.</b>
+  <b>Enterprise-style retail operations platform for inventory, POS, storefront, backoffice, prospectus automation, and multi-shop management.</b>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js" />
-  <img src="https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb" />
-  <img src="https://img.shields.io/badge/JavaScript-Vanilla-yellow?style=for-the-badge&logo=javascript" />
-  <img src="https://img.shields.io/badge/HTML-CSS-orange?style=for-the-badge&logo=html5" />
-  <img src="https://img.shields.io/badge/Multi--Shop-Supported-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Platform-Retail%20Operations-0A66C2?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Architecture-Full%20Stack-111827?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Deployment-Multi%20Interface-2563EB?style=for-the-badge" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express-API-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/Mongoose-ODM-880000?style=for-the-badge&logo=mongoose&logoColor=white" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/HTML5-Frontend-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/CSS3-Styling-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/Font%20Awesome-UI%20Icons-528DD7?style=for-the-badge&logo=fontawesome&logoColor=white" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Authentication-JWT-8B5CF6?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/API-REST-0F766E?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Multi--Shop-Supported-1D4ED8?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active%20Development-F59E0B?style=for-the-badge" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Modules-IVMS%20Console-1F2937?style=flat-square" />
+  <img src="https://img.shields.io/badge/Modules-Storefront-1F2937?style=flat-square" />
+  <img src="https://img.shields.io/badge/Modules-POS-1F2937?style=flat-square" />
+  <img src="https://img.shields.io/badge/Modules-Backoffice-1F2937?style=flat-square" />
+  <img src="https://img.shields.io/badge/Modules-Prospectus-1F2937?style=flat-square" />
+</p>
+
+---
+
+<p align="center">
+  <i>One shared backend. Multiple business interfaces. Unified retail operations.</i>
 </p>
 
 ---
