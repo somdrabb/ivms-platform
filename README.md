@@ -128,77 +128,80 @@ The backoffice is a single-page staff and admin interface focused on dashboards,
 
 The prospectus workspace is used to design promotional layouts and marketing pages. The uploaded propectas.html includes editing tools, company profile storage, modal interactions, discount and product loading, zoom support, and client-side persistence. In the current state, much of this logic is embedded directly in the HTML file rather than split into separate CSS and JS assets.
 
-## Tech Stack
+## Technology Landscape
 
 <div align="center">
 
-| Backend | Frontend | Storage & UI |
-|---|---|---|
-| Node.js | HTML | LocalStorage |
-| Express | CSS | IndexedDB |
-| MongoDB / Mongoose | Vanilla JavaScript | Font Awesome |
-| ES Modules | Browser-native modules | QR / Barcode / Chart helpers |
-| CORS / Morgan / dotenv | Static frontend delivery | Shop-aware API integration |
+| Platform Layer | Technologies |
+|---|---|
+| **Backend Services** | Node.js, Express, MongoDB, Mongoose, ES Modules |
+| **Frontend Applications** | HTML, CSS, Vanilla JavaScript |
+| **Client-Side Persistence** | LocalStorage, IndexedDB |
+| **UI & Interaction** | Font Awesome, browser-native UI modules, QR / barcode / chart helpers |
+| **Runtime & Developer Tooling** | dotenv, CORS, Morgan |
 
 </div>
 
-### Architecture Style
-- Static frontends served directly by Express
-- API-first communication between frontend and backend
-- Multi-shop aware requests using shop-scoped logic
-- Lightweight browser-native implementation without a required bundler
+### Engineering Approach
+- **Unified platform architecture** with a shared backend serving multiple operational interfaces
+- **API-first integration model** connecting internal tools, POS, storefront, and promotional workflows
+- **Multi-shop aware request handling** through shop-scoped data access and context-based operations
+- **Browser-native frontend delivery** with lightweight modules and no mandatory bundler dependency
+- **Express-served static applications** for simplified deployment and centralized platform delivery
 
 ---
 
-## Main Features
+## Core Business Capabilities
 
-### Inventory & Product Management
-- Product listing, editing, and stock handling
-- Shop-aware inventory workflows
-- Search, pagination, and inline stock editing
-- Product image workflows and CSV support
-- Inventory reset flow with confirmation safeguards
-- Transfer queue and retry support in the IVMS console
+### Inventory Operations
+- Centralized product catalog management
+- Stock editing, updates, and inventory control
+- Shop-aware inventory workflows across multiple outlets
+- Search, filtering, and pagination for large product datasets
+- Inline editing for faster operational updates
+- Product image handling and CSV-based support utilities
+- Controlled inventory reset workflow with confirmation safeguards
+- Transfer queue and retry handling within the IVMS console
 
-### Dashboard & Operations
-- KPI cards and overview panels
-- Multi-tab operational cockpit
-- Purchase and warehouse visibility
-- Activity indicators, notifications, and utility helpers
-- Keyboard shortcuts for faster staff workflows
+### Operational Intelligence & Control
+- KPI dashboards and executive overview panels
+- Multi-tab operational cockpit for day-to-day workflows
+- Purchase and warehouse activity visibility
+- Status indicators, alerts, and notification support
+- Keyboard shortcuts and workflow acceleration utilities
 
-### Multi-Shop Support
-- Shop-aware requests and scoped data loading
+### Multi-Shop Administration
+- Shop-scoped request handling
 - Shop metadata loading and persistence
-- Storefront shop targeting
-- POS shop selection fallback logic
+- Outlet-aware data targeting across platform modules
+- POS fallback logic for shop selection and active context handling
 
-### Storefront
-- Product grid with search and sorting
-- Category and availability filters
-- Customer-facing request-stock workflow
-- Shop-specific storefront view
+### Storefront Commerce Experience
+- Customer-facing product catalog presentation
+- Search, sorting, category filtering, and availability filtering
+- Shop-specific storefront rendering
+- Request-stock workflow for customer and sales-side interaction
 
-### POS
-- Login and lockscreen flow
-- Soft keypad and numeric input
-- Product and article lookup
-- Session persistence with LocalStorage
-- Shop-aware API base detection and product fetch attempts
+### Point of Sale
+- Login and lockscreen workflow
+- Soft keypad and register-style numeric input
+- Product and article lookup flows
+- Session persistence through LocalStorage
+- Shared API base awareness aligned with the wider platform
 
-### Backoffice
-- Dashboard widgets and sales views
-- POS terminal management
-- Cashier management
-- Business and admin workflow screens
+### Backoffice Administration
+- Dashboard widgets and business overview screens
+- Sales visibility and staff-facing management views
+- POS terminal administration
+- Cashier management workflows
+- Business and administrative process screens
 
-### Prospectus
-- Editable promotion canvas
+### Prospectus & Promotional Workspace
+- Editable promotion canvas for marketing content
 - Company profile persistence
-- Discount and product loading
-- Zoom controls
-- Modal-based content editing
-
+- Discount and promotional product loading
+- Zoom and presentation controls
+- Modal-based editing and prospectus composition workflows
 
 ### Project structure
 
