@@ -620,7 +620,10 @@ npm start
 Available Local Interfaces
 
 Once the server is running, the platform frontends can be accessed directly through the backend service:
-
+API listening on 
+```bash
+http://localhost:4000
+```
 Storefront:
 ```bash
 http://localhost:4000/storefront/
@@ -635,6 +638,18 @@ Backoffice:
 http://localhost:4000/backoffice/backoffice.html
 ```
 
+📦 IVMS:       
+```bash
+http://localhost:4000/ivms/
+```
+🛍 OnlineShop: 
+```bash
+http://localhost:4000/onlineshop/
+```
+📣 Prospectus: 
+```bash
+http://localhost:4000/prospectus/
+```
 This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
 ## Executive Summary
