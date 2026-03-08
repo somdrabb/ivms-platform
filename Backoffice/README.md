@@ -1,6 +1,6 @@
 # Backoffice SPA
 
-This folder contains the POS backoffice single-page experience that powers dashboards, POS management, inventory, sales, cash, reports, sync, bank, and settings. It's a static front-end that talks to the API defined by `localStorage`: by default `http://localhost:8000`.
+This folder contains the POS backoffice single-page experience that powers dashboards, POS management, inventory, sales, cash, reports, sync, bank, and settings. It's a static front-end that talks to the API defined by `localStorage`: by default `http://localhost:4000/api`.
 
 ## Layout
 - `backoffice.html` – the entry HTML (sidebar, header, toast, modal root, main content slot). It links to Font Awesome, the extracted `backoffice.css`, and `backoffice.js`.
