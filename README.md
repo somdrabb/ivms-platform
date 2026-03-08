@@ -290,254 +290,206 @@ ivms-platform/
 └── docs/                                # Project documentation
     └── screenshots/                     # UI previews and repository visuals
 ```
-db.js
 
-index.js
+## Platform Composition
 
-auth.js
+### Backend Services
+The backend layer is built around a centralized Node.js and Express service that manages platform routing, database connectivity, authentication, product operations, purchase workflows, warehouse activity, shop management, history tracking, and shared utility functions.
 
-product.js
+**Core backend components**
+- `index.js` — application entry point and server bootstrap
+- `db.js` — database connection and initialization
+- `auth.js` — authentication middleware or route logic
+- `product.js`, `purchaseOrder.js`, `shop.js`, `user.js`, `purchaseItems.js` — domain models
+- `products.js`, `purchases.js`, `shops.js`, `warehouses.js`, `history.js` — API resource modules
+- `csv.js`, `password.js`, `token.js` — shared backend utilities
 
-purchaseOrder.js
+### Frontend Applications
+The frontend layer is separated into multiple business-focused interfaces, each designed for a specific operational context across the platform.
 
-shop.js
+**Application areas**
+- **IVMS Console** — internal inventory and operations workspace
+- **Storefront / Online Shop** — customer-facing catalog and product browsing experience
+- **POS** — point-of-sale register interface
+- **Backoffice** — business and administration workspace
+- **Prospectus** — promotional and prospectus editing workspace
 
-user.js
+---
 
-history.js
+## Backend Overview
 
-products.js
+The backend acts as the **core service layer** of the platform.
 
-purchases.js
+### Service Responsibilities
+- Initialize and run the Express application
+- Connect the platform to MongoDB
+- Expose REST API resources for auth, products, purchases, shops, warehouses, and history
+- Serve static frontend applications from a centralized backend process
+- Maintain a shared source of truth across all business interfaces
 
-shops.js
+### Primary API Resources
+- `/api/auth`
+- `/api/products`
+- `/api/purchases`
+- `/api/shops`
+- `/api/warehouses`
+- `/api/history`
+- `/api/health`
 
-warehouses.js
+### Data & Security
+MongoDB stores the platform’s core business entities including products, purchases, shops, and users. The service also supports default shop normalization for legacy data. Authentication, token utilities, and protected route handling are already present, though production-grade hardening should be part of the final deployment roadmap.
 
-csv.js
+---
 
-password.js
+## IVMS Operational Console
 
-purchaseItems.js
+The IVMS console is the platform’s **primary internal operations workspace**, designed for inventory control, workflow visibility, and staff productivity.
 
-token.js
+### Core Responsibilities
+- Dashboard and KPI visibility
+- Product and stock management
+- Purchase and warehouse workflows
+- Transfer tracking and operational support
+- ESL / preview-related tooling
+- Shop-aware inventory actions
+- Bulk update utilities
+- Productivity enhancements such as inline editing and keyboard shortcuts
 
-IVMS / operational console files
+### Key Application Files
+- `index.html` — main shell and tab-driven UI structure
+- `script.js` — application state, rendering, loaders, and shared logic
+- `index.css` — shared interface styling
+- `dashbord.css` — dashboard-specific presentation
+- `addshop.js` — shop switching and shop-context logic
+- `updatepage.js` — pagination handling
+- `excelInlineEdit.js` — inline editing workflow
+- `picture.js` — image and media-related utilities
+- `restinventory.js` — safeguarded inventory reset flow
+- `Key_Shortcut.js` — keyboard productivity layer
+- `helper.js` — shared browser and UI helpers
+- `serchproduct.js` — product search and filtering logic
 
-index.html
+### Business Value
+This module demonstrates an enterprise-style internal application approach by combining operational visibility, workflow efficiency, shop-aware state handling, and staff tooling within a single management console.
 
-index.css
+---
 
-dashbord.css
+## Storefront / Online Shop
 
-script.js
+The storefront layer represents the **customer-facing commerce experience** of the platform.
 
-addshop.js
+### Included Components
+- `index.html`, `shop.js`, `style.css`
+- `onlineshop.html`, `onlineshop.css`, `onlineshop.js`
 
-updatepage.js
+### Business Role
+This area provides searchable, filterable, shop-aware product presentation for customer or sales-facing usage, extending the platform beyond internal operations into retail-facing digital experiences.
 
-excelInlineEdit.js
+---
 
-helper.js
+## POS Interface
 
-picture.js
+The POS module represents the **register-side sales interface**.
 
-restinventory.js
+### Included Components
+- `pos.html`
+- `pos.js`
 
-Key_Shortcut.js
+### Business Role
+This interface supports POS-oriented workflows such as lockscreen handling, keypad-driven input, product lookup, and temporary session control, giving the platform a direct operational sales layer.
 
-serchproduct.js
+---
 
-Storefront / online shop files
+## Backoffice Workspace
 
-index.html / shop.js / style.css
+The backoffice module represents the **administrative and business operations interface**.
 
-onlineshop.html / onlineshop.css / onlineshop.js
+### Included Components
+- `backoffice.html`
 
-POS files
+### Business Role
+This area is intended for dashboards, reporting, cashier workflows, terminal visibility, and broader business-side operational management.
 
-pos.html
+---
 
-pos.js
+## Prospectus Workspace
 
-Backoffice files
+The prospectus module represents the **promotional and marketing workspace**.
 
-backoffice.html
+### Included Components
+- `propectas.html`
 
-Prospectus files
+### Business Role
+This interface supports prospectus composition, promotional content editing, discount presentation, and marketing-oriented layout workflows, adding a merchandising layer to the broader platform.
 
-propectas.html
+## Business Value by Platform Module
 
-Backend overview
+### IVMS Operational Console
+The IVMS console delivers the platform’s **core operational control layer**. Rather than acting as a basic CRUD dashboard, it supports real business workflows through shared state handling, inventory operations, fallback logic, retry-oriented processes, productivity utilities, and shop-aware execution. This makes it a strong example of an internal enterprise application designed for day-to-day operational efficiency.
 
-The backend is the platform backbone.
+---
 
-Entry point
+### Storefront
+The storefront represents the platform’s **customer-facing digital commerce layer**. It transforms internal inventory data into a clean, searchable, and business-ready catalog experience with stock visibility, pricing presentation, filtering, and shop-specific product discovery.
 
-The server initializes Express, configures middleware, connects the database, mounts API routers, exposes a health check, and serves static frontend folders for the storefront, POS, and backoffice.
+#### Core Responsibilities
+- Product catalog presentation
+- Stock and pricing visibility
+- Search, sorting, and filtering
+- Request-stock interaction
+- Shop-specific catalog delivery
 
-API resources
+#### Business Value
+This module demonstrates that the platform’s data model is reusable beyond internal staff tools. It extends the system into a customer-facing experience, showing how the same operational backend can support commerce, product discovery, and sales enablement in a polished frontend layer.
 
-The backend currently exposes:
+---
 
-/api/auth
+### POS
+The POS module delivers the platform’s **transaction-side retail interface**. It provides a kiosk-style sales experience with register-oriented interaction patterns such as keypad input, product lookup, session handling, and access control.
 
-/api/products
+#### Core Responsibilities
+- POS lock and unlock workflow
+- Keypad-driven input handling
+- Product and article lookup
+- Active basket / scanned item flow
+- Temporary session persistence
+- Shared API base alignment with the wider platform
 
-/api/history
+#### Business Value
+This module elevates the project beyond inventory administration into real operational retail execution. It demonstrates the ability to design task-focused sales interfaces, which is a distinct product challenge compared with dashboards or catalog screens, and strengthens the platform’s enterprise credibility.
 
-/api/warehouses
+---
 
-/api/purchases
+### Backoffice SPA
+The backoffice provides the platform’s **administrative and business management layer**. It supports dashboards, reporting visibility, cashier-related workflows, terminal views, and broader business-side operational control.
 
-/api/shops
+#### Core Responsibilities
+- Management dashboard visibility
+- Terminal-related operational views
+- Sales-facing monitoring screens
+- Cashier workflow support
+- Modal-driven SPA navigation and business administration flows
 
-/api/health
+#### Business Value
+This module adds an executive and administrative dimension to the platform by supporting management-facing workflows in addition to frontline operations. It strengthens the system’s value as a multi-role business platform rather than a single-purpose operational tool.
 
-It also supports product-oriented operations such as list, create, update, delete, stock patching, duplicate checking, CSV export, and history access.
+#### Architecture Note
+In the current uploaded version, `backoffice.html` still contains inline CSS and JavaScript. For stronger maintainability and production readiness, this area should be modularized into dedicated `backoffice.css` and `backoffice.js` assets where applicable.
 
-Database role
+---
 
-MongoDB stores the central product, purchase, shop, and user data. The server also performs a default shop backfill so legacy products and purchase orders without a shopId can be normalized into a default shop context.
+### Prospectus Workspace
+The prospectus module represents the platform’s **promotional and merchandising workspace**. It is designed to connect operational product data with marketing-oriented presentation workflows.
 
-Authentication note
+#### Core Responsibilities
+- Promotional layout editing
+- Company profile persistence
+- Discount and product loading
+- Zoom and presentation controls
+- Marketing-oriented content composition
 
-The project includes auth routes, token utilities, and auth middleware, but production hardening should be reviewed carefully before deployment because the security model needs to match the intended real-world exposure.
-
-Frontend module details
-IVMS operational console
-
-The IVMS console is the main internal operations area.
-
-Responsibilities
-
-Dashboard overview
-
-Product and stock management
-
-Purchase and warehouse flows
-
-Transfer tracking
-
-ESL / shelf / preview support
-
-Shop-aware inventory actions
-
-Bulk and product utilities
-
-Staff productivity helpers like inline editing and shortcuts
-
-Important files
-
-index.html — main shell and tab system
-
-script.js — global state, rendering, loaders, shared helpers
-
-dashbord.css — dashboard presentation
-
-index.css — shared styles
-
-addshop.js — shop awareness and switching
-
-updatepage.js — pagination logic
-
-excelInlineEdit.js — editable table cells
-
-picture.js — image, status, barcode-related enhancements
-
-restinventory.js — protected reset flow
-
-Key_Shortcut.js — keyboard productivity layer
-
-helper.js — utility, autofill, and browser helpers
-
-serchproduct.js — product search helpers
-
-Why it is valuable
-
-This part of the project demonstrates strong frontend problem solving for real business workflows. It is not a simple CRUD page; it includes state management, fallback logic, queue and retry behavior, operational UX, and multi-shop awareness.
-
-Storefront
-
-The storefront provides a clean customer-facing catalog that syncs with inventory.
-
-Responsibilities
-
-Show product cards
-
-Display stock status and price information
-
-Support search and filtering
-
-Provide a simple request-stock interaction
-
-Present shop-specific catalog data
-
-Why it is valuable
-
-It demonstrates that the backend data model is reusable beyond staff tools. Instead of stopping at admin CRUD, the project exposes the same product system to customers in a safe, polished interface.
-
-POS
-
-The POS interface provides a kiosk-style register experience.
-
-Responsibilities
-
-Lock and unlock POS access
-
-Collect keypad input
-
-Manage current scanned and entered product flow
-
-Perform product and article lookups
-
-Maintain temporary session state
-
-Reuse the same API base conventions as the rest of the platform
-
-Why it is valuable
-
-It shows that the project is not just inventory software but also operational retail software. Building POS-oriented screen flows is a different skill than building dashboards, and this module makes the project much stronger as a portfolio piece.
-
-Backoffice SPA
-
-The backoffice provides a more business and admin-centric control surface.
-
-Responsibilities
-
-Management dashboard
-
-Terminal-related views
-
-Sales visibility
-
-Cashier workflows
-
-Business-oriented SPA navigation and modal interactions
-
-Important note
-
-In the current uploaded version, backoffice.html contains inline CSS and JavaScript. For maintainability and professionalism, this should be split into dedicated backoffice.css and backoffice.js files if those are not already present in another folder version.
-
-Prospectus workspace
-
-The prospectus page is a marketing and promo editor tied to the operational data model.
-
-Responsibilities
-
-Edit promotional boxes and layouts
-
-Persist company profile data in localStorage
-
-Load discounted products
-
-Support zoom and presentation adjustments
-
-Combine business data with marketing presentation
-
-Why it is valuable
-
-This module adds a unique business layer to the project. It shows that the system is not only about storage and selling but also about merchandising and promotion.
+#### Business Value
+This module adds a high-value commercial layer to the project by showing that the platform is not limited to inventory control and sales execution. It also supports merchandising, promotion, and presentation workflows, which makes the overall solution more complete and more aligned with real retail business operations.
 
 Screenshots
 ```text
@@ -561,42 +513,63 @@ Screenshots
 ### Prospectus Workspace
 ![Prospectus](docs/screenshots/prospectus.png)
 ```
-How to run the project
-Local development
+## Getting Started
 
-Install dependencies:
+IVMS is designed to run as a **single integrated platform** during local development.  
+Because the Express server also delivers the frontend applications, you can launch the backend once and access multiple business interfaces from the same runtime environment.
 
-npm install
+### Local Setup
 
-Create a .env file based on your environment.
+1. **Install project dependencies**
+   ```bash
+   npm install
 
-Make sure MongoDB is running.
+Create your environment configuration
+Add a .env file in the project root and provide the required runtime variables for your local environment.
 
-Start the backend:
+Ensure MongoDB is available
+Start your local MongoDB instance before launching the application.
+
+Start the platform
 
 npm run dev
 
 or
 
 npm start
+Available Local Interfaces
 
-Open the frontends served by the API server:
+Once the server is running, the platform frontends can be accessed directly through the backend service:
 
-http://localhost:4000/storefront/
+Storefront: http://localhost:4000/storefront/
 
-http://localhost:4000/pos/pos.html
+POS: http://localhost:4000/pos/pos.html
 
-http://localhost:4000/backoffice/backoffice.html
+Backoffice: http://localhost:4000/backoffice/backoffice.html
 
-Because the Express app serves the bundled frontends, you do not necessarily need separate static hosting during local development.
+This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
-Future improvements
+Platform Evolution Roadmap
 
-Move backend files into a cleaner src/ structure
+The current platform already demonstrates strong practical full-stack capability. The following enhancements would further strengthen maintainability, scalability, and production readiness:
 
-Split large inline files into separate HTML, CSS, and JS assets
+Refine the backend into a cleaner src/-driven architecture
 
-Rename inconsistent files such as:
+Split inline-heavy modules into dedicated HTML, CSS, and JavaScript assets
+
+Standardize naming conventions across frontend files and folders
+
+Strengthen authentication, authorization, and production security controls
+
+Add screenshots, UI previews, and architecture diagrams for better documentation
+
+Introduce automated testing for both API and frontend workflows
+
+Containerize the platform with Docker for more portable deployment
+
+Add CI/CD pipelines for build, validation, and release automation
+
+Recommended Naming Improvements
 
 dashbord.css → dashboard.css
 
@@ -604,20 +577,20 @@ serchproduct.js → searchProduct.js
 
 propectas.html → prospectus.html
 
-Improve production auth and security hardening
+Executive Summary
 
-Add screenshots and architecture diagrams
+IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
 
-Add tests for API and frontend modules
+From an engineering and product perspective, the platform already demonstrates strong practical value through:
 
-Containerize with Docker
+multi-interface system design
 
-Add CI/CD pipeline
+shared data architecture
 
-Summary
+business-oriented workflow coverage
 
-IVMS is a unified retail operations platform built around one central backend and multiple role-specific frontends. It combines internal operations, customer-facing sales, register workflows, administration, and promotional tooling into one shared system.
+customer-facing and internal-facing application layers
 
-The codebase already shows strong practical capability. With cleaner structure, naming consistency, screenshots, and production hardening, it can become an even more professional GitHub and portfolio project.
+operational scalability potential
 
-
+With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
