@@ -52,6 +52,26 @@ It combines:
 That makes it far more realistic than a basic tutorial app.
 
 ---
+## What this project includes
+
+### 1. Central backend and database
+The backend is the shared source of truth for the whole platform. It handles API routing, database access, shop-aware data, product management, purchases, history, warehouses, and authentication. The main server mounts the API and serves the static frontends for the storefront, POS, and backoffice from the same application. fileciteturn6file2
+
+### 2. IVMS frontend console
+The IVMS console is the main operational cockpit for staff. It includes dashboard KPIs, inventory management, transfers, purchases, ESL-related tools, shop-aware product operations, image handling, inline editing, and keyboard shortcuts. The main shell is defined in `index.html`, while the behavior is split across focused helper files such as `script.js`, `addshop.js`, `updatepage.js`, `excelInlineEdit.js`, `picture.js`, and `Key_Shortcut.js`. fileciteturn6file3 fileciteturn6file8
+
+### 3. POS interface
+The POS module is a browser-based point-of-sale experience with lockscreen/login flow, keypad input, article lookup, basket interactions, category shortcuts, and live product lookup support through the shared API base and selected shop context. `pos.html` contains the kiosk layout and `pos.js` handles interaction, lookup logic, local session state, and API base/shop selection. fileciteturn6file4 fileciteturn6file13
+
+### 4. Storefront / online shop
+The storefront is the customer-facing catalog interface. It is designed as a lightweight static frontend that reads live product/shop data from the shared API, displays inventory in a polished layout, and supports search, sort, category filters, availability filters, and quick stock request actions. The storefront shell is defined in `index.html` and powered by `shop.js`. fileciteturn6file10
+
+### 5. Backoffice SPA
+The backoffice is a single-page staff/admin interface focused on dashboards, terminals, cashiers, inventory, reporting, payments, and other business-side workflows. The uploaded `backoffice.html` contains the SPA layout and a large amount of inline styling and behavior, and it calls API endpoints such as sales, terminals, and cashier-related routes. fileciteturn6file9 fileciteturn6file19
+
+### 6. Prospectus / promotions workspace
+The prospectus workspace is used to design promotional layouts and marketing pages. The uploaded `propectas.html` includes editing tools, company profile storage, modal interactions, discount/product loading, zoom support, and client-side persistence. In the current uploaded state, much of this logic is embedded directly in the HTML file rather than split into separate CSS/JS assets. fileciteturn6file7 fileciteturn6file11
+
 
 ## Architecture
 
@@ -84,30 +104,9 @@ That makes it far more realistic than a basic tutorial app.
 │  POS    │ │Storefront│ │ Prospectus │            │ Shared Frontend │
 │ Register│ │ Catalog   │ │ Promotions │            │ Static Delivery │
 └─────────┘ └───────────┘ └────────────┘            └─────────────────┘
-
+```
 ---
 
-## What this project includes
-
-### 1. Central backend and database
-The backend is the shared source of truth for the whole platform. It handles API routing, database access, shop-aware data, product management, purchases, history, warehouses, and authentication. The main server mounts the API and serves the static frontends for the storefront, POS, and backoffice from the same application. fileciteturn6file2
-
-### 2. IVMS frontend console
-The IVMS console is the main operational cockpit for staff. It includes dashboard KPIs, inventory management, transfers, purchases, ESL-related tools, shop-aware product operations, image handling, inline editing, and keyboard shortcuts. The main shell is defined in `index.html`, while the behavior is split across focused helper files such as `script.js`, `addshop.js`, `updatepage.js`, `excelInlineEdit.js`, `picture.js`, and `Key_Shortcut.js`. fileciteturn6file3 fileciteturn6file8
-
-### 3. POS interface
-The POS module is a browser-based point-of-sale experience with lockscreen/login flow, keypad input, article lookup, basket interactions, category shortcuts, and live product lookup support through the shared API base and selected shop context. `pos.html` contains the kiosk layout and `pos.js` handles interaction, lookup logic, local session state, and API base/shop selection. fileciteturn6file4 fileciteturn6file13
-
-### 4. Storefront / online shop
-The storefront is the customer-facing catalog interface. It is designed as a lightweight static frontend that reads live product/shop data from the shared API, displays inventory in a polished layout, and supports search, sort, category filters, availability filters, and quick stock request actions. The storefront shell is defined in `index.html` and powered by `shop.js`. fileciteturn6file10
-
-### 5. Backoffice SPA
-The backoffice is a single-page staff/admin interface focused on dashboards, terminals, cashiers, inventory, reporting, payments, and other business-side workflows. The uploaded `backoffice.html` contains the SPA layout and a large amount of inline styling and behavior, and it calls API endpoints such as sales, terminals, and cashier-related routes. fileciteturn6file9 fileciteturn6file19
-
-### 6. Prospectus / promotions workspace
-The prospectus workspace is used to design promotional layouts and marketing pages. The uploaded `propectas.html` includes editing tools, company profile storage, modal interactions, discount/product loading, zoom support, and client-side persistence. In the current uploaded state, much of this logic is embedded directly in the HTML file rather than split into separate CSS/JS assets. fileciteturn6file7 fileciteturn6file11
-
----
 
 ## Core architecture
 
