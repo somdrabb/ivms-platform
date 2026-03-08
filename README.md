@@ -522,9 +522,9 @@ Because the Express server also delivers the frontend applications, you can laun
 
 1. **Install project dependencies**
    ```bash
-   npm install
+   npm install```
 
-Create your environment configuration
+## Create your environment configuration
 Add a .env file in the project root and provide the required runtime variables for your local environment.
 
 Ensure MongoDB is available
@@ -532,65 +532,37 @@ Start your local MongoDB instance before launching the application.
 
 Start the platform
 
-npm run dev
+```npm run dev```
 
 or
 
-npm start
+```npm start```
 Available Local Interfaces
 
-Once the server is running, the platform frontends can be accessed directly through the backend service:
+### Once the server is running, the platform frontends can be accessed directly through the backend service:
 
-Storefront: http://localhost:4000/storefront/
+Storefront: ```http://localhost:4000/storefront/```
 
-POS: http://localhost:4000/pos/pos.html
+POS: ```http://localhost:4000/pos/pos.html```
 
-Backoffice: http://localhost:4000/backoffice/backoffice.html
+Backoffice: ```http://localhost:4000/backoffice/backoffice.html
+```
+### This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
-This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
+### Summary
 
-Platform Evolution Roadmap
+# IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
 
-The current platform already demonstrates strong practical full-stack capability. The following enhancements would further strengthen maintainability, scalability, and production readiness:
+## From an engineering and product perspective, the platform already demonstrates strong practical value through:
 
-Refine the backend into a cleaner src/-driven architecture
+# multi-interface system design
 
-Split inline-heavy modules into dedicated HTML, CSS, and JavaScript assets
+# shared data architecture
 
-Standardize naming conventions across frontend files and folders
+# business-oriented workflow coverage
 
-Strengthen authentication, authorization, and production security controls
+# customer-facing and internal-facing application layers
 
-Add screenshots, UI previews, and architecture diagrams for better documentation
+# operational scalability potential
 
-Introduce automated testing for both API and frontend workflows
-
-Containerize the platform with Docker for more portable deployment
-
-Add CI/CD pipelines for build, validation, and release automation
-
-Recommended Naming Improvements
-
-dashbord.css → dashboard.css
-
-serchproduct.js → searchProduct.js
-
-propectas.html → prospectus.html
-
-Executive Summary
-
-IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
-
-From an engineering and product perspective, the platform already demonstrates strong practical value through:
-
-multi-interface system design
-
-shared data architecture
-
-business-oriented workflow coverage
-
-customer-facing and internal-facing application layers
-
-operational scalability potential
-
-With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
+### With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
