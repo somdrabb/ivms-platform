@@ -547,7 +547,7 @@ Because the Express server also delivers the frontend applications, you can laun
 
 1. **Install project dependencies**
    ```bash
-   npm install```
+   npm install
 
 ## Create your environment configuration
 Add a .env file in the project root and provide the required runtime variables for your local environment.
