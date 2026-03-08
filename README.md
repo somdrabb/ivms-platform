@@ -361,7 +361,7 @@ That makes it far more realistic than a basic tutorial app.
 The backend is the platform backbone.
 
 ### Entry point
-The server initializes Express, configures middleware, connects the database, mounts API routers, exposes a health check, and serves static frontend folders for the storefront, POS, and backoffice. fileciteturn6file2
+The server initializes Express, configures middleware, connects the database, mounts API routers, exposes a health check, and serves static frontend folders for the storefront, POS, and backoffice. 
 
 ### API resources
 Based on the uploaded routing setup, the backend currently exposes:
@@ -371,12 +371,12 @@ Based on the uploaded routing setup, the backend currently exposes:
 - `/api/warehouses`
 - `/api/purchases`
 - `/api/shops`
-- `/api/health` fileciteturn6file2
+- `/api/health` 
 
-The existing root README also lists product-oriented routes such as list, create, update, delete, stock patching, duplicate checking, CSV export, and history access. fileciteturn6file1
+The existing root README also lists product-oriented routes such as list, create, update, delete, stock patching, duplicate checking, CSV export, and history access. 
 
 ### Database role
-MongoDB stores the central product, purchase, shop, and user data. The server also performs a default shop backfill so legacy products/purchase orders without a `shopId` can be normalized into a default shop context. fileciteturn6file2
+MongoDB stores the central product, purchase, shop, and user data. The server also performs a default shop backfill so legacy products/purchase orders without a `shopId` can be normalized into a default shop context. 
 
 ### Authentication note
 The project includes auth routes, token utilities, and auth middleware, but production hardening should be reviewed carefully before deployment because the security model needs to match the intended real-world exposure. This repository is a strong platform foundation, but security review should be part of production readiness.
@@ -396,7 +396,7 @@ The IVMS console is your main internal operations area.
 - ESL / shelf / preview support
 - Shop-aware inventory actions
 - Bulk/product utilities
-- Staff productivity helpers like inline editing and shortcuts. fileciteturn6file3 fileciteturn6file8
+- Staff productivity helpers like inline editing and shortcuts. 
 
 ### Important files
 - `index.html` — main shell and tab system
@@ -413,7 +413,7 @@ The IVMS console is your main internal operations area.
 - `serchproduct.js` — product search helpers
 
 ### Why it is valuable
-This part of the project demonstrates strong front-end problem solving for real business workflows. It is not a simple CRUD page; it includes state management, fallback logic, queue/retry behavior, operational UX, and multi-shop awareness. fileciteturn6file8 fileciteturn6file17
+This part of the project demonstrates strong front-end problem solving for real business workflows. It is not a simple CRUD page; it includes state management, fallback logic, queue/retry behavior, operational UX, and multi-shop awareness. 
 
 ---
 
@@ -425,7 +425,7 @@ The storefront provides a clean customer-facing catalog that syncs with inventor
 - Display stock status and price information
 - Support search and filtering
 - Provide a simple request-stock interaction
-- Present shop-specific catalog data. fileciteturn6file10
+- Present shop-specific catalog data. 
 
 ### Why it is valuable
 It demonstrates that the backend data model is reusable beyond staff tools. Instead of stopping at admin CRUD, the project exposes the same product system to customers in a safe, polished interface.
@@ -441,7 +441,7 @@ The POS interface provides a kiosk-style register experience.
 - Manage current scanned/entered product flow
 - Perform product/article lookups
 - Maintain temporary session state
-- Reuse the same API base conventions as the rest of the platform. fileciteturn6file4 fileciteturn6file13
+- Reuse the same API base conventions as the rest of the platform. 
 
 ### Why it is valuable
 It shows that the project is not just inventory software but also operational retail software. Building POS-oriented screen flows is a different skill than building dashboards, and this module makes the project much stronger as a portfolio piece.
@@ -456,7 +456,7 @@ The backoffice provides a more business/admin-centric control surface.
 - Terminal-related views
 - Sales visibility
 - Cashier workflows
-- Business-oriented SPA navigation and modal interactions. fileciteturn6file12 fileciteturn6file19
+- Business-oriented SPA navigation and modal interactions. 
 
 ### Important note
 In the uploaded version, `backoffice.html` contains inline CSS and JavaScript. For maintainability and professionalism, this should be split into dedicated `backoffice.css` and `backoffice.js` files if those are not already present in another folder version.
@@ -471,7 +471,7 @@ The prospectus page is a marketing/promo editor tied to the operational data mod
 - Persist company profile data in localStorage
 - Load discounted products
 - Support zoom and presentation adjustments
-- Combine business data with marketing presentation. fileciteturn6file11
+- Combine business data with marketing presentation. 
 
 ### Why it is valuable
 This module adds a unique business layer to the project. It shows that the system is not only about storage and selling but also about merchandising and promotion.
@@ -498,9 +498,9 @@ This module adds a unique business layer to the project. It shows that the syste
 5. Open the frontends served by the API server. The current README confirms these routes:
    - `http://localhost:4000/storefront/`
    - `http://localhost:4000/pos/pos.html`
-   - `http://localhost:4000/backoffice/backoffice.html` fileciteturn6file1
+   - `http://localhost:4000/backoffice/backoffice.html` 
 
-Because the Express app serves the bundled frontends, you do not necessarily need separate static hosting during local development. fileciteturn6file2
+Because the Express app serves the bundled frontends, you do not necessarily need separate static hosting during local development. 
 
 ---
 
@@ -575,4 +575,4 @@ A recruiter or client can immediately see that this is closer to a real internal
 
 ## Final summary
 
-IVMS is a unified retail operations platform built around one central backend and multiple role-specific frontends. It combines internal operations, customer-facing sales, register workflows, administration, and promotional tooling into one shared system. The codebase already shows strong practical capability; with cleaner structure, naming consistency, and production hardening, it can become an even more professional GitHub and portfolio project. fileciteturn6file2 fileciteturn6file3 fileciteturn6file4 fileciteturn6file10
+IVMS is a unified retail operations platform built around one central backend and multiple role-specific frontends. It combines internal operations, customer-facing sales, register workflows, administration, and promotional tooling into one shared system. The codebase already shows strong practical capability; with cleaner structure, naming consistency, and production hardening, it can become an even more professional GitHub and portfolio project.
