@@ -573,10 +573,16 @@ Once the server is running, the platform frontends can be accessed directly thro
 Storefront:
 ```bash
 http://localhost:4000/storefront/
+```
+POS: 
+```bash
+http://localhost:4000/pos/pos.html
+```
 
-POS: ```http://localhost:4000/pos/pos.html
-
-Backoffice: ```http://localhost:4000/backoffice/backoffice.html
+Backoffice:
+```bash
+http://localhost:4000/backoffice/backoffice.html
+```
 
 This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
