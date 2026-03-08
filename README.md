@@ -552,28 +552,43 @@ The prospectus module represents the platform’s **promotional and merchandisin
 #### Business Value
 This module adds a high-value commercial layer to the project by showing that the platform is not limited to inventory control and sales execution. It also supports merchandising, promotion, and presentation workflows, which makes the overall solution more complete and more aligned with real retail business operations.
 
-Screenshots
-```text
 ## Screenshots
 
 ### IVMS Dashboard
 ![IVMS Dashboard](docs/screenshots/ivms-dashboard.png)
 
 ### Inventory Management
-![Inventory](docs/screenshots/inventory.png)
+![Inventory Management](docs/screenshots/inventory.png)
+
+### Add Product
+![Add Product](docs/screenshots/ivms-addproduct.png)
+
+### ESL View
+![ESL View](docs/screenshots/ivms-esl.png)
+
+### Inventory History
+![Inventory History](docs/screenshots/ivms-history.png)
+
+### Purchase Management
+![Purchase Management](docs/screenshots/ivms-purchase.png)
+
+### Restock View
+![Restock View](docs/screenshots/ivms-restock.png)
+
+### Stockout Monitoring
+![Stockout Monitoring](docs/screenshots/ivms-stockout.png)
+
+### Warehouse View
+![Warehouse View](docs/screenshots/ivms-warehouse.png)
+
+### Online Storefront
+![Online Storefront](docs/screenshots/onlinestorefront.png)
 
 ### POS Interface
-![POS](docs/screenshots/pos.png)
-
-### Storefront
-![Storefront](docs/screenshots/storefront.png)
+![POS Interface](docs/screenshots/pos.png)
 
 ### Backoffice
 ![Backoffice](docs/screenshots/backoffice.png)
-
-### Prospectus Workspace
-![Prospectus](docs/screenshots/prospectus.png)
-```
 ## Getting Started
 
 IVMS is designed to run as a **single integrated platform** during local development.  
