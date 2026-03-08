@@ -207,44 +207,51 @@ The prospectus workspace is used to design promotional layouts and marketing pag
 
 ```text
 ivms-platform/
-├─ package.json
-├─ package-lock.json
-├─ README.md
-├─ .env
-├─ .env.example
-├─ uploads/
-├─ src/
-│  ├─ index.js
-│  ├─ db.js
-│  ├─ middleware/
-│  │  └─ auth.js
-│  ├─ models/
-│  │  ├─ product.js
-│  │  ├─ purchaseOrder.js
-│  │  ├─ shop.js
-│  │  └─ user.js
-│  ├─ routes/
-│  │  ├─ auth.js
-│  │  ├─ products.js
-│  │  ├─ purchases.js
-│  │  ├─ shops.js
-│  │  ├─ warehouses.js
-│  │  └─ history.js
-│  └─ utils/
-│     ├─ csv.js
-│     ├─ password.js
-│     └─ token.js
-├─ frontend/
-│  ├─ ivms/
-│  ├─ storefront/
-│  ├─ pos/
-│  ├─ backoffice/
-│  └─ prospectus/
-└─ docs/
-   └─ screenshots/
+├── package.json
+├── package-lock.json
+├── README.md
+├── .env
+├── .env.example
+├── uploads/
+│
+├── src/                             # Backend / API layer
+│   ├── index.js                     # Express app entry point
+│   ├── db.js                        # Database connection
+│   │
+│   ├── middleware/                  # Cross-cutting backend middleware
+│   │   └── auth.js
+│   │
+│   ├── models/                      # Database models / schemas
+│   │   ├── product.js
+│   │   ├── purchaseOrder.js
+│   │   ├── shop.js
+│   │   └── user.js
+│   │
+│   ├── routes/                      # API route modules
+│   │   ├── auth.js
+│   │   ├── products.js
+│   │   ├── purchases.js
+│   │   ├── shops.js
+│   │   ├── warehouses.js
+│   │   └── history.js
+│   │
+│   └── utils/                       # Shared backend utilities
+│       ├── csv.js
+│       ├── password.js
+│       └── token.js
+│
+├── frontend/                        # Frontend applications
+│   ├── ivms/                        # Main inventory & operations console
+│   ├── storefront/                  # Customer-facing online shop
+│   ├── pos/                         # Point-of-sale interface
+│   ├── backoffice/                  # Admin / business operations SPA
+│   └── prospectus/                  # Promotions / prospectus workspace
+│
+├── uploads/                         # Uploaded assets / product images
+│
+└── docs/                            # Project documentation
+    └── screenshots/                 # UI previews and repository visuals
 ```
-Current repository layout
-Backend-related files
 
 db.js
 
