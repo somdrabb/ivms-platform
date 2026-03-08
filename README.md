@@ -52,38 +52,63 @@ It combines:
 That makes it far more realistic than a basic tutorial app.
 
 ---
+## Enterprise Architecture Overview
 
-## Architecture
+The platform follows a **centralized service architecture** in which a unified backend and shared data layer power multiple role-specific frontend applications across retail, administration, sales, and promotional workflows.
 
 ```text
-                         ┌───────────────────────────┐
-                         │        MongoDB            │
-                         │   Products / Shops /      │
-                         │ Purchases / Users / Logs  │
-                         └─────────────┬─────────────┘
-                                       │
-                                       │
-                          ┌────────────▼────────────┐
-                          │   Node.js + Express API │
-                          │  Auth / Products /      │
-                          │  Shops / Purchases /    │
-                          │  Warehouses / History   │
-                          └───────┬───────┬─────────┘
-                                  │       │
-               ┌──────────────────┘       └──────────────────┐
-               │                                             │
-     ┌─────────▼─────────┐                         ┌─────────▼─────────┐
-     │  IVMS Console     │                         │   Backoffice SPA  │
-     │ Inventory / KPIs  │                         │ Admin / Sales /   │
-     │ Warehouse / Shop  │                         │ Cashier / Reports │
-     └─────────┬─────────┘                         └───────────────────┘
-               │
-     ┌─────────┼─────────┬───────────────────────────────┐
-     │         │         │                               │
-┌────▼────┐ ┌──▼──────┐ ┌▼────────────┐            ┌─────▼──────────┐
-│  POS    │ │Storefront│ │ Prospectus │            │ Shared Frontend │
-│ Register│ │ Catalog   │ │ Promotions │            │ Static Delivery │
-└─────────┘ └───────────┘ └────────────┘            └────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                   IVMS PLATFORM ARCHITECTURE                                │
+└──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                   DATA & PERSISTENCE LAYER                                  │
+├──────────────────────────────────────────────────────────────────────────────────────────────┤
+│  MongoDB                                                                                     │
+│  • Products                                                                                  │
+│  • Shops / Outlets                                                                           │
+│  • Purchase Orders                                                                           │
+│  • Users / Roles                                                                             │
+│  • Inventory History / Activity Logs                                                         │
+│  • Warehouse / Stock Movement Data                                                           │
+└───────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                                │
+                                                │
+┌───────────────────────────────────────────────▼──────────────────────────────────────────────┐
+│                                APPLICATION & API SERVICE LAYER                               │
+├──────────────────────────────────────────────────────────────────────────────────────────────┤
+│  Node.js + Express                                                                           │
+│  • Authentication & Authorization                                                            │
+│  • Product & Inventory Services                                                              │
+│  • Purchase Workflow Services                                                                │
+│  • Shop Management Services                                                                  │
+│  • Warehouse & History Services                                                              │
+│  • CSV / Token / Password Utilities                                                          │
+│  • Static Frontend Delivery                                                                  │
+│  • Shared Platform Business Logic                                                            │
+└───────────────┬───────────────────────────────┬───────────────────────────────┬──────────────┘
+                │                               │                               │
+                │                               │                               │
+                │                               │                               │
+┌───────────────▼──────────────┐   ┌───────────▼──────────────┐   ┌───────────▼──────────────┐
+│   OPERATIONS APPLICATIONS    │   │   CUSTOMER APPLICATIONS  │   │ ADMIN & BUSINESS APPS    │
+├──────────────────────────────┤   ├──────────────────────────┤   ├──────────────────────────┤
+│  IVMS Console                │   │  Storefront              │   │ Backoffice SPA           │
+│  • Inventory control         │   │  • Product catalog       │   │ • Dashboards             │
+│  • KPIs / dashboards         │   │  • Search / filters      │   │ • Sales visibility       │
+│  • Transfers / purchases     │   │  • Availability view     │   │ • Cashier workflows      │
+│  • Shop-aware workflows      │   │  • Shop-specific view    │   │ • Terminal management    │
+└───────────────┬──────────────┘   └──────────────────────────┘   └──────────────────────────┘
+                │
+                │
+   ┌────────────▼────────────┬───────────────────────────────┐
+   │                         │                               │
+┌──▼────────────────┐  ┌─────▼──────────────────┐  ┌────────▼─────────────────┐
+│ POS Interface     │  │ Prospectus Workspace   │  │ Shared Static Delivery   │
+│ • Register flows  │  │ • Promotions / layout  │  │ • Frontend serving       │
+│ • Lookup / input  │  │ • Discount rendering   │  │ • Unified local runtime  │
+│ • Session control │  │ • Marketing workspace  │  │ • Central access model   │
+└───────────────────┘  └────────────────────────┘  └──────────────────────────┘
 ```
 ### Core architecture
 
