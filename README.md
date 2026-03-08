@@ -128,137 +128,77 @@ The backoffice is a single-page staff and admin interface focused on dashboards,
 
 The prospectus workspace is used to design promotional layouts and marketing pages. The uploaded propectas.html includes editing tools, company profile storage, modal interactions, discount and product loading, zoom support, and client-side persistence. In the current state, much of this logic is embedded directly in the HTML file rather than split into separate CSS and JS assets.
 
-### Tech stack
-Backend
+## Tech Stack
+
+<div align="center">
+
+| Backend | Frontend | Storage & UI |
+|---|---|---|
+| Node.js | HTML | LocalStorage |
+| Express | CSS | IndexedDB |
+| MongoDB / Mongoose | Vanilla JavaScript | Font Awesome |
+| ES Modules | Browser-native modules | QR / Barcode / Chart helpers |
+| CORS / Morgan / dotenv | Static frontend delivery | Shop-aware API integration |
+
+</div>
+
+### Architecture Style
+- Static frontends served directly by Express
+- API-first communication between frontend and backend
+- Multi-shop aware requests using shop-scoped logic
+- Lightweight browser-native implementation without a required bundler
+
+---
+
+## Main Features
+
+### Inventory & Product Management
+- Product listing, editing, and stock handling
+- Shop-aware inventory workflows
+- Search, pagination, and inline stock editing
+- Product image workflows and CSV support
+- Inventory reset flow with confirmation safeguards
+- Transfer queue and retry support in the IVMS console
+
+### Dashboard & Operations
+- KPI cards and overview panels
+- Multi-tab operational cockpit
+- Purchase and warehouse visibility
+- Activity indicators, notifications, and utility helpers
+- Keyboard shortcuts for faster staff workflows
+
+### Multi-Shop Support
+- Shop-aware requests and scoped data loading
+- Shop metadata loading and persistence
+- Storefront shop targeting
+- POS shop selection fallback logic
+
+### Storefront
+- Product grid with search and sorting
+- Category and availability filters
+- Customer-facing request-stock workflow
+- Shop-specific storefront view
+
+### POS
+- Login and lockscreen flow
+- Soft keypad and numeric input
+- Product and article lookup
+- Session persistence with LocalStorage
+- Shop-aware API base detection and product fetch attempts
+
+### Backoffice
+- Dashboard widgets and sales views
+- POS terminal management
+- Cashier management
+- Business and admin workflow screens
+
+### Prospectus
+- Editable promotion canvas
+- Company profile persistence
+- Discount and product loading
+- Zoom controls
+- Modal-based content editing
 
-Node.js
-
-Express
-
-MongoDB / Mongoose
-
-ES Modules
-
-CORS
-
-Morgan
-
-dotenv
-
-Frontend
-
-HTML
-
-CSS
-
-Vanilla JavaScript
-
-Font Awesome
-
-LocalStorage
-
-IndexedDB where needed
-
-Some third-party browser helpers such as QR, barcode, and chart-related scripts referenced by the frontend shell
-
-Design approach
-
-Static frontends that can be served directly by Express
-
-API-first communication between frontend and backend
-
-Multi-shop awareness via shop IDs and shop-scoped requests
-
-Lightweight browser-native modules without bundler dependency in the current uploaded version
-
-Main features
-Inventory and product management
-
-Product listing and editing
-
-Shop-aware inventory handling
-
-Search and pagination
-
-Inline stock editing
-
-Product pictures and image workflows
-
-CSV-related support utilities
-
-Inventory reset flow with confirmation safeguards
-
-Transfer queue and retry support in the IVMS console
-
-Dashboard and operations
-
-KPI cards and overview panels
-
-Multi-tab operational cockpit
-
-Purchase and warehouse-related visibility
-
-Activity indicators and notifications
-
-Keyboard shortcuts and utility helpers
-
-Multi-shop support
-
-Shop-aware requests
-
-Shop metadata loading and persistence
-
-Storefront shop targeting
-
-POS shop selection fallback logic
-
-Storefront capabilities
-
-Product grid
-
-Search and sort
-
-Category and availability filters
-
-Customer-facing request-stock workflow
-
-Shop-specific storefront view
-
-POS capabilities
-
-Login and lockscreen flow
-
-Soft keypad and numeric input
-
-Product and article lookup
-
-Session persistence in localStorage
-
-Shop-aware API base detection and product fetch attempts
-
-Backoffice capabilities
-
-Dashboard widgets
-
-Sales views
-
-POS terminal management
-
-Cashier management
-
-Business and admin workflow screens
-
-Prospectus capabilities
-
-Editable promotion canvas
-
-Company profile persistence
-
-Discount and product loading
-
-Zoom controls
-
-Modal-based content editing
 
 ### Project structure
 
