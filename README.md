@@ -547,22 +547,22 @@ POS: ```http://localhost:4000/pos/pos.html```
 
 Backoffice: ```http://localhost:4000/backoffice/backoffice.html ```
 
-### This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
+# This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
-### Summary
+# Summary
 
 # IVMS is a unified retail operations platform built on one central backend and multiple role-specific frontend applications. It brings together internal operations, customer-facing commerce, POS workflows, administrative tooling, and promotional content management within a single connected ecosystem.
 
-## From an engineering and product perspective, the platform already demonstrates strong practical value through:
+ From an engineering and product perspective, the platform already demonstrates strong practical value through:
 
-# multi-interface system design
+multi-interface system design
 
-# shared data architecture
+shared data architecture
 
-# business-oriented workflow coverage
+business-oriented workflow coverage
 
-# customer-facing and internal-facing application layers
+customer-facing and internal-facing application layers
 
-# operational scalability potential
+operational scalability potential
 
 ### With continued structure refinement, production hardening, and stronger visual documentation, IVMS has the potential to evolve from a strong portfolio project into a highly compelling enterprise-style platform presentation.
