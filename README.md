@@ -545,8 +545,8 @@ Storefront: ```http://localhost:4000/storefront/```
 
 POS: ```http://localhost:4000/pos/pos.html```
 
-Backoffice: ```http://localhost:4000/backoffice/backoffice.html
-```
+Backoffice: ```http://localhost:4000/backoffice/backoffice.html ```
+
 ### This unified startup flow simplifies development, testing, and module validation by allowing the backend and frontend applications to run together without requiring separate local hosting for each interface.
 
 ### Summary
