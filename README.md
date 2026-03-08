@@ -47,7 +47,7 @@
 
 ---
 
-## Executive Overview
+## Overview
 
 **IVMS** is a unified **retail operations platform** engineered to consolidate multiple business-critical workflows into a single connected ecosystem. Rather than treating inventory, sales, administration, customer-facing commerce, and promotional tooling as isolated applications, IVMS brings them together under one shared platform architecture powered by a centralized backend and common data layer.
 
@@ -88,7 +88,7 @@ What makes the project especially compelling is its ability to bridge **internal
 
 As a result, the platform feels significantly closer to a **real-world enterprise retail system** than a basic portfolio CRUD project. It shows architectural thinking, workflow awareness, and practical product design across multiple operational surfaces.
 ---
-## Enterprise Architecture Overview
+## Architecture Overview
 
 The platform follows a **centralized service architecture** in which a unified backend and shared data layer power multiple role-specific frontend applications across retail, administration, sales, and promotional workflows.
 
