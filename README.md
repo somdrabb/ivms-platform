@@ -106,48 +106,48 @@ The current backend entry point is `src/index.js` according to the runtime scrip
 - Product pictures / image workflows
 - CSV-related support utilities
 - Inventory reset flow with confirmation safeguards
-- Transfer queue and retry support in the IVMS console. fileciteturn6file8 fileciteturn6file5 fileciteturn6file15 fileciteturn6file17
+- Transfer queue and retry support in the IVMS console. 
 
 ### Dashboard and operations
 - KPI cards and overview panels
 - Multi-tab operational cockpit
 - Purchase and warehouse-related visibility
 - Activity indicators and notifications
-- Keyboard shortcuts and utility helpers. fileciteturn6file3 fileciteturn6file8
+- Keyboard shortcuts and utility helpers. 
 
 ### Multi-shop support
 - Shop-aware requests
 - Shop metadata loading and persistence
 - Storefront shop targeting
-- POS shop selection fallback logic. fileciteturn6file13 fileciteturn6file2
+- POS shop selection fallback logic. 
 
 ### Storefront capabilities
 - Product grid
 - Search and sort
 - Category and availability filters
 - Customer-facing request-stock workflow
-- Shop-specific storefront view. fileciteturn6file10
+- Shop-specific storefront view.
 
 ### POS capabilities
 - Login/lockscreen flow
 - Soft keypad / numeric input
 - Product/article lookup
 - Session persistence in localStorage
-- Shop-aware API base detection and product fetch attempts. fileciteturn6file4 fileciteturn6file13
+- Shop-aware API base detection and product fetch attempts.
 
 ### Backoffice capabilities
 - Dashboard widgets
 - Sales views
 - POS terminal management
 - Cashier management
-- Business/admin workflow screens. fileciteturn6file12 fileciteturn6file19
+- Business/admin workflow screens.
 
 ### Prospectus capabilities
 - Editable promotion canvas
 - Company profile persistence
 - Discount/product loading
 - Zoom controls
-- Modal-based content editing. fileciteturn6file7 fileciteturn6file11
+- Modal-based content editing. 
 
 ---
 
